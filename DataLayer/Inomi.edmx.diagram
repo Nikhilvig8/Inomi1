@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bf841d9dc838433d81cf6b394dcfb4ac" Name="Diagram1" ZoomLevel="54">
+        <EntityTypeShape EntityType="InomiModel.Event" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.interestinglink" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InomiModel.selectedcollege" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InomiModel.studentmilestoneupload" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InomiModel.tblAcadenmouse" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InomiModel.tblAssingTask" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCallNote" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCollege" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCountry" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCourse" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblExtraCurricularActivite" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="InomiModel.tblFormat" Width="1.5" PointX="10.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InomiModel.tblLeadershipPosition" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="InomiModel.tblProduct" Width="1.5" PointX="8.75" PointY="11.75" />
+        <EntityTypeShape EntityType="InomiModel.tblProject" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="InomiModel.tblStudent" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="InomiModel.tblTask" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblTest" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InomiModel.tblTestReport" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="InomiModel.UploadEssayFile" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tbl_ExcelFilePath" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="InomiModel.tblApplicationMode" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCityName" Width="1.5" PointX="14.75" PointY="9.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCollegeDetail" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCollegeDetailsTemp" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCollegeScore" Width="1.5" PointX="2.75" PointY="15.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCounsellor" Width="1.5" PointX="4.75" PointY="15.75" />
+        <EntityTypeShape EntityType="InomiModel.tblCountryName" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="InomiModel.tblEventTemp" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="InomiModel.tblFAQDetail" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblFAQDetails_Temp" Width="1.5" PointX="16.75" PointY="4.75" />
+        <EntityTypeShape EntityType="InomiModel.tblFormatTemp" Width="1.5" PointX="16.75" PointY="8.75" />
+        <EntityTypeShape EntityType="InomiModel.tblGendor" Width="1.5" PointX="16.75" PointY="14.75" />
+        <EntityTypeShape EntityType="InomiModel.tblMonth" Width="1.5" PointX="16.75" PointY="17.75" />
+        <EntityTypeShape EntityType="InomiModel.tblPaymentDetail" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblPercentileName" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="InomiModel.tblProjectMilestone" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="InomiModel.tblStudentInstallmentDetail" Width="1.5" PointX="18.75" PointY="4.75" />
+        <EntityTypeShape EntityType="InomiModel.tblTestingRequirement" Width="1.5" PointX="6.75" PointY="18.75" />
+        <EntityTypeShape EntityType="InomiModel.tblUsersLogIn" Width="1.5" PointX="18.75" PointY="8.75" />
+        <AssociationConnector Association="InomiModel.FK__tblProjec__Proje__13F1F5EB" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireCareerDescription" Width="1.5" PointX="19.75" PointY="17.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireCourseWork" Width="1.5" PointX="13.75" PointY="20.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireFieldLogic" Width="1.5" PointX="15.75" PointY="20.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireFieldLogicResult" Width="1.5" PointX="17.75" PointY="20.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireLogin" Width="1.5" PointX="19.75" PointY="20.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireMainStrength" Width="1.5" PointX="19.75" PointY="14.25" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireOnlineCourse" Width="1.5" PointX="21.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireReading" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireStudentRegister" Width="1.5" PointX="2.75" PointY="21.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireSubStrength" Width="1.5" PointX="22" PointY="14" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireSubStrengthQuestion" Width="1.5" PointX="24.25" PointY="14.125" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireSubStrengthResult" Width="1.5" PointX="21.75" PointY="3.75" />
+        <EntityTypeShape EntityType="InomiModel.tblQuestionnaireVideo" Width="1.5" PointX="4.75" PointY="21.75" />
+        <AssociationConnector Association="InomiModel.FK_tblQuestionnaireSubStrength_tblQuestionnaireMainStrength" />
+        <AssociationConnector Association="InomiModel.FK_tblQuestionnaireSubStrengthQuestion_tblQuestionnaireSubStrength" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

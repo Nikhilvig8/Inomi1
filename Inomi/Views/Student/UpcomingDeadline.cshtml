@@ -1,0 +1,67 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Upcoming Deadline</h2>
+                </div>
+            </div>
+        </div>
+
+        
+            <div class="report-details">
+                @*<h2>Deadlines</h2>*@
+            </div>
+            <div class="table-responsive" data-simplebar>
+                <table id="example" class="table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr No</th>
+                            <th scope="col">University/College</th>
+                            <th scope="col">Campus</th>
+                            <th scope="col">Early Deadline(for 2020-21)</th>
+                            <th scope="col">Late Deadline(for 2020-21)</th>
+                            <th scope="col">Final Deadline(for 2020-21)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UpcomingDeadLineReport.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <tr>
+                                <td>@item.Index</td>
+                                <td>@item.Data.University</td>
+                                <td>@item.Data.Campus</td>
+                                <td>@item.Data.EarlyDeadLine</td>
+                                <td>@item.Data.LateDeadLine</td>
+                                <td>@item.Data.FinalDeadLine</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        
+        <div class="d-flex mt-2">
+            <button type="submit"
+                    class="btn blue-btn"
+                    onclick="window.location.href = 'Index'">
+                Back
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script> 

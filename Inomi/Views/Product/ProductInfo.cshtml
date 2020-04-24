@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Product Details";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Products</h2>
+                </div>
+            </div>
+        </div>
+        <div class="product-container">
+            @foreach (DataRow row in Model.Rows)
+            {
+
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12  " id="image-content">
+                            <img src="@row["Attribute1"].ToString()" alt="product-image" width="100%" height="100%" >
+                        </div>
+                        <div class="col-md-9 col-sm-12 " id="heading-content">
+                            <h4>@row["Name"].ToString()</h4>
+                            @*<p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.Sed tortor<br>
+                                    leo, sodales non gravida eu, finibus et felis.
+                                </p>*@
+                            <h6>Price </h6>
+                            <span>@row["Fee"].ToString()</span>
+                            @*<div class="cal-view">
+                                <p> <img src="/images/calendar.png" alt="calender">@row["CreatedDateTime"].ToString()</p>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="para">
+                    <p>
+                        <label id="hideProductDetails">@row["ProductDetails"].ToString()</label>
+                    </p>
+                   
+                </div>
+
+
+            }
+
+            <div class="button1">
+                <button type="submit" class="btn blue-btn add-new" id="btnInfoBack">Back</button>
+                @*<a hrif="/Product/Product" class="btn blue-btn add-new">Back</a>*@
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link href="~/css/myStyle.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnInfoBack').click(function () {
+            var url = "/Product/Product";
+            window.location.href = url;
+        });
+
+        window.onload = function () {
+
+            var strPro = $('#hideProductDetails').text();
+            //var DecodePro = escapeHtml(strPro);
+            //$('#para').html(DecodePro);
+
+            //function escapeHtml(ProductDetails) {
+            //    return ProductDetails
+            //        .replace(/~amp;/g, "&")
+            //        .replace(/~lt;/g, "<")
+            //        .replace(/~gt;/g, ">")
+            //        .replace(/~quot;/g, "")
+            //        .replace(/~#039;/g, "'");
+            //}
+        }
+
+
+
+    });
+
+</script>

@@ -1,0 +1,484 @@
+﻿<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12"> Student Add New</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover">
+            <div>
+                @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                {
+                    <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                        @TempData["Message"]
+                    </label>
+
+                }
+                <label id="tab" style="display:none"> @TempData["tab"]</label>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="nav-tabs-cover">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <button type="button" class="nav-item nav-link active" id="academics-tab" data-toggle="tab" href="#academics" role="tab" aria-controls="academics" aria-selected="true">
+                                <span>Academics</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="Test-Reports-tab" data-toggle="tab" href="#Test-Reports" role="tab" aria-controls="Test-Reports" aria-selected="false">
+                                <span>Test Reports</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="ECA-tab" data-toggle="tab" href="#ECA" role="tab" aria-controls="ECA" aria-selected="false">
+                                <span>Extra Curricular Activites</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="leadership-tab" data-toggle="tab" href="#leadership" role="tab" aria-controls="leadership" aria-selected="false">
+                                <span>Leadership Positions in School</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="Pathfinder-tab" data-toggle="tab" href="#leadership" role="tab" aria-controls="leadership" aria-selected="false">
+                                <span>Pathfinder Picture</span>
+                            </button>
+
+                        </div>
+                    </nav>
+                    <div class="tab-content px-sm-0 clearfix" id="nav-tabContent">
+
+                        <div class="tab-pane" id="AcedemicsGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Acedemics List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="AddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="StudentDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Student</th>
+                                                <th scope="col">Class</th>
+                                                <th scope="col">Year</th>
+                                                <th scope="col">Board</th>
+                                                <th scope="col">School</th>
+                                                <th scope="col">GPA Mark</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.Acedemics != null)
+                                            {
+                                                foreach (var dr in ViewBag.Acedemics.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Student"]</td>
+                                                        <td>@dr["Class"]</td>
+                                                        <td>@dr["Year"]</td>
+                                                        <td>@dr["Board"]</td>
+                                                        <td>@dr["School"]</td>
+                                                        <td>@dr["OverAllGPAMark"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="TestScoreGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Test List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="btnTestAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="TestScoreDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Student</th>
+                                                <th scope="col">Test Name</th>
+                                                <th scope="col">Score</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.TestScore != null)
+                                            {
+                                                foreach (var dr in ViewBag.TestScore.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Student"]</td>
+                                                        <td>@dr["TestName"]</td>
+                                                        <td>@dr["Score"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="ActivitiesGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Activities List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="btnActivitiesAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="ActivitiesDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Student</th>
+                                                <th scope="col">Activities</th>
+                                                <th scope="col">Achievements</th>
+                                                <th scope="col">Details</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.Activitics != null)
+                                            {
+                                                foreach (var dr in ViewBag.Activitics.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Student"]</td>
+                                                        <td>@dr["Activities"]</td>
+                                                        <td>@dr["Achievements"]</td>
+                                                        <td>@dr["Details"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="LeaderShipGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Leadership List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="btnLeadershipAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="LeadershipDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">student</th>
+                                                <th scope="col">Leadership Positions</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.Leadership != null)
+                                            {
+                                                foreach (var dr in ViewBag.Leadership.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Student"]</td>
+                                                        <td>@dr["Position"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="PathfinderGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Pathfinder List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="AddPFNew">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="PathfinderDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Student</th>
+                                                <th scope="col">Picture name</th>
+                                                <th scope="col">Date</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.Pathfinder != null)
+                                            {
+                                                foreach (var dr in ViewBag.Pathfinder.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["FirstName"]</td>
+                                                        <td>@dr["PathfinderName"]</td>
+                                                        <td>@dr["CreatedDateTime"]</td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane " id="academics" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Student<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlStudent" })
+                                    </div>
+                                    <label style="display:none;color:red" id="lblStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Class<sup>*</sup></label>
+                                    <input type="text" id="txtClass" class="form-control">
+                                    <label style="display:none;color:red" id="lblClass"></label>
+                                    <label style="display:none;" id="AcademicsId"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Year<sup>*</sup></label>
+                                    <input type="text" id="txtYear" class="form-control">
+                                    <label style="display:none;color:red" id="lblYear"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Boards/Syllabous<sup>*</sup></label>
+                                    <input type="text" id="txtBoard" class="form-control">
+                                    <label style="display:none;color:red" id="lblBoard"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>School<sup>*</sup></label>
+                                    <input type="text" id="txtSchool" class="form-control">
+                                    <label style="display:none;color:red" id="lblSchool"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Overall GPA/Marks<sup>*</sup></label>
+                                    <input type="text" id="txtOverallGPA" class="form-control">
+                                    <label style="display:none;color:red" id="lblOverallGPA"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Transcript<sup>*</sup></label>
+                                    <div class="input-group input-file" name="FichierTranscript">
+                                        <input type="text" class="form-control" id="txtTranscript" placeholder='Choose a file...' />
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <label style="display:none;color:red" id="lblTranscript"></label>
+                                </div>
+
+
+
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="btnAdmSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="btnAdmBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="Test-Reports" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Student<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlTestStudent" })
+                                    </div>
+                                    <label style="display:none;color:red" id="lblTestStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Test Name<sup>*</sup></label>
+                                    <input type="text" id="txtTestName" class="form-control">
+                                    <label style="display:none;color:red" id="lblTestName"></label>
+                                    <label style="display:none;" id="TestNameId"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Score<sup>*</sup></label>
+                                    <input type="text" id="txtScore" class="form-control">
+                                    <label style="display:none;color:red" id="lblScore"></label>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="btnTestSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="btnTestBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="ECA" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Student<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlActivitiesStudent" })
+                                    </div>
+                                    <label style="display:none;color:red" id="lblActivitiesStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Activities<sup>*</sup></label>
+                                    <input type="text" id="txtActivities" class="form-control">
+                                    <label style="display:none;color:red" id="lblActivities"></label>
+                                    <label style="display:none;" id="ActivitiesId"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Achievements<sup>*</sup></label>
+                                    <input type="text" id="txtAchievement" class="form-control">
+                                    <label style="display:none;color:red" id="lblAchievement"></label>
+                                </div>
+
+                                <div class="form-group col-sm-12 col-12">
+                                    <label>Details<sup>*</sup></label>
+                                    <textarea type="text" id="txtDetails" class="form-control"></textarea>
+                                    <label style="display:none;color:red" id="lblDetails"></label>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="btnActivitiesSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="btnActivitiesBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane " id="leadership" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Student<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlLeadershipStudent" })
+                                    </div>
+                                    <label style="display:none;color:red" id="lblActivitiesStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-12 col-12">
+                                    <label> Name of Leadership Positions in School<sup>*</sup></label>
+                                    <textarea type="text" id="txtLeadership" class="form-control"></textarea>
+                                    <label style="display:none;color:red" id="lblLeadership"></label>
+                                    <label style="display:none;" id="LeadershipId"></label>
+                                </div>
+
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="btnLeadershipSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="btnLeadershipBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane " id="Pathfinder" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Student<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlPFStudent" })
+                                    </div>
+                                    <label style="display:none;color:red" id="lblFPStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Pathfinder Picture<sup>*</sup></label>
+                                    <div class="input-group input-file" name="FichierPathfinder">
+                                        <input type="text" class="form-control" id="txtPathfinder" placeholder='Choose a file...' />
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <label style="display:none;color:red" id="lblPathfinder"></label>
+                                </div>
+
+
+
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="btnPathfinder" class="btn blue-btn">Update</button>
+                                    <button type="reset" id="btnPfBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/Js/AcademiscDetails.js"></script>
+<script src="~/Js/TestReportDetails.js"></script>
+<script src="~/Js/ActivitiesDetails.js"></script>
+<script src="~/Js/LeadershipDetails.js"></script>
+<script src="~/Js/Pathfinder.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#AcedemicsGrid').show();
+
+        var tab = $('#tab').text().trim();
+
+        if ('AcedemicsGrid' == tab) {
+            $('#academics-tab').addClass('active');
+            $('#AcedemicsGrid').show();
+        }
+        else if ('TestScoreGrid' == tab) {
+            $('#Test-Reports-tab').addClass('active');
+            $('#academics-tab').removeClass('active');
+            $('#AcedemicsGrid').hide();
+            $('#TestScoreGrid').show();
+        }
+        else if ('ActivitiesGrid' == tab) {
+            $('#ECA-tab').addClass('active');
+            $('#academics-tab').removeClass('active');
+            $('#AcedemicsGrid').hide();
+            $('#ActivitiesGrid').show();
+        }
+        else if ('LeadershipGrid' == tab) {
+            $('#leadership-tab').addClass('active');
+            $('#academics-tab').removeClass('active');
+            $('#AcedemicsGrid').hide();
+            $('#LeaderShipGrid').show();
+        }
+
+        else if ('PathfinderGrid' == tab) {
+            $('#Pathfinder-tab').addClass('active');
+            $('#academics-tab').removeClass('active');
+            $('#AcedemicsGrid').hide();
+            $('#PathfinderGrid').show();
+        }
+
+
+    });
+</script>

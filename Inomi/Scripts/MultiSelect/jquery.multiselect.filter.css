@@ -1,0 +1,3 @@
+.ui-multiselect-hasfilter ul { position:relative; top:2px;left:3px;}
+.ui-multiselect-filter { float:left; margin-left:6px; font-size:11px;padding-top:8px;padding-bottom:5px;color:#fff; }
+.ui-multiselect-filter input { width:145px; font-size:10px; margin-left:5px; height:15px; padding:2px; border:1px solid #667f58; -webkit-appearance:textfield; -webkit-box-sizing:content-box; }

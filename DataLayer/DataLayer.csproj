@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{832EDB4A-D737-4E05-A633-052A5CE9E34D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="EditAcedemicsDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditActivitiesDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditCollegeDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditConAssignTaskDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditCounsellorDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditCountryDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditCourseDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditFormatDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditLeadershipDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditProductDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditProjectDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditStudentDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditTaskDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditTestDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditTestScoreDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Event.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EventList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterDataAdmin_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterDataCouncellor_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FilterData_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAcedemicsDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetActivitiesDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetApplicationModeList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetApplicationYearList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAssignTaskById_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCalendarEventDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCityList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCollegeDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCollegeEssayDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCollegeList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCounsellerPendingTaskById_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCounsellerPendingTask_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCounsellorDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCounsellorList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCountryDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCountryList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCourseDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCourseList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDashboardEventDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEssayCount_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEssayDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEventDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetFAQById_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetFAQDetail_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetFormatDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLeadershipDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMileStoneDefineDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMyProfile_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPathfinderDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProductDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProductList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProjectDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProjectMilestoneDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSchoolList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetScoreDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetScoreType_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStudentDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStudentList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTaskDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTestDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTestingRequirementList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTestScoreDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetToDoListEventDetails_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTotalApplicationById_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTotalApplication_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUniversityName_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inomi.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inomi.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inomi.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inomi.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inomi.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="interestinglink.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Logincheck_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetailsInfo_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="selectedcollege.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_collegeshortlist2_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_collegeshortlist_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sp_QuestionChecked_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sp_QuestionList_Result.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="studentmilestoneupload.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcadenmouse.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicationMode.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAssingTask.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCallNote.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCityName.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCollege.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCollegeDetail.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCollegeDetailsTemp.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCollegeScore.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCounsellor.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCountry.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCountryName.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblCourse.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblEventTemp.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblExtraCurricularActivite.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFAQDetail.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFAQDetails_Temp.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFormat.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblFormatTemp.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblGendor.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblLeadershipPosition.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblMonth.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPaymentDetail.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblPercentileName.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblProduct.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblProject.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblProjectMilestone.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireCareerDescription.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireCourseWork.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireFieldLogic.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireFieldLogicResult.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireLogin.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireMainStrength.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireOnlineCourse.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireReading.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireStudentRegister.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireSubStrength.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireSubStrengthQuestion.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireSubStrengthResult.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblQuestionnaireVideo.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblStudent.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblStudentInstallmentDetail.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTask.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTest.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTestingRequirement.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblTestReport.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblUsersLogIn.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ExcelFilePath.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UploadEssayFile.cs">
+      <DependentUpon>Inomi.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Inomi.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Inomi.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Inomi.edmx.diagram">
+      <DependentUpon>Inomi.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Inomi.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Inomi.edmx</DependentUpon>
+      <LastGenOutput>Inomi.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Inomi.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Inomi.edmx</DependentUpon>
+      <LastGenOutput>Inomi.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+</Project>

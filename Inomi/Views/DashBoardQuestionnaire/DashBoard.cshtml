@@ -1,0 +1,417 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "DashBoard";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Questions Details</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- simple scrollbar-->
+    <link rel="stylesheet"
+          href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/style-questionnaire.css" />
+    <style>
+        .chart {
+            width: 100%;
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body class="inner-page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light  fixed-top top-navbar">
+            <a class="navbar-brand" href="#">
+                <img src="~/images/inomi-logo.png" class="inomi-logo" alt="inomi logo" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse top-nav-content"
+                 id="navbarSupportedContent">
+                <ul class="nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
+                            <div class="d-inline-block align-middle">
+                                <span class="bold-fonts">@FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name</span>
+                                <br />
+                                <span>Student</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="/LoginQuestionnaire/LogOut" id="navbarDropdown">
+                            <i class="material-icons">
+                                power_settings_new
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper mb-5">
+        <div class="content mt-cmn" id="content">
+            <div class="container-fluid">
+                <div class="signature-strength-results">
+                    <h2>SIGNATURE STRENGTH RESULTS</h2>
+                    @*<div class=" chart" id="columnchart_values"></div>*@
+                    <div class="chart" id="highchart_values"></div>
+                    <div class="charts-details-text">
+                        <div class="creative cmn-charts-details">
+                            <h2 class="creative-header">
+                                Creative
+                            </h2>
+                            <div class="creative-content description" data-simplebar>
+                                @foreach (var item in ViewBag.Description)
+                                {
+                                    if (@item.Name == 1)
+                                    {
+                                        <b style="font-size:large">Artistic:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 2)
+                                    {
+                                        <b style="font-size:large">Aesthetic:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 3)
+                                    {
+                                        <b style="font-size:large">Idea Generator:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="interpersonal cmn-charts-details">
+                            <h2 class="interpersonal-header">
+                                Interpersonal
+                            </h2>
+                            <div class="interpersonal-content description" data-simplebar>
+                                @foreach (var item in ViewBag.Description)
+                                {
+                                    if (@item.Name == 4)
+                                    {
+                                        <b style="font-size:large">Team Player:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 5)
+                                    {
+                                        <b style="font-size:large">Independent:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 6)
+                                    {
+                                        <b style="font-size:large">Mentor:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="intellectual cmn-charts-details">
+                            <h2 class="intellectual-header">
+                                Intellectual
+                            </h2>
+                            <div class="intellectual-content description" data-simplebar>
+                                @foreach (var item in ViewBag.Description)
+                                {
+                                    if (@item.Name == 7)
+                                    {
+                                        <b style="font-size:large">Analytics:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 8)
+                                    {
+                                        <b style="font-size:large">Social Philosophical:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                    else if (@item.Name == 9)
+                                    {
+                                        <b style="font-size:large">Practical:</b>
+                                        @item.Value
+                                        <br />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="signature-strength-results career-mapping">
+                    <h2>Career Mapping</h2>
+                    <div class="table-responsive career-table" data-simplebar>
+                        <table class="table table-striped table-light frz-col" id="tblQuestion">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Main Fields</th>
+                                    <th scope="col">Sub Fields</th>
+                                    <th width="30%" scope="col">Suitable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.CarrerList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.MainField
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink((string)@item.SubField, "Career", new { id = @item.CareerId })
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="progress" style="width: 93%; border-radius:15px;">
+                                                    @if (item.Result <= 5)
+                                                    {
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width:5%">@item.Result%</div>
+                                                    }
+                                                    else if (item.Result <= 25)
+                                                    {
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width:@item.Result%">@item.Result%</div>
+                                                    }
+                                                    else if (item.Result >= 50 && item.Result < 75)
+                                                    {
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:@item.Result%">@item.Result%</div>
+                                                    }
+                                                    else if (item.Result >= 75 && item.Result < 90)
+                                                    {
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width:@item.Result%">@item.Result%</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width:@item.Result%">@item.Result%</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>inomi © <label id="year">2019</label> All rights reserved.</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- simple scrollbar-->
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+    @*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            $(window).resize(function (e) {
+                drawChart();
+            });
+
+            google.charts.load("current", { packages: ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Name');
+                data.addColumn('number', 'Value');
+                data.addColumn({ role: "style" });
+                data.addColumn('number', '');
+
+                $.get("GetColumnChartData", {}, function (chartsdata) {
+                    $.each(chartsdata, function (i, v) {
+                        if (v.Name == "Independent" || v.Name == "Team Player" || v.Name == "Mentor") {
+                            data.addRow([v.Name, v.Value, "color:#26C7BB", (90 - parseInt(v.Value))]);
+                        }
+                        else if (v.Name == "Analytics" || v.Name == "Social Philosophical" || v.Name == "Practical") {
+                            data.addRow([v.Name, v.Value, "color:#BB86E8", (90 - parseInt(v.Value))]);
+                        }
+                        else {
+                            data.addRow([v.Name, v.Value, "color:#898D2C", (90 - parseInt(v.Value))]);
+                        }
+                    });
+
+                    var view = new google.visualization.DataView(data);
+                    view.setColumns([0, 1,
+                        {
+                            calc: "stringify",
+                            sourceColumn: 1,
+                            type: "string",
+                            role: "annotation"
+                        },
+                        2, 3]);
+
+                    var options = {
+                        title: "",
+                        bar: { groupWidth: "50%" },
+                        legend: { position: "none" },
+                        vAxis: {
+                            gridlines: {
+                                color: 'transparent'
+                            },
+                            minValue: 0,
+                            textStyle: {
+                                color: 'white'
+                            }
+                        },
+                        hAxis: {
+                            textStyle: {
+                                color: '#000',
+                                fontSize: 14,
+                                fontName: 'calibri'
+                            }
+                        },
+                        isStacked: true,
+                        tooltip: {
+                            trigger: 'none'
+                        },
+                        series: {
+                            0: { color: 'blue' },
+                            1: { color: '#f2eeed' }
+                        },
+                        chartArea: {
+                            top: '1%',
+                            bottom: '25%'
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                    chart.draw(view, options);
+                })
+            }
+        </script>*@
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script>
+        var seriesData = [];
+        $.get("GetColumnChartData", {}, function (chartsdata) {
+            $.each(chartsdata, function (i, v) {
+                if (v.Name == "Independent" || v.Name == "Team Player" || v.Name == "Mentor") {
+                    var item = {
+                        name: v.Name,
+                        y: v.Value,
+                        color: "#528330"
+                    };
+                }
+                else if (v.Name == "Analytics" || v.Name == "Social Philosophical" || v.Name == "Practical") {
+                    var item = {
+                        name: v.Name,
+                        y: v.Value,
+                        color: "#4170C7"
+                    };
+                }
+                else {
+                    var item = {
+                        name: v.Name,
+                        y: v.Value,
+                        color: "#C75A00"
+                    };
+                }
+                seriesData.push(item);
+            });
+        }).done(function () {
+            var chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'highchart_values',
+                    type: 'column',
+                    options3d: {
+                        enabled: true,
+                        depth: 25,
+                        viewDistance: 25
+                    }
+                },
+                title: {
+                    text: 'Sub-Strengths'
+                },
+                //subtitle: {
+                //  text: 'Test options by dragging the sliders below'
+                //},
+                plotOptions: {
+                    column: {
+                        depth: 50
+                    }
+                },
+                xAxis: {
+                    tickInterval: 1,
+                    labels: {
+                        enabled: true,
+                        formatter: function () { return seriesData[this.value]['name']; },
+                    }
+                },
+                tooltip: {
+                    formatter: function () {
+                        return '<b> Sub-Strength: </b>' + this.point.name + '<br/>' +
+                            '<b>Marks: </b>' + Highcharts.numberFormat(this.y, 0);
+                    },
+                },
+                series: [{
+                    data: seriesData
+                }],
+                legend: {
+                    enabled: false
+                }
+            });
+
+            function showValues() {
+                $('#depth-value').html(chart.options.chart.options3d.depth);
+            }
+
+            // Activate the sliders
+            $('#sliders input').on('input change', function () {
+                chart.options.chart.options3d[this.id] = parseFloat(this.value);
+                showValues();
+                chart.redraw(false);
+            });
+            showValues();
+        });
+
+
+
+    </script>
+
+    <script>
+        $(document).ready(function (e) {
+            var d = new Date();
+            var year = d.getFullYear();
+            $("#year").text(year);
+
+        });
+    </script>
+</body>
+</html>

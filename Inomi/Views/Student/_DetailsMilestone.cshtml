@@ -1,0 +1,38 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+
+
+
+
+@Html.Hidden("MID",@Model.Milestone.ID)
+<div class="define-content-header">
+    <div class="milestone-text">
+        <h2>Milestone</h2>
+        <p>@Model.Milestone.MilestoneName</p>
+    </div>
+    <div class="deadline-text">
+        <h2>Deadline </h2>
+        <p>@Model.Milestone.Milestonedate.Value.ToString("dd/MM/yyyy")</p>
+    </div>
+    <div class="status-text">
+        <p class="action">
+            <img src="~/STUDENTUIFILES/images/done-icon.png" alt="done icon" />
+            <span>@Model.Milestone.Status</span>
+        </p>
+    </div>
+</div>
+<div class="define-content">
+    <p>
+        @Model.Milestone.Description
+    </p>
+</div>
+
+<input type="file" id="salaryslip" name="salaryslip"  multiple>
+    
+
+
+   
+    
+
+
+

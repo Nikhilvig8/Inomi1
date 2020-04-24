@@ -1,0 +1,178 @@
+<div class="tab-pane" id="student" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="student-form row">
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Name<sup>*</sup></label>
+                                        <input type="text" id="studentName" class="form-control">
+                                        <input style="display:none" type="text" id="NameId" class="form-control">
+                                        <label style="display:none;color:red" id="msgStudent"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Grade<sup>*</sup></label>
+                                        <input type="text" id="studentGrade" class="form-control">
+                                        <label style="display:none; color:red" id="msgGrade"></label>
+
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>School<sup>*</sup></label>
+                                        <input type="text" id="studentSchool" class="form-control">
+                                        <label style="display:none; color:red" id="msgSchool"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Phone<sup>*</sup></label>
+                                        <input type="text" id="studentPhone" class="form-control" maxlength="10">
+                                        <label style="display:none; color:red" id="msgPhone"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Email<sup>*</sup></label>
+                                        <input type="email" id="studentEmail" class="form-control">
+                                        <label style="display:none; color:red" id="msgEmail"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-6">
+                                        <label>Gender<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            <select id="studentGender">
+                                                <option selected>--Select--</option>
+                                                <option>Male</option>
+                                                <option>Female</option>
+                                                <option>Transgender</option>
+                                            </select>
+                                        </div>
+                                        <label style="display:none; color:red" id="msgGender"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Product<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "studentProduct" })
+                                        </div>
+                                        <label style="display:none; color:red" id="msgProduct"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Installment Type<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            <select id="txtInstallment">
+                                                <option selected>--Select--</option>
+                                                <option value="1">First Installment</option>
+                                                <option value="2">Second Installment</option>
+                                                <option value="3">Third Installment</option>
+                                                <option value="4">Fourth Installment</option>
+                                            </select>
+                                        </div>
+                                        <label style="display:none; color:red" id="msgInstallment"></label>
+                                    </div>
+
+                                    <div class="form-group col-12">
+                                        <div class="row" id="InstallmentDate">
+                                            @*Dynamic textBox*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Concession<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            <select id="txtConcession">
+                                                <option value="1" selected>No</option>
+                                                <option value="2">Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-3 col-12" id="divConAmt">
+                                        <label>Concession Amount<sup>*</sup></label>
+                                        <input type="text" id="txtConAmt" class="form-control">
+                                        <label style="display:none; color:red" id="msgConAmt"></label>
+                                    </div>
+
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Picture<sup>*</sup></label>
+                                        <div class="input-group input-file" name="studentFichier" id="fileClick">
+                                            <input type="text" id="studentPicture" class="form-control" placeholder='Choose a file...' />
+                                            <span class="input-group-btn">
+                                                <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                            </span>
+                                        </div>
+                                        <label style="display:none; color:red" id="msgPicture"></label>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <h3>Parent 1</h3>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Name<sup>*</sup></label>
+                                        <input type="text" id="studentParent1Name" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent1Name"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Occupation<sup>*</sup></label>
+                                        <input type="text" id="studentParent1Occupation" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent1Occupation"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Phone<sup>*</sup></label>
+                                        <input type="text" id="studentParent1Phone" class="form-control" maxlength="10">
+                                        <label style="display:none; color:red" id="msgParent1Phone"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Email<sup>*</sup></label>
+                                        <input type="email" id="studentParent1Email" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent1Email"></label>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <h3>Parent 2</h3>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Name<sup>*</sup></label>
+                                        <input type="text" id="studentParent2Name" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent2Name"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Occupation<sup>*</sup></label>
+                                        <input type="text" id="studentParent2Occupation" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent2Occupation"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Phone<sup>*</sup></label>
+                                        <input type="text" id="studentParent2Phone" class="form-control" maxlength="10">
+                                        <label style="display:none; color:red" id="msgParent2Phone"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Email<sup>*</sup></label>
+                                        <input type="email" id="studentParent2Email" class="form-control">
+                                        <label style="display:none; color:red" id="msgParent2Email"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Career Applying<sup>*</sup></label>
+                                        <input type="text" id="studentCareerApplying" class="form-control">
+                                        <label style="display:none; color:red" id="msgCareerApplying"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Country Applying<sup>*</sup></label>
+                                        @*<input type="text" id="studentCountryApplying" class="form-control">*@
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "studentCountryApplying" })
+                                        </div>
+                                        <label style="display:none; color:red" id="msgCountryApplying"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Application year<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select--", new { @class = "selectdiv", @id = "studentApplicationYear" })
+                                        </div>
+                                        <label style="display:none; color:red" id="msgApplicationYear"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <label>Finacial Aid needed<sup>*</sup></label>
+                                        <input type="email" id="studentFinacialAidNeeded" class="form-control">
+                                        <label style="display:none; color:red" id="msgFinacialAidNeeded"></label>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-6">
+
+                                        <label>Counsellor<sup>*</sup></label>
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select Counsellor--", new { @class = "selectdiv", @id = "studentCounsellor" })
+                                        </div>
+                                        <label style="display:none; color:red" id="msgCounsellorList"></label>
+                                    </div>
+                                    <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                        <button type="submit" id="StudentSubmit" class="btn blue-btn">Submit</button>
+                                        <button type="reset" id="StudentBack" class="btn dark-grey-btn back-hide-show" hirf="#studentGrid">Back</button>
+                                    </div>
+                                </div>
+                            </div>

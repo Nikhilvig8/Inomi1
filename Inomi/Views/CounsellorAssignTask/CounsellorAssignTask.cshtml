@@ -1,0 +1,561 @@
+﻿
+@{
+    ViewBag.Title = "Consellor-AssignTask";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Consellor Assign Task</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw">
+            <div>
+                @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                {
+                    <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                        @TempData["Message"]
+                    </label>
+
+                }
+            </div>
+            <div class="reports-hdr row">
+
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Select Student</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlStudent", @title = "student" })
+                    </div>
+                    <label id="lblStudent" style="color:red"></label>
+                    <label id="AssignTaskId" style="display:none"></label>
+                </div>
+
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Type</label>
+                    <div class="selectdiv">
+                        <select id="ddlTaskType" title="Task type ">
+                            <option selected>--Select--</option>
+                            <option value="Task">Task</option>
+                            <option value="Essay">Essay</option>
+                            <option value="Message">Message</option>
+                        </select>
+                    </div>
+                    <label id="lblTaskType" style="color:red"></label>
+                </div>
+
+                <div class="form-group col-sm-3 col-12" id="DivUniversity">
+                    <label>University/College</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.UniversityName, "--Select--", new { @class = "selectdiv", @id = "ddlUniversity", @title = "University" })
+                    </div>
+                    <label id="lblUniversity" style="color:red"></label>
+                </div>
+
+                <div class="form-group col-sm-3 col-12" id="DivEssayTopic">
+                    <label>Essay Name</label>
+                    <div class="selectdiv" id="">
+                        <select id="EssayName">
+                        </select>
+                    </div>
+                    <label id="lblEssayName" style="color:red"></label>
+                </div>
+
+                <div class="form-group col-sm-3 col-12" id="DivEssayCount">
+                    <label>Essay count</label>
+                    <input class="form-control" rows="4" id="txtEssayCount" readonly>
+                    <label id="lblEssayCount" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Deadline</label>
+                    <div class="form-group date">
+                        @* <input type="text" class="form-control" id="startDate" placeholder="Date" readonly title="Search by date" />*@
+                        <input type="text" class="form-control" id="startDate" />
+                    </div>
+                    <label id="lblDate" style="color:red"></label>
+                </div>
+                <div class="col-12 form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" rows="4" id="txtDescription"></textarea>
+                    <label id="lblDescription" style="color:red"></label>
+                </div>
+                <div class="d-flex col-12">
+                    <button type="submit" class="btn blue-btn" id="btnSubmit">Submit</button>
+                    <button type="submit" class="btn blue-btn" id="btnMainReset">Reset</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h2>Assign Task list</h2>
+                <div class="reports-hdr">
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlSearchStudent", @title = "Search by student" })
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="starDate1" placeholder="From Deadline Date" readonly title="Search by start Deadline Date" />
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="endDate" placeholder="To Deadline Date" readonly title="Search by end Deadline Date" />
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                        <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="AssignTaskDetails">
+                    <thead>
+                        <tr>
+                            <th scope="col">Student</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col">Task Type</th>
+                            <th scope="col">Assign Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.TaskDetails != null)
+                        {
+                            foreach (var dr in ViewBag.TaskDetails.Rows)
+                            {
+                                <tr>
+                                    <td>@dr["Student"].ToString()</td>
+                                    <td>@dr["DeadlineDate"].ToString()</td>
+                                    <td>@dr["TaskType"].ToString()</td>
+                                    <td>@dr["CreatedDateTime"].ToString()</td>
+                                    <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+
+                                </tr>
+
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+<script src="/Scripts/bootstrap-datetimepicker.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $('#DivEssayCount').hide();
+        $('#DivUniversity').hide();
+        $('#DivEssayTopic').hide();
+
+        $('#ddlTaskType').change(function () {
+            var Type = $('#ddlTaskType').val();
+
+            if (Type == 'Essay') {
+                $('#DivEssayCount').show();
+                $('#DivUniversity').show();
+                $('#DivEssayTopic').show();
+            }
+            else {
+                $('#DivEssayCount').hide();
+                $('#DivUniversity').hide();
+                $('#DivEssayTopic').hide();
+            }
+        });
+
+        $('#txtEssayCount').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+
+        $('#starDate1').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#AssignTaskDetails').DataTable({
+            "bSort": false
+        });
+
+        $('#btnSearch').click(function () {
+            debugger
+            var StrMain = "";
+            var Student = $('#ddlSearchStudent').val();
+            var startDate = $('#starDate1').val();
+            var endDate = $('#endDate').val();
+
+            if (Student != "" && Student != null) {
+                StrMain = StrMain + "And Student=" + "'" + Student + "'"
+            };
+            if ((startDate != "" && startDate != null) && (endDate == "" || endDate == null)) {
+                //StrMain = StrMain + "And cast(DeadlineDate as date)=" + "'" + "cast('" + startDate + "' as date)" + "'"
+                StrMain = StrMain + "And cast(DeadlineDate as date) between " + "cast('" + startDate + "' as date)" + "And" + " cast('" + startDate + "' as date)"
+
+            };
+            if (startDate != "" && startDate != null && endDate != "" && endDate != null) {
+                //StrMain = StrMain + "And DeadlineDate between" + "'" + startDate + "'" + "And" + "'" + endDate + "'"
+                StrMain = StrMain + "And cast(DeadlineDate as date) between " + "cast('" + startDate + "' as date)" + "And" + " cast('" + endDate + "' as date)"
+
+            };
+
+            document.location = '/CounsellorAssignTask/CounsellorAssignTask/?Str=' + StrMain;
+        });
+
+        $('#btnReset').click(function () {
+            var StrMain = "";
+            document.location = '/CounsellorAssignTask/CounsellorAssignTask/?Str=' + StrMain;
+        });
+
+        $('#btnMainReset').click(function () {
+            var StrMain = "";
+            document.location = '/CounsellorAssignTask/CounsellorAssignTask/?Str=' + StrMain;
+        });
+
+    });
+
+
+
+    $("#btnSubmit").click(function () {
+
+        function escapeHtml(emailBody) {
+            return emailBody
+                .replace(/&/g, "~amp;")
+                .replace(/</g, "~lt;")
+                .replace(/>/g, "~gt;")
+                .replace(/"/g, "~quot;")
+                .replace(/'/g, "~#039;")
+                .replace(/#/g, "~040;");
+        }
+
+        let data = [];
+        var Id = $('#AssignTaskId').val().trim();
+        var Student = $('#ddlStudent').val();
+        var TaskType = $('#ddlTaskType').val();
+
+        var University = $('#ddlUniversity').val();
+        var EssayName = $('#EssayName').val();
+        var EssayCount = $('#txtEssayCount').val();
+
+        var startDate = $('#startDate').val();
+        var Description = $('#txtDescription').val();
+
+        if (Student == '' || Student == null || Student == '--Select--') {
+            $('#ddlStudent').focus();
+            $('#lblStudent').text('Please select student.');
+            $('#lblStudent').show();
+            return;
+        }
+        else {
+            $('#lblStudent').text('');
+            $('#lblStudent').hide();
+        }
+        if (TaskType == '' || TaskType == null || TaskType == '--Select--') {
+            $('#ddlTaskType').focus();
+            $('#lblTaskType').text('Please select task type.');
+            $('#lblTaskType').show();
+            return;
+        }
+        else {
+            $('#lblTaskType').text('');
+            $('#lblTaskType').hide();
+        }
+
+
+
+        if (TaskType == 'Essay') {
+            if (University == '' || University == null || University == '--Select--') {
+                $('#ddlUniversity').focus();
+                $('#lblUniversity').text('Please select university.');
+                $('#lblUniversity').show();
+                return;
+            }
+            else {
+                $('#lblUniversity').text('');
+                $('#lblUniversity').hide();
+            }
+            if (EssayName == '' || EssayName == null || EssayName == '--Select--') {
+                $('#EssayName').focus();
+                $('#lblEssayName').text('Please select essay name.');
+                $('#lblEssayName').show();
+                return;
+            }
+            else {
+                $('#lblEssayName').text('');
+                $('#lblEssayName').hide();
+            }
+            if (EssayCount == '' || EssayCount == null) {
+                $('#txtEssayCount').focus();
+                $('#lblEssayCount').text('Please enter essay count.');
+                $('#lblEssayCount').show();
+                return;
+            }
+            else {
+                $('#lblEssayCount').text('');
+                $('#lblEssayCount').hide();
+            }
+        }
+
+
+
+        if (startDate == '' || startDate == null) {
+            $('#startDate').focus();
+            $('#lblDate').text('Please enter date.');
+            $('#lblDate').show();
+            return;
+        }
+        else {
+            $('#lblDate').text('');
+            $('#lblDate').hide();
+        }
+
+        if (Description == '' || Description == null) {
+            $('#txtDescription').focus();
+            $('#lblDescription').text('Please enter description.');
+            $('#lblDescription').show();
+            return;
+        }
+        else {
+            $('#lblDescription').text('');
+            $('#lblDescription').hide();
+        }
+
+        Id = escapeHtml(Id);
+        Student = escapeHtml(Student);
+        TaskType = escapeHtml(TaskType);
+        if (TaskType != 'Essay') {
+            University = '';
+            EssayName = '';
+            EssayCount = '';
+        }
+        else {
+            University = escapeHtml(University);
+            EssayName = escapeHtml(EssayName);
+            EssayCount = escapeHtml(EssayCount);
+        }
+        startDate = escapeHtml(startDate);
+        Description = escapeHtml(Description);
+
+
+        data.push({
+            Id: Id,
+            Student: Student,
+            TaskType: TaskType,
+            University: University,
+            EssayName: EssayName,
+            EssayCount: EssayCount,
+            startDate: startDate,
+            Description: Description
+        });
+
+        $("#btnSubmit").text('Processing...');
+        $("#btnSubmit").attr("disabled", true);
+
+        var json = JSON.stringify(data);
+        $.ajax
+            ({
+                url: "/CounsellorAssignTask/InsertAssignDetails?json=" + json + "&Id=" + Id + "",
+                type: "Get",
+                success: function (drr) {
+                    $("#btnSubmit").text('Save');
+                    $("#btnSubmit").attr("disabled", false);
+
+                    var Str = "";
+                    var StrMain = "Record has been save successfully.";
+                    var url = "/CounsellorAssignTask/CounsellorAssignTask/?Str=" + Str + "&StrMain=" + StrMain;
+                    window.location.href = url;
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+    });
+
+    $('#AssignTaskDetails').on('click', '#delete', function () {
+        var id = $(this).closest("tr").find('td:eq(4)').text();
+        var result = confirm("Do you Want to delete?");
+        if (result) {
+            $.ajax
+                ({
+                    url: "/CounsellorAssignTask/DeleteAssignTaskDetails?id=" + id + "",
+                    type: "Get",
+                    success: function (drr) {
+                        var Str = "";
+                        var StrMain = "Record has been delete successfully.";
+                        var url = "/CounsellorAssignTask/CounsellorAssignTask/?Str=" + Str + "&StrMain=" + StrMain;
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        }
+    });
+
+    $('#AssignTaskDetails').on('click', '#edit', function () {
+
+        $('#btnSubmit').text('Update');
+        var id = $(this).closest("tr").find('td:eq(4)').text();
+        $.ajax
+            ({
+                url: "/CounsellorAssignTask/EditConAssignTaskDetails?id=" + id + "",
+                type: "Get",
+                success: function (data) {
+
+                    var item = JSON.parse(data);
+                    debugger;
+                    for (var i = 0; i < item.length; i++) {
+                        $('#AssignTaskId').val(item[0].Id)
+                        $('#ddlStudent').val(item[0].Student)
+                        $('#ddlTaskType').val(item[0].TaskType)
+                        $('#ddlUniversity').val(item[0].UniversityId)
+
+                        $('#startDate').val(item[0].DeadlineDate)
+                        $('#txtDescription').val(item[0].TaskDescription)
+                        
+                        $('#txtEssayCount').val(item[0].EssayCount)
+
+                        if (item[0].TaskType == 'Essay') {
+                            $('#DivEssayCount').show();
+                            $('#DivUniversity').show();
+                            $('#DivEssayTopic').show();
+
+                            $.ajax
+                                ({
+                                    url: "/CounsellorAddNew/GetEssayName?Cid=" + item[0].UniversityId + "",
+                                    type: "Get",
+                                    success: function (data) {
+                                        var itemdd = JSON.parse(data);
+                                        var CityList = '<option value="">--Select--</option>';
+                                        for (var i = 0; i < itemdd.length; i++) {
+
+
+                                            CityList += '<option value="' + itemdd[i].CTID + '">' + itemdd[i].Name + '</option>';
+
+                                        }
+                                        $("#EssayName").html(CityList);
+                                        $('#EssayName').val(item[0].EssayId)
+                                    },
+                                    Error: function (err) {
+                                        Console.log(err);
+                                    }
+                                });
+
+                        }
+                        else {
+                            $('#DivEssayCount').hide();
+                            $('#DivUniversity').hide();
+                            $('#DivEssayTopic').hide();
+                        }
+
+                    }
+
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+
+
+    });
+
+    $('#ddlUniversity').change(function () {
+        var University = $('#ddlUniversity').val();
+        $.ajax
+            ({
+                url: "/CounsellorAddNew/GetEssayName?Cid=" + University + "",
+                type: "Get",
+                success: function (data) {
+                    var itemdd = JSON.parse(data);
+                    var CityList = '<option value="">--Select--</option>';
+                    for (var i = 0; i < itemdd.length; i++) {
+
+
+                        CityList += '<option value="' + itemdd[i].CTID + '">' + itemdd[i].Name + '</option>';
+
+                    }
+                    $("#EssayName").html(CityList);
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+    });
+
+    $('#EssayName').change(function () {
+        var Essay = $('#EssayName').val();
+        $.ajax
+            ({
+                url: "/CounsellorAddNew/GetEssayCount?Cid=" + Essay + "",
+                type: "Get",
+                success: function (data) {
+                    var itemdd = JSON.parse(data);
+
+
+                    $('#txtEssayCount').val(itemdd[0].Name);
+
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+    });
+
+    $(window).on('load', function () {
+        setTimeout(function () { $("#msgErroStudent").hide(); }, 4000);
+    });
+
+</script>
+
+<script type="text/javascript">
+    (function ($) {
+        $(function () {
+            $("#startDate").datetimepicker();
+        });
+    })(jQuery);
+
+
+</script>

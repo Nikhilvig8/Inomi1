@@ -1,0 +1,60 @@
+﻿@model Inomi.Models.Student.Dashboard
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Message</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-details-cover mb-3">
+            <div class="report-details">
+                <h2>Message List</h2>
+            </div>
+            <div id="accordion" class="myaccordion" data-simplebar>
+                <div class="card-cover">
+                    @foreach (var item in Model.Studentmessage.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+                        <div class="card">
+                            <div class="card-header" id="heading_@item.Index">
+                                <h2 class="mb-0">
+                                    <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                            data-toggle="collapse"
+                                            data-target="#collapse_@item.Index"
+                                            aria-expanded="true"
+                                            aria-controls="collapse_@item.Index">
+                                        Message_@item.Index
+                                        <span class="fa-stack fa-sm">
+                                            <i class="fas fa-circle fa-stack-2x"></i>
+                                            <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse_@item.Index"
+                                 class="collapse"
+                                 aria-labelledby="heading_@item.Index"
+                                 data-parent="#accordion">
+                                <div class="card-body">
+                                    <p>
+                                        @item.Data.Message
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+        <div class="d-flex mt-2">
+            <button type="submit"
+                    class="btn blue-btn"
+                    onclick="window.location.href = 'Index';">
+                Back
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+﻿
+
+@{
+    ViewBag.Title = "Format";
+}
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Formats</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw">
+            <div>
+                @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                {
+                    <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                        @TempData["Message"]
+                    </label>
+
+                }
+                <label id="tab" style="display:none"> @TempData["tab"]</label>
+            </div>
+            <div class="reports-hdr">
+                <div class="tab-pane" id="format" role="tabpanel" aria-labelledby="nav-about-tab">
+                    <div>
+                        <div class="reports-hdr row">
+                            <div class="form-group col-sm-3 col-12">
+                                <div class="selectdiv">
+                                    <select id="ddlFiletype">
+                                        <option value="0" selected="">Select file type</option>
+                                        <option value="Resume">Resume</option>
+                                        <option value="LoR">LoR</option>
+                                        <option value="Bragsheet">Brag sheet</option>
+                                        <option value="Essay">Essay</option>
+
+                                    </select>
+                                </div>
+                                <label style="display:none;color:red" id="msgFileType"></label>
+                            </div>
+                            <div class="form-group col-12" style="display:none">
+                                <input type="text" class="form-control" placeholder="To" />
+                            </div>
+                            <div class="form-group col-sm-3 col-12">
+                                <div class="selectdiv">
+                                    @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, new { @class = "form-control", @id = "ddlCounsellor", @multiple = true, @title = "Counsellor list" })
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3 col-12">
+                                <div class="selectdiv">
+                                    @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, new { @class = "form-control", @id = "ddlStudent", @multiple = true, @title = "Student list" })
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+
+                                <div class="input-group input-file" name="FormatFichier">
+                                    <input type="text" class="form-control" id="Format" placeholder='Choose a file...' />
+                                    <span class="input-group-btn">
+                                        <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <input type="text" class="form-control" placeholder="Subject" id="txtEmailsubject" />
+                            </div>
+                            <div class="form-group col-sm-12 col-12">
+                                <textarea name='mailContents' id='editor' placeholder="Please enter Mail Body Contents." cols="4" rows="4" aria-invalid="false"></textarea>
+                            </div>
+                            <label style="display:none;color:red" id="msgeditor"></label>
+
+                        </div>
+                    </div>
+                    <input style="display:none" type="text" id="FormatId" class="form-control">
+
+                    <div class="d-flex bttn-box  mb-0 mt-2">
+                        <button type="submit" id="FormatSubmit" class="btn blue-btn">Submit</button>
+                        <button type="reset" id="FormatBack" class="btn dark-grey-btn back-hide-show">Back</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+@*<link href="/multiselect/css/jquery.multiselect.css" rel="stylesheet" />
+    <script src="/multiselect/js/jquery.multiselect.js"></script>*@
+<link href="~/Scripts/MultiSelect/jquery-ui.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/jquery.multiselect.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/jquery.multiselect.filter.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/prettify.css" rel="stylesheet" />
+
+<script src="~/Scripts/MultiSelect/Jquery-ui.min.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.filter.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.min.js"></script>
+<script src="~/Scripts/MultiSelect/prettify.js"></script>
+
+<script src="~/Js/CounsellorFormat.js"></script>
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/samples/js/sample.js"></script>
+
+@*<script>
+        $('#MddlCounsellor').multiselect({
+            columns: 1,
+            search: true,
+            selectAll: true
+        });
+
+        $('#MddlStudent').multiselect({
+            columns: 1,
+            search: true,
+            selectAll: true
+        });
+
+
+    </script>*@
+
+
+<script>
+    initSample();
+</script>
+
+<script>
+    $("#ddlCounsellor").multiselect({
+        noneSelectedText: "Select counsellor"
+    }).multiselectfilter();
+
+    var multiselectSelddlCounsellor = $($('input[name="multiselect_ddlCounsellor"]')[0]).closest('div.ui-multiselect-menu');
+    $(multiselectSelddlCounsellor).find('.ui-multiselect-all, .ui-multiselect-none, .ui-icon-check, .ui-icon-closethick').show();
+
+    $("#ddlStudent").multiselect({
+        noneSelectedText: "Select student"
+    }).multiselectfilter();
+
+    var multiselectSelddlStudent = $($('input[name="multiselect_ddlStudent"]')[0]).closest('div.ui-multiselect-menu');
+    $(multiselectSelddlStudent).find('.ui-multiselect-all, .ui-multiselect-none, .ui-icon-check, .ui-icon-closethick').show();
+
+
+</script>

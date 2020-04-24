@@ -1,0 +1,24 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h4 class="modal-title">Add Leadership Positions in school</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span>x</span>
+    </button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+    @Html.Hidden("Id", @Model.EditLeadershipPositions.id)
+    <div class="row">
+        <div class="form-group col-12">
+            <label>Name of Leadership Positions in school</label>
+            @Html.EditorFor(m => m.EditLeadershipPositions.Position, new { htmlAttributes = new { @class = "form-control", @id = "Position", @Name = "Position" } })
+        </div>
+    </div>
+</div>
+<!-- Modal footer -->
+<div class="modal-footer">
+    <button type="button" class="btn blue-btn" id="EditLeadershipPositionsbutton">Update</button>
+</div>

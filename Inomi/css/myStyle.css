@@ -1,0 +1,150 @@
+
+
+2 Attachments
+/* product new page */
+#image-content img {
+    width: 100%;
+  height:100vh;
+    border: 3px solid gray;
+    margin-bottom: 20px;
+}
+
+#heading-content h6 {
+    color: #3ba6dd;
+    margin-top: 20px;
+}
+
+#heading-content span {
+    font-size: large;
+    font-weight: bold;
+}
+
+#heading-content p {
+    font-size: medium;
+}
+
+.cal-view img {
+    margin-right: 1rem;
+}
+
+.cal-view {
+    margin-top: 30px;
+}
+
+#para p {
+    font-size: medium;
+}
+
+.product-container {
+    margin-right: 30px;
+}
+
+/* pending task list */
+.button2 {
+    padding: 5px 10px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 20px;
+    border: 2px solid powderblue;
+}
+
+    .button2:hover {
+        background-color: #008CBA;
+        color: white;
+    }
+
+.button11 {
+    background-color: #95c84a;
+    border: 2px solid #95c84a;
+    border-radius: 15px;
+    padding: 2px 5px;
+    color: white;
+}
+
+.button12 {
+    background-color: #ff8067;
+    border: 2px solid #ff8067;
+    border-radius: 15px;
+    padding: 2px 5px;
+    color: white;
+}
+
+.button13 {
+    background-color: #fc5c3c;
+    border: 2px solid #fc5c3c;
+    border-radius: 15px;
+    padding: 2px 5px;
+    color: white
+}
+
+.cmn-table .table {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.btn5 {
+    border: none;
+    border-radius: 8 !important;
+    /* background-color: transparent; */
+    margin-right: 1rem;
+    padding: 0.375rem 1.5rem;
+    font-size: 0.8rem;
+    color: #fff;
+    margin-right: auto;
+}
+
+.modal-title {
+    color: #3ba6dd;
+}
+
+.modal-content {
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.fa {
+    color: black
+}
+
+#col-popup {
+    margin-left: 20px;
+}
+
+.pop-2 {
+    font-size: medium;
+}
+
+button:focus {
+    outline: 1px dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline: none;
+}
+
+.product-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+}
+/* accordian */
+.page1-wrapper {
+    background-color: #fff;
+    padding: 1.5rem 1.5rem;
+}
+
+.card-header h6 {
+    color: black;
+}
+
+i.fas.fa-angle-down.rotate-icon {
+    float: right;
+}
+
+.md-accordion .card1 .card-header a:not(.collapsed) .rotate-icon {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.p2 {
+    margin-right:30px;
+}
+

@@ -1,0 +1,1064 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+@{
+
+    ViewBag.Title = "Index";
+
+
+}
+
+
+<style type="text/css">
+    .nik {
+        border: 1px solid red;
+    }
+
+    .name-section .icon-section {
+        width: 40px;
+        height: 40px;
+    }
+
+        .name-section .icon-section img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+        }
+
+    .education-section {
+        padding-left: 27px;
+    }
+</style>
+
+<div id="page-content-wrapper" class="mb-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Dashboard</h2>
+                </div>
+            </div>
+        </div>
+        <!-- KPI Section -->
+        <div class="kpi-section">
+            <a href="UpcomingDeadline" class="kpi-cmn-section kpi-first">
+                <div class="kpi-left-section">
+                    <div class="kpi-img-cover first-bg">
+                        <img src="~/STUDENTUIFILES/images/upcoming-deadline-icon.png"
+                             alt="upcoming deadline icon" />
+                    </div>
+                    <span>Upcoming Deadline</span>
+                </div>
+                <div class="kpi-right-section">
+                    <span> @Model.Counts.UpcomingDeadlineCount </span>
+                </div>
+            </a>
+            <a href="DeadLineEssay" class="kpi-cmn-section kpi-second">
+                <div class="kpi-left-section">
+                    <div class="kpi-img-cover second-bg">
+                        <img src="~/STUDENTUIFILES/images/deadline-essay-icon.png"
+                             alt="deadline essay icon" />
+                    </div>
+                    <span>Deadline Essay</span>
+                </div>
+                <div class="kpi-right-section">
+                    <span>@Model.Counts.DeadlineEssayCount</span>
+                </div>
+            </a>
+            <a href="message" class="kpi-cmn-section kpi-third">
+                <div class="kpi-left-section">
+                    <div class="kpi-img-cover third-bg">
+                        <img src="~/STUDENTUIFILES/images/message-icon.png" alt="message icon" />
+                    </div>
+                    <span>Message</span>
+                </div>
+                <div class="kpi-right-section">
+                    <span>@Model.Counts.MessageCount</span>
+                </div>
+            </a>
+        </div>
+        <!-- KPI Section -->
+        <!-- projects signature section -->
+        <div class="projects-signature-section">
+            <div class="report-details-cover projects-section">
+                <div class="report-details">
+                    <h2>Projects</h2>
+                    @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#ProjectModal" style="display:none">Add</button>
+                    }
+                    else
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#ProjectModal">Add</button>
+                    }
+                </div>
+                <div id="accordion" class="myaccordion" data-simplebar>
+                    <div class="card-cover">
+                        @if (Model.Project.Count > 0)
+                        {
+                            foreach (var item in Model.Project.Select((x, i) => new { Data = x, Index = i + 1 }))
+                            {
+
+                                <div class="card">
+                                    <div class="card-header" id="heading">
+                                        <h2 class="mb-0">
+                                            <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                                    data-toggle="collapse"
+                                                    data-target="#collapse_@item.Index"
+                                                    aria-expanded="false"
+                                                    aria-controls="collapse">
+                                                Projects @item.Index
+                                                <span class="fa-stack fa-sm">
+                                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                                    <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapse_@item.Index"
+                                         class="collapse"
+                                         aria-labelledby="heading"
+                                         data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="projects-cover">
+                                                <div class="projects-header">
+                                                    <div class="name-section">
+                                                        <h3>Name</h3>
+                                                        <p>@item.Data.Name</p>
+                                                    </div>
+                                                    <div class="description-section">
+                                                        <h3>Description</h3>
+                                                        <p>
+                                                            @item.Data.Description
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="projects-contents">
+                                                    @foreach (var item1 in item.Data.Milestone.Select((x, i) => new { Data = x, Index = i + 1 }))
+                                                    {
+                                                        <div class="projects-contents-box">
+                                                            <div class="left-box">
+                                                                <h3>Milestone @item1.Index</h3>
+                                                                <p>@item1.Data.MilestoneName</p>
+                                                                @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                                                                {
+                                                                    <a href="javascript:void;"
+                                                                       class="anchorDetail2 btn blue-btn" id="@item1.Data.ID" style="display:none">
+                                                                        Define
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="javascript:void;"
+                                                                       class="anchorDetail2 btn blue-btn" id="@item1.Data.ID">
+                                                                        Define
+                                                                    </a>
+                                                                }
+
+                                                            </div>
+                                                            <div class="right-box">
+                                                                <h3>Deadline @item1.Index</h3>
+                                                                <p>@item1.Data.Milestonedate.Value.ToString("dd-MM-yyyy")</p>
+                                                                <p class="action">
+
+                                                                    @if (item1.Data.Status == true)
+                                                                    {
+                                                                        <img src="~/STUDENTUIFILES/images/done-icon.png"
+                                                                             alt="done icon" />
+                                                                        <span>Done</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/STUDENTUIFILES/images/pending-icon.png"
+                                                                             alt="pending icon" />
+                                                                        <span>Pending</span>
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <center> <h1 style="margin-left:10%;margin-top:10%"> NO PROJECT  </h1></center>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="signature-strength">
+                <div class="report-details">
+                    <h2>Signature Strength</h2>
+                </div>
+                <div id="highchart_values" style="height: 300px; ">
+
+
+                </div>
+            </div>
+        </div>
+        <!-- projects signature section -->
+        <!-- academics and test reports section -->
+        <div class="academics-test-reports-section">
+            <div class="report-details-cover academics-section">
+                <div class="report-details">
+                    <h2>Academics</h2>
+                    @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#academicsModal" style="display:none">Add</button>
+                    }
+                    else
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#academicsModal">Add</button>
+                    }
+                </div>
+                <div id="academics" class="myaccordion" data-simplebar>
+                    <div class="card-cover">
+                        @foreach (var item in Model.Academics.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <span class="fa-stack fa-sm" style="margin-left: 97%;">
+                                <i class="fas fa-pen-square fa-stack-2x Editacademic" id="@item.Data.Id"></i>
+                                @*<i class="fa fa-pencil-square-o Editacademic" id="@item.Data.Id"></i>*@
+
+
+
+                            </span>
+                            <span class="fa-stack fa-sm" style="margin-left: -9%;">
+
+                                <a href="/Student/deleteacademics/@item.Data.Id" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};"> <i class="fas fa-trash-alt fa-stack-2x"></i> </a>
+                            </span>
+
+                            <div class="card">
+                                <div class="card-header" id="heading_@item.Index">
+                                    <h2 class="mb-0">
+
+
+                                        <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                                data-toggle="collapse"
+                                                data-target="#class_@item.Index"
+                                                aria-expanded="false"
+                                                aria-controls="collapse">
+                                            @item.Data.Class
+
+                                            <span class="fa-stack fa-sm">
+
+                                                <i class="fas fa-circle fa-stack-2x"></i>
+                                                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+
+                                            </span>
+
+                                        </button>
+
+
+
+                                    </h2>
+
+                                </div>
+
+                                <div id="class_@item.Index"
+                                     class="collapse"
+                                     aria-labelledby="heading_@item.Index"
+                                     data-parent="#academics">
+                                    <div class="card-body">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>Year</th>
+                                                    <th>Subject</th>
+                                                    <th>Board / Syllabus</th>
+                                                    <th>School</th>
+                                                    <th>Transcript</th>
+                                                    <th>Overall GPA / Marks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@item.Data.Year</td>
+                                                    <td>@item.Data.Subject</td>
+                                                    <td>@item.Data.Board</td>
+                                                    <td>@item.Data.School</td>
+                                                    <td>
+                                                        <a href="/Student/Download?CurrentFileName=@item.Data.Transcript">
+                                                            <span class="text-underline">File </span>
+                                                        </a>
+                                                    </td>
+                                                    <td>@item.Data.OverAllGPAMark</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="report-details-cover test-reports">
+                <div class="report-details">
+                    <h2>Test Reports</h2>
+                    @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#testReportModal" style="display:none">Add</button>
+                    }
+                    else
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#testReportModal">Add</button>
+                    }
+                </div>
+                <div id="testReports" class="myaccordion" data-simplebar>
+                    <div class="card-cover">
+                        @foreach (var item in Model.TestReport.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+
+
+                            <span class="fa-stack fa-sm" style="margin-left: 81%;">
+
+                                <a href="/Student/deletetestReports/@item.Data.id" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};"> <i class="fas fa-trash-alt fa-stack-2x"></i> </a>
+                            </span>
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-pen-square fa-stack-2x Edittestreport " id="@item.Data.id"></i>
+
+                            </span>
+                            <div class="card">
+                                <div class="card-header" id="SAT1">
+                                    <h2 class="mb-0">
+                                        <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                                data-toggle="collapse"
+                                                data-target="#SAT_@item.Index"
+                                                aria-expanded="false"
+                                                aria-controls="collapseOne">
+                                            @item.Data.TestName
+                                            <span class="fa-stack fa-sm">
+                                                <i class="fas fa-circle fa-stack-2x"></i>
+                                                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="SAT_@item.Index"
+                                     class="collapse"
+                                     aria-labelledby="SAT1"
+                                     data-parent="#testReports">
+                                    <div class="card-body">
+                                        <p><span>Score</span><span>@item.Data.Score</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- academics and test reports section -->
+        <!-- extra curricular row -->
+        <div class="extra-curricular-row">
+            <div class="report-details-cover extra-curricular-section">
+                <div class="report-details">
+                    <h2>Extra Curricular Activites</h2>
+                    @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#extraCurricularActivitiesModal" style="display:none">Add</button>
+                    }
+                    else
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#extraCurricularActivitiesModal">Add</button>
+                    }
+                </div>
+                <div id="extraCurricular" class="myaccordion" data-simplebar>
+                    <div class="card-cover">
+                        @foreach (var item in Model.ExtraCurricularActivites.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <span class="fa-stack fa-sm" style="margin-left: 81%;">
+
+                                <a href="/Student/deleteExtraCurricularActivites/@item.Data.id" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};"> <i class="fas fa-trash-alt fa-stack-2x"></i> </a>
+                            </span>
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-pen-square fa-stack-2x EditExtraCurricularActivites " id="@item.Data.id"></i>
+
+                            </span>
+                            <div class="card">
+                                <div class="card-header" id="Cricket1">
+                                    <h2 class="mb-0">
+                                        <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                                data-toggle="collapse"
+                                                data-target="#Cricket_@item.Index"
+                                                aria-expanded="false"
+                                                aria-controls="Cricket">
+                                            @item.Data.Activities
+                                            <span class="fa-stack fa-sm">
+                                                <i class="fas fa-circle fa-stack-2x"></i>
+                                                <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Cricket_@item.Index"
+                                     class="collapse"
+                                     aria-labelledby="Cricket1"
+                                     data-parent="#extraCurricular">
+                                    <div class="card-body">
+                                        <p class="mb-2">
+                                            <span>Achievements </span><span>@item.Data.Achievements</span>
+                                        </p>
+                                        <p>Details</p>
+                                        <p>
+                                            <span>
+                                                @item.Data.Details
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="report-details-cover leadership-position-section">
+                <div class="report-details">
+                    <h2>Leadership Positions in School</h2>
+                    @if (Session["UserRole"].ToString() == "Father" || Session["UserRole"].ToString() == "Mother")
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#leadershipPositionsModal" style="display:none">Add</button>
+                    }
+                    else
+                    {
+                        <button class="btn blue-btn dashboard-btn" data-toggle="modal" data-target="#leadershipPositionsModal">Add</button>
+                    }
+                </div>
+                <div class="myaccordion" data-simplebar>
+                    <div class="card-cover">
+                        @foreach (var item in Model.LeadershipPositions.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <span class="fa-stack fa-sm" style="margin-left: 81%;">
+
+                                <a href="/Student/deleteLeadershipPositions/@item.Data.id" onclick="if (confirm('Delete selected item?')){return true;}else{event.stopPropagation(); event.preventDefault();};"> <i class="fas fa-trash-alt fa-stack-2x"></i> </a>
+                            </span>
+                            <span class="fa-stack fa-sm">
+                                <i class="fas fa-pen-square fa-stack-2x EditLeadershipPositions " id="@item.Data.id"></i>
+
+                            </span>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="mb-0">
+                                        <button class="d-flex align-items-center justify-content-between btn btn-link">
+                                            @item.Data.Position
+                                        </button>
+                                    </h2>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="pathfinder">
+                <div class="report-details">
+                    <h2>Pathfinder</h2>
+                </div>
+                <div class="chart">
+                    @*<img src="~/STUDENTUIFILES/images/pathfinder.png" alt="chart image" />*@
+                    @*<img src=@if (ViewBag.Pathfinder != null)
+                           {
+                               foreach (var dr in ViewBag.Pathfinder.Rows)
+                               {
+                                  @dr["PathFinderPath"]
+                               }
+                           }
+        alt="chart image" />*@
+
+
+
+                    @if (ViewBag.Pathfinder != null)
+                    {
+                        <a class="text-underline" href="/Student/Download?CurrentFileName=@ViewBag.Pathfinder"><i class="fas fa-download fa-6x"></i></a>
+                        @*<img src=" @ViewBag.Pathfinder "
+            alt="chart image" />*@
+                    }
+                    else
+                    {
+                        <center> <h3> NO Data  </h3></center>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- extra curricular row -->
+        <!-- calendar row -->
+        <div class="calendar-row">
+            <div class="calendar-section" style="height:509px">
+
+                <div class="report-details-cover">
+                    <div id="calender"></div>
+                </div>
+                <div id="myModal" class="modal " role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="pDetails"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="col-md-12" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-section">
+                <div class="chat-content">
+                    <h2>Know Your Counsellor</h2>
+                    <div class="chat-content-cover">
+
+                        @*<img src=@Session["Picture"].ToString() alt="profile pic" />*@
+                        <div class="name-section info-section">
+                            <div class="icon-section">
+                                <img src="@Model.Counsellor.Picture" />
+                            </div>
+                            <div class="text-section">
+                                <p>@Model.Counsellor.Name</p>
+                                <p>Counsellor (Exp. @Model.Counsellor.Experience)</p>
+                            </div>
+                        </div>
+                        <div class="education-section info-section">
+                            <div class="icon-section"><img src="~/STUDENTUIFILES/images/education-icon.png" alt="education icon" /></div>
+                            <div class="text-section">
+                                <p>Education</p>
+                                <p>@Model.Counsellor.Education</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="chat-icon">
+                        <div class="chat-icon-img">
+                            <img src="~/STUDENTUIFILES/images/chat-icon.png" alt="chat icon" />
+                            <span class="badge">1</span>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+        <!-- calendar row -->
+
+    </div>
+</div>
+
+
+<!--Projects-->
+
+<div class="modal fade cmn-modal" id="ProjectModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("AcadamicData", "Student", FormMethod.Post, new
+        { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Projects</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-12">
+                            <label>Project name<sup>*</sup></label>
+                            @Html.Editor("ProjectName", new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        <div class="form-group col-sm-6 col-12">
+                            <label>Description<sup>*</sup></label>
+                            @Html.Editor("Description", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Milestone</label>
+                            @Html.Editor("Milestone", new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Deadline</label>
+                            @Html.Editor("Deadline", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <button type="button" class="btn blue-btn" id="Projectbutton" style="margin-top: 13%;">Add</button>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Milestone</label>
+                            @Html.Editor("Milestone", new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Deadline</label>
+                            <input type="text" id="Deadline" name="Deadline" class="form-control  Projectdeadlinedate" onkeyup="$(this).val('')" />
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <button type="button" class="btn blue-btn" id="Projectbutton" style="margin-top: 13%;">Add</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="Projectbutton">Add</button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!--EditAcademics-->
+<div class="modal fade cmn-modal" id="EditacademicsModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("UpdateAcademics", "Student", FormMethod.Post, new
+        { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content" id="Editacademics">
+
+
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+<!-- Academics Modal-->
+<div class="modal fade cmn-modal" id="academicsModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("AcadamicData", "Student", FormMethod.Post, new
+        { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Academics</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Class</label>
+                            @Html.Editor("Class", new { htmlAttributes = new { @class = "form-control" } })
+
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Year</label>
+                            @Html.Editor("Year", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Subject</label>
+                            @Html.Editor("Subject", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Board</label>
+                            @Html.Editor("Board", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>School</label>
+                            @Html.Editor("School", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Transcript</label>
+
+                            <div class="input-group input-file" name="Fichier1">
+                                <input type="text" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button class="btn blue-btn btn-choose" type="button">
+                                        Upload
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Overall GPA/Marks</label>
+                            @Html.Editor("OverAllGPAMark", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="acadmicbutton">Add</button>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Academics Modal-->
+<!--EditTestReport-->
+
+<div class="modal fade cmn-modal" id="EdittestreportModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("UpdateTestReport", "Student", FormMethod.Post))
+        {
+            <div class="modal-content" id="EditTestreport">
+
+
+            </div>
+        }
+    </div>
+</div>
+
+
+<!-- Test Report Modal-->
+<div class="modal fade cmn-modal" id="testReportModal">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("TestReportData", "Student", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Test Report</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-12">
+                            <label>Test Name</label>
+                            @Html.Editor("TestName", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-6 col-12">
+                            <label>Score</label>
+                            @Html.Editor("Score", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="Testreportbutton">Add</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Test Report Modal-->
+<!--EditExtraactivites-->
+<div class="modal fade cmn-modal" id="EditExtraactivitesModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("UpdateExtraactivites", "Student", FormMethod.Post))
+        {
+            <div class="modal-content" id="EditExtraactivites">
+
+
+            </div>
+        }
+    </div>
+</div>
+
+
+<!--EditLeadership-->
+<div class="modal fade cmn-modal" id="EditLeadershipModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("UpdateLeadership", "Student", FormMethod.Post))
+        {
+            <div class="modal-content" id="EditEditLeadership">
+
+
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Extra Curricular Activities Modal-->
+<div class="modal fade cmn-modal" id="extraCurricularActivitiesModal">
+    <div class="modal-dialog xl-modal-dialog">
+        @using (Html.BeginForm("ExtraCurricularActivitesData", "Student", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Extra Curricular Activites</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Activities</label>
+                            @Html.Editor("Activities", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Achievements</label>
+                            @Html.Editor("Achievements", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group col-sm-6 col-12">
+                            <label>Details</label>
+                            @Html.Editor("Details", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="ExtraCurricularActivitesbutton">Add</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Extra Curricular Activities Modal-->
+<!-- Leadership positions Modal-->
+<div class="modal fade cmn-modal" id="leadershipPositionsModal">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("LeadershipPositionsData", "Student", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Leadership Positions in school</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Name of Leadership Positions in school</label>
+                            @Html.Editor("Position", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="LeadershipPositionsbutton">Add</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade cmn-modal" id="defineModal">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("MilestoneuploadData1", "Student", FormMethod.Post, new
+        { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Define Milestone</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="viewModal">
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="milestoneupload">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- Leadership positions Modal-->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+<script src="~/Scripts/Custom/Dashboard.js"></script>
+
+<script type="text/javascript">
+    "use strict";
+    !function () {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) { if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice.")); t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"], t.factory = function (e) { return function () { var n = Array.prototype.slice.call(arguments); return n.unshift(e), t.push(n), t; }; }, t.methods.forEach(function (e) { t[e] = t.factory(e); }), t.load = function (t) { var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script"); o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js"; var i = document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(o, i); }; }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('ux3en3w9775k');
+</script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script>
+    var seriesData = [];
+    $.get("GetColumnChartData", {}, function (chartsdata) {
+        $.each(chartsdata, function (i, v) {
+            if (v.Name == "Independent" || v.Name == "Team Player" || v.Name == "Mentor") {
+                var item = {
+                    name: v.Name,
+                    y: v.Value,
+                    color: "#528330"
+                };
+            }
+            else if (v.Name == "Analytics" || v.Name == "Social Philosophical" || v.Name == "Practical") {
+                var item = {
+                    name: v.Name,
+                    y: v.Value,
+                    color: "#4170C7"
+                };
+            }
+            else {
+                var item = {
+                    name: v.Name,
+                    y: v.Value,
+                    color: "#C75A00"
+                };
+            }
+            seriesData.push(item);
+        });
+    }).done(function () {
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'highchart_values',
+                type: 'column',
+                options3d: {
+                    enabled: true,
+                    depth: 25,
+                    viewDistance: 25
+                }
+            },
+            title: {
+                text: 'Sub-Strengths'
+            },
+            //subtitle: {
+            //  text: 'Test options by dragging the sliders below'
+            //},
+            plotOptions: {
+                column: {
+                    depth: 50
+                }
+            },
+            xAxis: {
+                tickInterval: 1,
+                labels: {
+                    enabled: true,
+                    formatter: function () { return seriesData[this.value]['name']; },
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b> Sub-Strength: </b>' + this.point.name + '<br/>' +
+                        '<b>Marks: </b>' + Highcharts.numberFormat(this.y, 0);
+                },
+            },
+            series: [{
+                data: seriesData
+            }],
+            legend: {
+                enabled: false
+            }
+        });
+
+        function showValues() {
+            $('#depth-value').html(chart.options.chart.options3d.depth);
+        }
+
+        // Activate the sliders
+        $('#sliders input').on('input change', function () {
+            chart.options.chart.options3d[this.id] = parseFloat(this.value);
+            showValues();
+            chart.redraw(false);
+        });
+        showValues();
+    }).error(function () {
+        $("#highchart_values").html("<img src='~/STUDENTUIFILES/images/chart.png' />");
+    });
+
+
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var events = [];
+        $.ajax({
+            type: "GET",
+            url: "/Student/ToDashboardGetEvents",
+            success: function (data) {
+                $.each(data, function (i, v) {
+                    events.push({
+                        title: v.Subject,
+                        description: v.Description,
+                        start: moment(v.Start),
+                        end: v.End != null ? moment(v.End) : null,
+                        color: v.ThemeColor,
+                        allDay: v.IsFullDay
+                    });
+                })
+
+                GenerateCalender(events);
+            },
+            error: function (error) {
+                alert('failed');
+            }
+        })
+
+        function GenerateCalender(events) {
+            $('#calender').fullCalendar('destroy');
+            $('#calender').fullCalendar({
+                contentHeight: 400,
+                defaultDate: new Date(),
+                timeFormat: 'h(:mm)a',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                eventLimit: true,
+                eventColor: '#378006',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    $('#myModal #eventTitle').text(calEvent.title);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
+                    if (calEvent.end != null) {
+                        $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                    }
+                    $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
+                    $('#myModal #pDetails').empty().html($description);
+
+                    $('#myModal').modal();
+                }
+            })
+        }
+
+    })
+
+</script>
+

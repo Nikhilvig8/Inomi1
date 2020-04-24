@@ -1,0 +1,167 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Terms & Condition";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/style-questionnaire.css" />
+</head>
+<body class="inner-page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light  fixed-top top-navbar">
+            <a class="navbar-brand" href="#">
+                <img src="~/images/inomi-logo.png" class="inomi-logo" alt="inomi logo" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse top-nav-content"
+                 id="navbarSupportedContent">
+                <ul class="nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
+                            <div class="d-inline-block align-middle">
+                                <span class="bold-fonts">@FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name</span>
+                                <br />
+                                <span>Student</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="/LoginQuestionnaire/LogOut" id="navbarDropdown">
+                            <i class="material-icons">
+                                power_settings_new
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper mb-5">
+        <div class="content mt-cmn" id="content">
+            <div class="container-fluid">
+                <div class="section-cover">
+                    <div class="first-section cmn-section">
+                        <img src="~/images/chart-image.svg" alt="chart image" />
+                    </div>
+                    <div class="second-section cmn-section">
+                        <img src="~/images/laptop-image.png" alt="laptop image" />
+                    </div>
+                    <div class="third-section cmn-section">
+                        <img src="~/images/sample-report-image.svg"
+                             alt="sample report image" />
+                    </div>
+                </div>
+                <div class="terms-and-conditions mt-15">
+                    <h2>Terms and Conditions</h2>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry’s standard dummy text
+                        ever since the 1500s, when an unknown printer took a galley of
+                        type and scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets
+                        containing Lorem Ipsum passages, and more recently with desktop
+                        publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.
+                    </p>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry’s standard dummy text
+                        ever since the 1500s, when an unknown printer took a galley of
+                        type and scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets
+                        containing Lorem Ipsum passages, and more recently with desktop
+                        publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.
+                    </p>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. Lorem Ipsum has been the industry’s standard dummy text
+                        ever since the 1500s, when an unknown printer took a galley of
+                        type and scrambled it to make a type specimen book. It has
+                        survived not only five centuries, but also the leap into
+                        electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets
+                        containing Lorem Ipsum passages, and
+                    </p>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="custom-checkbox">
+                            <label class="checkbox">
+                                I have read the instructions
+                                <input type="checkbox" id="termcheckbox" />
+                                <span class="checkbox-checkmark"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-info button bg-button login-button"
+                                type="button" id="termbutton" disabled="disabled">
+                            Take The Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>inomi © <label id="year">2019</label> All rights reserved.</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            var d = new Date();
+            var year = d.getFullYear();
+            $("#year").text(year);
+
+
+            $("#termcheckbox").change(function (e) {
+                if ($(this).prop("checked") == true) {
+                    $("#termbutton").attr("disabled", false);
+                }
+                else if ($(this).prop("checked") == false) {
+                    $("#termbutton").attr("disabled", true);
+                }
+            });
+
+            $("#termbutton").on('click', function (e) {
+                window.location.href = "/HomeQuestionnaire/QuestionSelect";
+            });
+        });
+    </script>
+</body>
+</html>

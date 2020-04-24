@@ -1,0 +1,131 @@
+﻿@model Inomi.Models.Student.Dashboard
+@{
+    ViewBag.Title = "projects";
+}
+    <style type="text/css">
+        .nik {
+            border: 1px solid red;
+        }
+    </style>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Projects</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h2>Projects List</h2>
+            </div>
+            <div id="accordion" class="myaccordion" data-simplebar>
+                <div class="card-cover">
+                    @foreach (var item in Model.Project.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+
+                        <div class="card">
+                            <div class="card-header" id="heading">
+                                <h2 class="mb-0">
+                                    <button class="d-flex align-items-center justify-content-between btn btn-link"
+                                            data-toggle="collapse"
+                                            data-target="#collapse_@item.Index"
+                                            aria-expanded="false"
+                                            aria-controls="collapse">
+                                        Projects @item.Index
+                                        <span class="fa-stack fa-sm">
+                                            <i class="fas fa-circle fa-stack-2x"></i>
+                                            <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse_@item.Index"
+                                 class="collapse"
+                                 aria-labelledby="heading"
+                                 data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="projects-cover">
+                                        <div class="projects-header">
+                                            <div class="name-section">
+                                                <h3>Name</h3>
+                                                <p>@item.Data.Name</p>
+                                            </div>
+                                            <div class="description-section">
+                                                <h3>Description</h3>
+                                                <p>
+                                                    @item.Data.Description
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="projects-contents">
+                                            @foreach (var item1 in item.Data.Milestone.Select((x, i) => new { Data = x, Index = i + 1 }))
+                                            {
+                                                <div class="projects-contents-box">
+                                                    <div class="left-box">
+                                                        <h3>Milestone @item1.Index</h3>
+                                                        <p>@item1.Data.MilestoneName</p>
+                                                        <a href="javascript:void;"
+                                                           class="anchorDetail2 btn blue-btn" id="@item1.Data.ID">
+                                                            Define
+                                                        </a>
+                                                    </div>
+                                                    <div class="right-box">
+                                                        <h3>Deadline @item1.Index</h3>
+                                                        <p>@item1.Data.Milestonedate.Value.ToString("dd-MM-yyyy")</p>
+                                                        <p class="action">
+                                                            <img src="~/STUDENTUIFILES/images/done-icon.png"
+                                                                 alt="done icon" />
+                                                            <span>@item1.Data.Status</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade cmn-modal" id="defineModal">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("MilestoneuploadData", "Student", FormMethod.Post, new
+        { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Define Milestone</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>x</span>
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="viewModal">
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn blue-btn" id="milestoneupload">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="~/Scripts/Custom/Dashboard.js"></script>

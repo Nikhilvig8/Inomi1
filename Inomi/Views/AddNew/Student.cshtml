@@ -1,0 +1,1548 @@
+﻿
+@{
+    ViewBag.Title = "Student";
+}
+
+
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Add New</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover">
+            <div>
+                @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                {
+                    <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                        @TempData["Message"]
+                    </label>
+
+                }
+                <label id="tab" style="display:none"> @TempData["tab"]</label>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <nav class="nav-tabs-cover">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <button type="button" class="nav-item nav-link active" id="studenttab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">
+                                <span>Student</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="counsellortab" data-toggle="tab" href="#counsellor" role="tab" aria-controls="counsellor" aria-selected="false">
+                                <span>Counsellor</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="collegetab" data-toggle="tab" href="#college" role="tab" aria-controls="college" aria-selected="false">
+                                <span>College</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="countrytab" data-toggle="tab" href="#country" role="tab" aria-controls="country" aria-selected="false">
+                                <span>Country</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="producttab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="false">
+                                <span>Product</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="coursetab" data-toggle="tab" href="#course" role="tab" aria-controls="course" aria-selected="false">
+                                <span>Course</span>
+                            </button>
+                            <button style="display:none" type="button" class="nav-item nav-link" id="tasktab" data-toggle="tab" href="#task" role="tab" aria-controls="task" aria-selected="false">
+                                <span>Task</span>
+                            </button>
+                            <button style="display:none" type="button" class="nav-item nav-link" id="testtab" data-toggle="tab" href="#test" role="tab" aria-controls="test" aria-selected="false">
+                                <span>Test</span>
+                            </button>
+                            <button type="button" class="nav-item nav-link" id="formattab" data-toggle="tab" href="#format" role="tab" aria-controls="format" aria-selected="false">
+                                <span>Format</span>
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content px-sm-0 clearfix" id="nav-tabContent">
+
+
+                        <div class="tab-pane" id="studentGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Student List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="AddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="StudentDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Grade</th>
+                                                <th scope="col">School</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.StudentDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.StudentDetails.Rows)
+                                                {
+                                            <tr>
+                                                <td>@dr["FirstName"]</td>
+                                                <td>@dr["Grade"]</td>
+                                                <td>@dr["School"]</td>
+                                                <td>@dr["Phone"]</td>
+                                                <td>@dr["Email"]</td>
+                                                <td>@dr["Gender"]</td>
+                                                <td>@dr["Product"]</td>
+                                                <td>@dr["Status"]</td>
+                                                <td><label id="ID" style="display: none;">@dr["ID"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+
+                                                @if (dr["Status"] == "Accepted")
+                                                {
+                                                    <td>
+                                                        <a href="javascript:void;" class="button13" id="Rejected">Reject</a>
+                                                    </td>
+                                                }
+                                                else if (dr["Status"] == "Rejected")
+                                                {
+                                                    <td>
+                                                        <a href="javascript:void;" class="button11" id="Approved">Accept</a>
+                                                    </td>
+                                                }
+                                                else if (dr["Status"] == "N/A")
+                                                {
+                                                    <td>
+                                                        <a href="javascript:void;" class="button11" id="Approved">Accept</a>
+                                                    </td>
+                                                }
+                                            </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="CounsellorGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Counsellor List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="CounsellorAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="CounsellorDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Education</th>
+                                                <th scope="col">Link</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col">City</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Experience</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.CounsellorDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.CounsellorDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Name"]</td>
+                                                        <td>@dr["Education"]</td>
+                                                        <td>@dr["Link"]</td>
+                                                        <td>@dr["Country"]</td>
+                                                        <td>@dr["City"]</td>
+                                                        <td>@dr["Phone"]</td>
+                                                        <td>@dr["Experience"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="CollegeGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">College List</h2>
+                                    <div class="d-flex justify-content-around">
+                                        <div class="p2">
+                                            <img src="/images/red-sq.jpg" height="15px" alt="icons">
+                                            <span>DATE OVER.</span>
+                                        </div>
+                                        <div class="p2">
+                                            <img src="/images/orange-sq.jpg" height="15px" alt="icons"><span> EARLY DECISION.</span>
+                                        </div>
+                                        <div class="p2">
+                                            <img src="/images/green-square.jpg" height="15px" alt="icons">
+                                            <span>UPCOMING DATE.</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="CollegeAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="CollegeDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">College Name</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col">International Rank</th>
+                                                <th scope="col">Indian Rank</th>
+                                                <th scope="col">US News Ranking</th>
+                                                <th scope="col">QS World Ranking</th>
+                                                <th scope="col">Grade Profile</th>
+                                                <th scope="col">Deadline Date</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.CollegeDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.CollegeDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["NameOfCollege"]</td>
+                                                        <td>@dr["Country"]</td>
+                                                        <td>@dr["IRank"]</td>
+                                                        <td>@dr["IndRank"]</td>
+                                                        <td>@dr["USNewsRanking"]</td>
+                                                        <td>@dr["QSWorldRanking"]</td>
+                                                        <td>@dr["GrandeProfile"]</td>
+
+                                                        @if (dr["AppDate"] < 0)
+                                                        {
+                                                            <td style="color:white; font-weight: bold; background-color:#fd441f">@dr["ApplicationDeadline"]</td>
+                                                        }
+                                                        else if (dr["AppDate"] <= 5 && dr["AppDate"] >= 0)
+                                                        {
+                                                            <td style="color:white; font-weight: bold; background-color:#ff8067">@dr["ApplicationDeadline"]</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td style="color:white; font-weight: bold; background-color:#6baa0f">@dr["ApplicationDeadline"]</td>
+                                                        }
+
+
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="CountryGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Country List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="CountryAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="CountryDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">JobProspect</th>
+                                                <th scope="col">VisaProcess</th>
+                                                <th scope="col">Link</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.CountryDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.CountryDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["NameOfCountry"]</td>
+                                                        <td>@dr["JobProspect"]</td>
+                                                        <td>@dr["VisaProcess"]</td>
+                                                        <td>@dr["Link"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="ProductGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Product List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="ProductAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="ProductDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Fee</th>
+                                                <th scope="col">Link</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.ProductDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.ProductDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Name"]</td>
+                                                        <td>@dr["Fee"]</td>
+                                                        <td>@dr["Link"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="CourseGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Course List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="CourseAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="CourseDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name of course</th>
+                                                <th scope="col">College</th>
+                                                <th scope="col">Career</th>
+                                                <th scope="col">Link</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.CourseDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.CourseDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["NameOfCourse"]</td>
+                                                        <td>@dr["College"]</td>
+                                                        <td>@dr["Career"]</td>
+                                                        <td>@dr["Link"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:none" class="tab-pane" id="TaskGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Task List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="TaskAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="TaskDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Counsellor</th>
+                                                <th scope="col">Task</th>
+                                                <th scope="col">Deadline</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.TaskDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.TaskDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Counsellor"]</td>
+                                                        <td>@dr["Task"]</td>
+                                                        <td>@dr["Deadline"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:none" class="tab-pane" id="TestGrid" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Test List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="TestAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="TestDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name Of Test</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.TestDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.TestDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["NameOfTest"]</td>
+                                                        <td><label id="ID" style="display: none;">@dr["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="FormatGrid" role="tabpanel" aria-labelledby="nav-home-tab" style="display:none">
+                            <div class="students-table-cover">
+                                <div class="report-details">
+                                    <h2 class="diff-hd">Format List</h2>
+                                    <div class="reports-hdr">
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn blue-btn add-new" id="FormatAddNew">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive cmn-table">
+                                    <table class="table table-striped" id="FormatDetails">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Format</th>
+                                                <th scope="col"></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.FormatDetails != null)
+                                            {
+                                                foreach (var dr in ViewBag.FormatDetails.Rows)
+                                                {
+                                                    <tr>
+                                                        <td>@dr["Format"]</td>
+                                                        <td>
+                                                            <label id="ID" style="display: none;">@dr["Id"]</label>
+                                                            <button type="button" class="fas fa-trash" id="delete">
+                                                                @*</button><button type="button" class="fas fa-pencil-alt" id="edit"></button>*@
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="student" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="student-form row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name<sup>*</sup></label>
+                                    <input type="text" id="studentName" class="form-control">
+                                    <input style="display:none" type="text" id="NameId" class="form-control">
+                                    <label style="display:none;color:red" id="msgStudent"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Grade<sup>*</sup></label>
+                                    <input type="text" id="studentGrade" class="form-control">
+                                    <label style="display:none; color:red" id="msgGrade"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>School<sup>*</sup></label>
+                                    <input type="text" id="studentSchool" class="form-control">
+                                    <label style="display:none; color:red" id="msgSchool"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Phone<sup>*</sup></label>
+                                    <input type="text" id="studentPhone" class="form-control" maxlength="10">
+                                    <label style="display:none; color:red" id="msgPhone"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Email<sup>*</sup></label>
+                                    <input type="email" id="studentEmail" class="form-control" placeholder="abc@gamil.com" autofocus />
+                                    <label style="display:none; color:red" id="msgEmail"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Gender<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        <select id="studentGender">
+                                            <option selected>--Select--</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Transgender</option>
+                                        </select>
+                                    </div>
+                                    <label style="display:none; color:red" id="msgGender"></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <h3>Payment Term Plan</h3>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>  Product<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "studentProduct" })
+                                    </div>
+                                    <label style="display:none; color:red" id="msgProduct"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Installment Type<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        <select id="txtInstallment">
+                                            <option selected>--Select--</option>
+                                            <option value="1">One Installment</option>
+                                            <option value="2">Two Installment</option>
+                                            <option value="3">Three Installment</option>
+                                            <option value="4">Fourth Installment</option>
+                                        </select>
+                                    </div>
+                                    <label style="display:none; color:red" id="msgInstallment"></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <div class="row" id="InstallmentDate">
+                                        @*Dynamic textBox*@
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Concession<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        <select id="txtConcession">
+                                            <option value="1" selected>No</option>
+                                            <option value="2">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3 col-12" id="divConAmt">
+                                    <label>Concession Amount<sup>*</sup></label>
+                                    <input type="text" id="txtConAmt" class="form-control">
+                                    <label style="display:none; color:red" id="msgConAmt"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Picture<sup>*</sup></label>
+                                    <div class="input-group input-file" name="studentFichier" id="fileClick">
+                                        <input type="text" id="studentPicture" class="form-control" placeholder='Choose a file...' />
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <label style="display:none; color:red" id="msgPicture"></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <h3>Parent 1</h3>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name<sup>*</sup></label>
+                                    <input type="text" id="studentParent1Name" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent1Name"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Occupation<sup>*</sup></label>
+                                    <input type="text" id="studentParent1Occupation" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent1Occupation"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Phone<sup>*</sup></label>
+                                    <input type="text" id="studentParent1Phone" class="form-control" maxlength="10">
+                                    <label style="display:none; color:red" id="msgParent1Phone"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Email<sup>*</sup></label>
+                                    <input type="email" id="studentParent1Email" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent1Email"></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <h3>Parent 2</h3>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name<sup>*</sup></label>
+                                    <input type="text" id="studentParent2Name" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent2Name"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Occupation<sup>*</sup></label>
+                                    <input type="text" id="studentParent2Occupation" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent2Occupation"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Phone<sup>*</sup></label>
+                                    <input type="text" id="studentParent2Phone" class="form-control" maxlength="10">
+                                    <label style="display:none; color:red" id="msgParent2Phone"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Email<sup>*</sup></label>
+                                    <input type="email" id="studentParent2Email" class="form-control">
+                                    <label style="display:none; color:red" id="msgParent2Email"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Career Applying<sup>*</sup></label>
+                                    <input type="text" id="studentCareerApplying" class="form-control">
+                                    <label style="display:none; color:red" id="msgCareerApplying"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Country Applying<sup>*</sup></label>
+                                    @*<input type="text" id="studentCountryApplying" class="form-control">*@
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "studentCountryApplying" })
+                                    </div>
+                                    <label style="display:none; color:red" id="msgCountryApplying"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Application year<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select--", new { @class = "selectdiv", @id = "studentApplicationYear" })
+                                    </div>
+                                    <label style="display:none; color:red" id="msgApplicationYear"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Finacial Aid needed<sup>*</sup></label>
+                                    <input type="email" id="studentFinacialAidNeeded" class="form-control" placeholder="Yes/No">
+                                    <label style="display:none; color:red" id="msgFinacialAidNeeded"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+
+                                    <label>Counsellor<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select Counsellor--", new { @class = "selectdiv", @id = "studentCounsellor" })
+                                    </div>
+                                    <label style="display:none; color:red" id="msgCounsellorList"></label>
+                                </div>
+
+
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="StudentSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="StudentBack" class="btn dark-grey-btn back-hide-show" hirf="#studentGrid">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="counsellor" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="counsellor-from row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name<sup>*</sup></label>
+                                    <input type="text" id="CslName" class="form-control">
+                                    <input style="display:none" type="text" id="CounsellorId" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslName"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Education<sup>*</sup></label>
+                                    <input type="text" id="CslEducation" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslEducation"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Link<sup>*</sup></label>
+                                    <input type="text" id="CslLink" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslLink"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Country<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "CslCountry" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCslCountry"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>City<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        <select id="CslCity">
+                                        </select>
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCslCity"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Phone<sup>*</sup></label>
+                                    <input type="text" id="CslPhone" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslPhone"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Email<sup>*</sup></label>
+                                    <input type="email" id="CslEmail" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslEmail"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Experience<sup>*</sup></label>
+                                    <input type="text" id="CslExperience" class="form-control">
+                                    <label style="display:none;color:red" id="msgCslExperience"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Picture<sup>*</sup></label>
+                                    <div class="input-group input-file" name="CounsellorFichier">
+                                        <input type="text" id="CslPicture" class="form-control" placeholder='Choose a file...' />
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCslPicture"></label>
+                                </div>
+                                <div class="form-group col-sm-12 col-12">
+                                    <label>Achievements<sup>*</sup></label>
+                                    <textarea rows="4" id="CslAchievements" class="form-control"></textarea>
+                                    <label style="display:none;color:red" id="msgCslAchievements"></label>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="CounsellorSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="CounsellorBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="college" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name of University/College<sup>*</sup></label>
+                                    <input type="text" id="CollegeName" class="form-control">
+                                    <input style="display:none" type="text" id="CollegeId" class="form-control">
+                                    <label style="display:none;color:red" id="msgCollegeName"></label>
+                                </div>
+
+                                @*<div class="form-group col-sm-3 col-12">
+            <label>Campus<sup>*</sup></label>
+            <input type="text" id="CampusName" class="form-control">
+            <label style="display:none;color:red" id="msgCampusName"></label>
+        </div>*@
+
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Country</label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "CollegeCountry" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCollegeCountry"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>City</label>
+                                    <div class="selectdiv">
+                                        <select id="CollegeCity">
+                                        </select>
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCollegeCity"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Courses</label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CourseList, "--Select--", new { @class = "selectdiv", @id = "CollegeCourses" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCollegeCourses"></label>
+                                </div>
+                                @*<div class="form-group col-sm-3 col-6">
+                                    <label>Application Mode</label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationModeList, "--Select--", new { @class = "selectdiv", @id = "CollegeApplicationMode" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCollegeApplicationMode"></label>
+                                </div>*@
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Testing Requirement</label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.TestingRequirementList, "--Select--", new { @class = "selectdiv", @id = "CollegeTestingRequirement" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCollegeTestingRequirement"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Link</label>
+                                    <input type="text" id="CollegeLink" class="form-control">
+                                    <label style="display:none;color:red" id="msgCollegeLink"></label>
+
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12 date">
+                                    <label>Early Deadline</label>
+                                    <input type="text" id="EarlyDate" class="form-control Date" readonly>
+                                    <label style="display:none;color:red" id="msgEarlyDate"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12 date">
+                                    <label>Late Deadline</label>
+                                    <input type="text" id="LateDate" class="form-control Date" readonly>
+                                    <label style="display:none;color:red" id="msgLateDate"></label>
+                                </div>
+
+                                <div class="form-group col-sm-3 col-12 date">
+                                    <label>Final Deadline<sup>*</sup></label>
+                                    <input type="text" id="CollegeDate" class="form-control Date" readonly>
+                                    <label style="display:none;color:red" id="msgCollegeDate"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>International Rank</label>
+                                    <input type="text" id="CollegeIRanking" class="form-control">
+                                    <label style="display:none;color:red" id="msgCollegeIRanking"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Indian Rank</label>
+                                    <input type="text" id="CollegeIndRanking" class="form-control">
+                                    <label style="display:none;color:red" id="msgCollegeIndRanking"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>US News Ranking</label>
+                                    <input type="text" id="USNewsRanking" class="form-control">
+                                    <label style="display:none;color:red" id="msgUSNewsRanking"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>QS World Ranking</label>
+                                    <input type="text" id="QSWorldRanking" class="form-control">
+                                    <label style="display:none;color:red" id="msgQSWorldRanking"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>QS By Subject</label>
+                                    <input type="text" id="QSBySubject" class="form-control">
+                                    <label style="display:none;color:red" id="msgQSBySubject"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Grade Profile</label>
+                                    <input type="text" id="CollegeGrandeProfile" class="form-control">
+                                    <label style="display:none;color:red" id="msgCollegeGrandeProfile"></label>
+
+                                </div>
+                                <div class="form-group col-sm-12 col-12">
+                                    <label>About University/College</label>
+                                    <textarea rows="4" id="txtAboutUniversity" class="form-control"></textarea>
+                                    <label style="display:none;color:red" id="msgAboutUniversity"></label>
+                                </div>
+
+                                <div class="table-responsive cmn-table">
+                                    Score Details:-
+                                    <table id="tblScore" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Score</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ScoreDetails">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <div class="selectdiv">
+                                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ScoreType, "--Select--", new { @class = "selectdiv", @id = "ScoreType" })
+                                                    </div>
+                                                    <label style="display:none;color:red" id="msgType"></label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="txtScore" class="form-control" />
+                                                    <label style="display:none;color:red" id="msgScore"></label>
+                                                </td>
+                                                <td><input class="btn blue-btn" type="button" onclick="AddScore()" value="Add" /></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="table-responsive cmn-table ">
+                                    Essay Details:-
+                                    <table id="tblCollege" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Essay name</th>
+                                                <th>Topic</th>
+                                                <th>Word count</th>
+                                                <th>Dead line</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="EssayDetails">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtEssayName" />
+                                                    <label style="display:none;color:red" id="msgEssayName"></label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtTopic" />
+                                                    <label style="display:none;color:red" id="msgTopic"></label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtWordCount" />
+                                                    <label style="display:none;color:red" id="msgWordCount"></label>
+                                                </td>
+                                                <td>
+                                                    <div class="date">
+                                                        <input type="text" id="txtEssayDeadline" class="form-control Date" readonly />
+                                                        <label style="display:none;color:red" id="msgEssayDeadline"></label>
+                                                    </div>
+                                                </td>
+                                                <td><input class="btn blue-btn" type="button" onclick="Add()" value="Add" /></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="table-responsive cmn-table ">
+                                    Essay Details:-
+                                    <table  class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Application Mode</th>
+                                                <th>Essay name</th>
+                                                <th>Topic</th>
+                                                <th>Word count</th>
+                                                <th>Dead line</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody id="EssayDetails">
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <div class="selectdiv">
+                                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationModeList, "--Select--", new { @class = "selectdiv", @id = "CollegeApplicationMode" })
+                                                    </div>
+                                                    <label style="display:none;color:red" id="msgCollegeApplicationMode"></label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtEssayNameapp" />
+                                                    <label style="display:none;color:red" id="msgEssayNameapp"></label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtTopicapp" />
+                                                    <label style="display:none;color:red" id="msgTopicapp"></label>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" id="txtWordCountapp" />
+                                                    <label style="display:none;color:red" id="msgWordCountapp"></label>
+                                                </td>
+                                                <td>
+                                                    <div class="date">
+                                                        <input type="text" id="txtEssayDeadlineapp" class="form-control Date" readonly />
+                                                        <label style="display:none;color:red" id="msgEssayDeadlineapp"></label>
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="CollegeSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="CollegeBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="country" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <input style="display:none" type="text" id="CountryId" class="form-control">
+                                    <label>Name of country<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "CountryName" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCountryName"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Job prospect<sup>*</sup></label>
+                                    <input type="text" id="CountryJobProspect" class="form-control">
+                                    <label style="display:none;color:red" id="msgCountryJobProspect"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Visa process<sup>*</sup></label>
+                                    <input type="text" id="CountryVisaProcess" class="form-control">
+                                    <label style="display:none;color:red" id="msgCountryVisaProcess"></label>
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Link<sup>*</sup></label>
+                                    <input type="text" id="CountryLink" class="form-control">
+                                    <label style="display:none;color:red" id="msgCountryLink"></label>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="CountrySubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="CountryBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="product" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>Name<sup>*</sup></label>
+                                    <input type="text" id="ProductName" class="form-control">
+                                    <input style="display:none" type="text" id="ProductId" class="form-control">
+                                    <label style="display:none;color:red" id="msgProductName"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Fee<sup>*</sup></label>
+                                    <input type="number" id="ProductFee" class="form-control">
+                                    <label style="display:none;color:red" id="msgProductFee"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Link<sup>*</sup></label>
+                                    <input type="text" id="ProductLink" class="form-control">
+                                    <label style="display:none;color:red" id="msgProductLink"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Picture<sup>*</sup></label>
+                                    <div class="input-group input-file" name="productFicher">
+                                        <input type="text" class="form-control" id="ProductPicture" placeholder='Choose a file...' />
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                        </span>
+                                        <label style="display:none;color:red" id="msgProductPicture"></label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 col-12">
+                                    <label>Product Details<sup>*</sup></label>
+                                    <textarea rows="4" id="txtProductDetails" class="form-control"></textarea>
+                                    <label style="display:none;color:red" id="msgProductDetails"></label>
+                                </div>
+
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="ProductSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="ProductBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="course" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name of course<sup>*</sup></label>
+                                    <input type="text" id="CourseName" class="form-control">
+                                    <input style="display:none" type="text" id="CourseId" class="form-control">
+                                    <label style="display:none;color:red" id="msgCourseName"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-6">
+                                    <label>College<sup>*</sup></label>
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CollegeList, "--Select--", new { @class = "selectdiv", @id = "CourseCollege" })
+                                    </div>
+                                    <label style="display:none;color:red" id="msgCourseCollege"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Career<sup>*</sup></label>
+                                    <input type="text" id="CourseCareer" class="form-control">
+                                    <label style="display:none;color:red" id="msgCourseCareer"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Link<sup>*</sup></label>
+                                    <input type="text" id="CourseLink" class="form-control">
+                                    <label style="display:none;color:red" id="msgCourseLink"></label>
+
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="CourseSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="CourseBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:none" class="tab-pane" id="task" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Counsellor<sup>*</sup></label>
+                                    @*<input type="text" id="TaskCounsellor" class="form-control">*@
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select--", new { @class = "selectdiv", @id = "TaskCounsellor" })
+                                    </div>
+                                    <input style="display:none" type="text" id="TaskId" class="form-control">
+                                    <label style="display:none;color:red" id="msgTaskCounsellor"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Task<sup>*</sup></label>
+                                    <input type="text" id="Task" class="form-control">
+                                    <label style="display:none;color:red" id="msgTask"></label>
+
+                                </div>
+                                <div class="form-group col-sm-3 col-12 date">
+                                    <label>Deadline<sup>*</sup></label>
+                                    <input type="text" id="TaskDeadline" class="form-control" readonly>
+                                    <label style="display:none;color:red" id="msgTaskDeadline"></label>
+
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="TaskSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="TaskBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:none" class="tab-pane" id="test" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="row">
+                                <div class="form-group col-sm-3 col-12">
+                                    <label>Name of test<sup>*</sup></label>
+                                    <input type="text" id="TestName" class="form-control">
+                                    <input style="display:none" type="text" id="TestId" class="form-control">
+                                    <label style="display:none;color:red" id="msgTestName"></label>
+                                </div>
+                                <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                    <button type="submit" id="TestSubmit" class="btn blue-btn">Submit</button>
+                                    <button type="reset" id="TestBack" class="btn dark-grey-btn back-hide-show">Back</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="format" role="tabpanel" aria-labelledby="nav-about-tab">
+                            <div class="report-details-cover res-viw">
+                                <div class="reports-hdr row">
+                                    <div class="form-group col-sm-3 col-12">
+                                        <div class="selectdiv">
+                                            <select id="ddlFiletype">
+                                                <option value="0" selected="">Select file type</option>
+                                                <option value="Resume">Resume</option>
+                                                <option value="LoR">LoR</option>
+                                                <option value="Bragsheet">Brag sheet</option>
+                                                <option value="Essay">Essay</option>
+
+                                            </select>
+                                        </div>
+                                        <label style="display:none;color:red" id="msgFileType"></label>
+                                    </div>
+                                    <div class="form-group col-12" style="display:none">
+                                        <input type="text" class="form-control" placeholder="To" />
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, new { @class = "selectdiv form-control", @id = "ddlCounsellor", @multiple = true, @title = "Counsellor list" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-12">
+                                        <div class="selectdiv">
+                                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, new { @class = "selectdiv form-control", @id = "ddlStudent", @multiple = true, @title = "Student list" })
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12">
+
+                                        <div class="input-group input-file" name="FormatFichier">
+                                            <input type="text" class="form-control" id="Format" placeholder='Choose a file...' />
+                                            <span class="input-group-btn">
+                                                <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <input type="text" class="form-control" placeholder="Subject" id="txtEmailsubject" />
+                                    </div>
+                                    <div class="form-group col-sm-12 col-12">
+                                        <textarea name='mailContents' id='editor' placeholder="Please enter Mail Body Contents." cols="4" rows="4" aria-invalid="false"></textarea>
+                                    </div>
+                                    <label style="display:none;color:red" id="msgeditor"></label>
+
+                                </div>
+                            </div>
+                            <input style="display:none" type="text" id="FormatId" class="form-control">
+
+                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                <button type="submit" id="FormatSubmit" class="btn blue-btn">Submit</button>
+                                <button type="reset" id="FormatBack" class="btn dark-grey-btn back-hide-show">Back</button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="~/Js/StudentDetails.js"></script>
+<script src="~/Js/CounsellorDetails.js"></script>
+<script src="~/Js/CollegeDetails.js"></script>
+<script src="~/Js/CountryDetails.js"></script>
+<script src="~/Js/ProductDetails.js"></script>
+<script src="~/Js/CourseDetails.js"></script>
+<script src="~/Js/TaskDetails.js"></script>
+<script src="~/Js/TestDetails.js"></script>
+<script src="~/Js/FormatDetails.js"></script>
+
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/samples/js/sample.js"></script>
+
+
+<link href="~/Scripts/MultiSelect/jquery-ui.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/jquery.multiselect.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/jquery.multiselect.filter.css" rel="stylesheet" />
+<link href="~/Scripts/MultiSelect/prettify.css" rel="stylesheet" />
+
+<script src="~/Scripts/MultiSelect/Jquery-ui.min.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.filter.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.js"></script>
+<script src="~/Scripts/MultiSelect/jquery.multiselect.min.js"></script>
+<script src="~/Scripts/MultiSelect/prettify.js"></script>
+
+
+<script>
+    $("#ddlCounsellor").multiselect({
+        noneSelectedText: "Select counsellor"
+    }).multiselectfilter();
+
+    var multiselectSelddlCounsellor = $($('input[name="multiselect_ddlCounsellor"]')[0]).closest('div.ui-multiselect-menu');
+    $(multiselectSelddlCounsellor).find('.ui-multiselect-all, .ui-multiselect-none, .ui-icon-check, .ui-icon-closethick').show();
+
+    $("#ddlStudent").multiselect({
+        noneSelectedText: "Select student"
+    }).multiselectfilter();
+
+    var multiselectSelddlStudent = $($('input[name="multiselect_ddlStudent"]')[0]).closest('div.ui-multiselect-menu');
+    $(multiselectSelddlStudent).find('.ui-multiselect-all, .ui-multiselect-none, .ui-icon-check, .ui-icon-closethick').show();
+
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#txtWordCount').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+         $('#txtWordCountapp').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+
+        $('#CollegeIRanking').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#CollegeIndRanking').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#CollegeGrandeProfile').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#USNewsRanking').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#QSWorldRanking').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#QSBySubject').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+        $('#txtScore').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+
+        $('#studentGrid').show();
+
+        var tab = $('#tab').text().trim();
+
+        if ('CounsellorGrid' == tab) {
+            $('#counsellortab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#CounsellorGrid').show();
+        }
+        else if ('CollegeGrid' == tab) {
+            $('#collegetab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#CollegeGrid').show();
+        }
+        else if ('CountryGrid' == tab) {
+            $('#countrytab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#CountryGrid').show();
+        }
+        else if ('ProductGrid' == tab) {
+            $('#producttab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#ProductGrid').show();
+        }
+        else if ('CourseGrid' == tab) {
+            $('#coursetab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#CourseGrid').show();
+        }
+        else if ('TaskGrid' == tab) {
+            $('#tasktab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#TaskGrid').show();
+        }
+        else if ('TestGrid' == tab) {
+            $('#testtab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#TestGrid').show();
+        }
+        else if ('FormatGrid' == tab) {
+            $('#formattab').addClass('active');
+            $('#studenttab').removeClass('active');
+            $('#studentGrid').hide();
+            $('#format').show();
+        }
+
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#CollegeDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+
+        $('#EarlyDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+
+        $('#LateDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#txtEssayDeadline').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+         $('#txtEssayDeadlineapp').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+
+        $('#ProductDate1').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#ProductDate2').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#ProductDate3').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#ProductDate4').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+
+        $("#CslCountry").change(function () {
+            var selectedCountry = $("#CslCountry option:selected").val();
+            $.ajax
+                ({
+                    url: "/AddNew/GetCityList?Cid=" + selectedCountry + "",
+                    type: "Get",
+                    success: function (data) {
+                        var item = JSON.parse(data);
+                        var CityList = '<option value="">--Select--</option>';
+                        for (var i = 0; i < item.length; i++) {
+                            CityList += '<option value="' + item[i].CTID + '">' + item[i].Name + '</option>';
+                        }
+                        $("#CslCity").html(CityList);
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+
+        });
+        $("#CollegeCountry").change(function () {
+            var selectedCountry = $("#CollegeCountry option:selected").val();
+            $.ajax
+                ({
+                    url: "/AddNew/GetCityList?Cid=" + selectedCountry + "",
+                    type: "Get",
+                    success: function (data) {
+                        var item = JSON.parse(data);
+                        var CityList = '<option value="">--Select--</option>';
+                        for (var i = 0; i < item.length; i++) {
+                            CityList += '<option value="' + item[i].CTID + '">' + item[i].Name + '</option>';
+                        }
+                        $("#CollegeCity").html(CityList);
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+    });
+
+    $(window).on('load', function () {
+        setTimeout(function () { $("#msgErroStudent").hide(); }, 4000);
+
+
+
+    });
+
+</script>
+<script>
+    initSample();
+</script>
+
+
+
+<style>
+    .langOpt_checklist {
+        position: relative;
+        height: 100px;
+        width: 218px;
+    }
+
+    .langOpt_checklist {
+        width: 219px;
+    }
+
+    .langOpt_checklist {
+        width: 229px;
+    }
+
+    div.findInList input {
+        padding: .375rem .75rem !important;
+    }
+</style>
+
+
+
+
+
+
+

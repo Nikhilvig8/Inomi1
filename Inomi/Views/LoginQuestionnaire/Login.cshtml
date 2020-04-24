@@ -1,0 +1,351 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inomi Login Page</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css"
+          integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo="
+          crossorigin="anonymous" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/style-questionnaire.css" />
+</head>
+<body class="login-page">
+    <div class="login-content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-12">
+                    <img src="~/images/inomi-logo.png"
+                         class="inomi-logo"
+                         alt="inomi logo" />
+                    <div class="about-login-page">
+                        <img src="~/images/login-bg.svg" alt="login bg image" />
+                    </div>
+                </div>
+                <div class="col-md-5 col-12">
+                    <div class="form-cover">
+                        <div class="form-wrapper">
+                            <div class="form-txt">
+                                <p class="h4 mb-2">
+                                    Welcome to <strong>Questionnaire</strong>
+                                </p>
+                                <p>
+                                    Lorem Ipsum is simply dummy text of the printing and
+                                    typesetting industry.
+                                </p>
+                            </div>
+                            <!-- Default form login -->
+                            <form class="signIn" id="signIn">
+                                @Html.AntiForgeryToken()
+                                <p class="h4">Login</p>
+                                <div class="input-cover">
+                                    <div class="email-cover">
+                                        <!-- Email -->
+                                        <label>Email Address</label>
+                                        <input type="email"
+                                               id="defaultLoginFormEmail"
+                                               class="form-control mb-0"
+                                               autofocus
+                                               name="Username" />
+                                    </div>
+                                    <div class="password-cover">
+                                        <!-- Password -->
+                                        <label>Password</label>
+                                        <input type="password"
+                                               id="defaultLoginFormPassword"
+                                               class="form-control mb-0"
+                                               name="Password" />
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <!-- Remember me -->
+                                    <div class="custom-checkbox">
+                                        <label class="checkbox">
+                                            Remember Me
+                                            <input type="checkbox" checked="checked" />
+                                            <span class="checkbox-checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <a href="#" id="forgotpassword">Forgot Password?</a>
+                                </div>
+                                <div class="alert alert-danger mt-4 mb-0 d-none" role="alert" id="errorLogin">
+                                    UserName/Password is Incorrect.
+                                </div>
+                                <!-- Sign in button -->
+                                <div class="button-box">
+                                    <button class="btn btn-info mt-4 button bg-button login-button"
+                                            id="login"
+                                            type="button">
+                                        Login
+                                    </button>
+                                    <button class="btn btn-info mt-4 button grey-btn signup-button"
+                                            type="button"
+                                            id="signUp">
+                                        Signup
+                                    </button>
+                                </div>
+                            </form>
+                            <!-- Default form signup -->
+                            <form class="signUp" style="display: none" id="signUp">
+                                @Html.AntiForgeryToken()
+                                <p class="h4">Signup</p>
+                                <div class="input-cover">
+                                    <div class="name-cover cmn-cover">
+                                        <!-- Full Name -->
+                                        <label>Full Name</label>
+                                        <input type="text"
+                                               class="form-control mb-0"
+                                               autofocus
+                                               required
+                                               id="Name" />
+                                    </div>
+                                    <div class="email-cover">
+                                        <!-- Email -->
+                                        <label>Email Address</label>
+                                        <input type="email"
+                                               class="form-control mb-0"
+                                               autofocus
+                                               required
+                                               id="Email" />
+                                    </div>
+                                    <div class="age-gender-cover cmn-cover">
+                                        <!-- Age -->
+                                        <div class="age-cover cmn-dropdown-icon">
+                                            <label>Age</label>
+                                            <input type="text"
+                                                   class="form-control mb-0"
+                                                   autofocus
+                                                   required
+                                                   id="Age" />
+                                        </div>
+                                        <!-- Gender -->
+                                        <div class="gender-cover cmn-dropdown-icon">
+                                            <label>Gender</label>
+                                            <select class="form-control minimal" id="Gender">
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mobile-cover cmn-cover">
+                                        <!-- Mobile -->
+                                        <label>Mobile</label>
+                                        <input type="text"
+                                               class="form-control mb-0"
+                                               required
+                                               id="Mobile" />
+                                    </div>
+                                    <div class="location-cover cmn-cover">
+                                        <!-- Location -->
+                                        <label>Location</label>
+                                        <input type="text"
+                                               class="form-control mb-0"
+                                               required
+                                               id="Address" />
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger mt-4 mb-0 d-none" role="alert" id="errorRegsiter">
+
+                                </div>
+                                <!-- Sign in button -->
+                                <div class="button-box">
+                                    <button class="btn btn-info mt-4 button bg-button login-button"
+                                            type="submit"
+                                            id="forSignup">
+                                        Signup
+                                    </button>
+                                    <button class="btn btn-info mt-4 button grey-btn signup-button"
+                                            id="signupBack"
+                                            type="button">
+                                        Back
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>Inomi © <label id="year">2019</label> All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"
+            integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var d = new Date();
+            var year = d.getFullYear();
+            $("#year").text(year);
+        });
+
+        $("#signUp").click(function () {
+            $(".signIn").hide();
+            $(".signUp").show();
+            $(".form-txt").hide();
+        });
+        $("#signupBack").click(function () {
+            $(".signUp").hide();
+            $(".signIn").show();
+            $(".form-txt").show();
+        });
+
+        $("#login").on('click', function (e) {
+            var UserName = $("#defaultLoginFormEmail").val();
+            var Password = $("#defaultLoginFormPassword").val();
+
+            var model = { UserName: UserName, Password: Password };
+
+            $("#login").html('<i class="fa fa-spinner fa-spin"></i> Wait')
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/LoginQuestionnaire/Login",
+                data: { tblQuesrionnaireLogin: model },
+                cache: false,
+                success: function (result) {
+                    if (result.Status == true) {
+                        $("#login").text('Done')
+                        if (result.IsAdmin == "1") {
+                            window.location.href = "/AdminQuestionnaire/Career";
+                        }
+                        else {
+                            window.location.href = "/DashBoardQuestionnaire/DashBoard";
+                        }
+
+                    }
+                    else {
+                        $("#login").text('Login')
+                        $("#errorLogin").removeClass("d-none");
+                    }
+                },
+                error: function (reponse) {
+
+                }
+            });
+        });
+
+        $("#forgotpassword").on('click', function (e) {
+            var UserName = $("#defaultLoginFormEmail").val();
+            if (UserName == "" || UserName == null) {
+                swal("Alert", "Please Enter Valid Email Address", "error");
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/LoginQuestionnaire/ForgotPassword",
+                    data: { UserName: UserName },
+                    cache: false,
+                    success: function (result) {
+                        if (result.Status == true) {
+                            swal("Success", "Please Check Your Email", "success");
+                        }
+                        else {
+                            swal("Alert", "Please Enter Valid Email Address", "error");
+                        }
+                    },
+                    error: function (reponse) {
+
+                    }
+                });
+            }
+        });
+
+        $("#forSignup").on('click', function (e) {
+            var errorStatus = false;
+            var Name = $("#Name").val();
+            var Email = $("#Email").val();
+            var Age = $("#Age").val();
+            var Gender = $("#Gender").val();
+            var Mobile = $("#Mobile").val();
+            var Address = $("#Address").val();
+
+            $("#forSignup").html('<i class="fa fa-spinner fa-spin"></i> Wait')
+
+            if (!Name.match("^[a-zA-Z ]*$")) {
+                $("#errorRegsiter").text("Name Should Contains Text Only.");
+                errorStatus = true;
+                e.preventDefault();
+            }
+            else if (parseInt(Age) > 50) {
+                $("#errorRegsiter").text("Age Should be less than 50.");
+                errorStatus = true;
+                e.preventDefault();
+            }
+            else if (Mobile != "") {
+                if (!Mobile.match("^([0-9]{10})$")) {
+                    $("#errorRegsiter").text("Mobile No Should be 10 digit number.");
+                    errorStatus = true;
+                    e.preventDefault();
+                }
+            }
+
+            if (!errorStatus) {
+                $("#errorRegsiter").addClass("d-none");
+                var model = { Name: Name, Email: Email, Age: Age, Gender: Gender, Mobile: Mobile, Address: Address };
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/LoginQuestionnaire/Register",
+                    data: { register: model },
+                    cache: false,
+                    success: function (result) {
+                        $("#forSignup").text('Signup')
+                        if (result.Status == true) {
+                            $("#forSignup").text('Done')
+                            swal({
+                                title: "Successful!",
+                                text: "Please check your Email!",
+                                type: "success"
+                            }, function () {
+                                location.reload(true);
+                            });
+                        }
+                        else {
+                            $("#errorRegsiter").text(result.Error);
+                            $("#errorRegsiter").removeClass("d-none");
+                        }
+                    },
+                    error: function (reponse) {
+
+                    }
+                });
+            }
+            else {
+                $("#errorRegsiter").removeClass("d-none");
+            }
+        });
+    </script>
+</body>
+</html>

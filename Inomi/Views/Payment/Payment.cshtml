@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Payment</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw">
+            <div class="reports-hdr row">
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Student</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlStudent" })
+                    </div>
+                    <label id="lblStudent" style="color:red"></label>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Product</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "ddlProduct", @disabled = "disabled" })
+                    </div>
+                    <label id="lblCounsellor" style="color:red"></label>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Counsellor</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select--", new { @class = "selectdiv", @id = "ddlCounsellor", @disabled = "disabled" })
+                    </div>
+                    <label id="lblCounsellor" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Product Price</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtProductPrice" readonly />
+                    </div>
+                    <label id="lblAmount" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Total Paid</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtTotalPaid" readonly />
+                    </div>
+                    <label id="lblAmount" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Total Panding</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtTotalPanading" readonly />
+                    </div>
+                    <label id="lblAmount" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Installment<sup>*</sup></label>
+                    <div class="selectdiv">
+                        <select id="ddlInstallment">
+                            <option selected>--Select Installment--</option>
+                            <option value="1">First Installment</option>
+                            <option value="2">Second Installment</option>
+                            <option value="3">Third Installment</option>
+                        </select>
+                    </div>
+                    <label style="display:none; color:red" id="msgGender"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Amount</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtAmount" />
+                    </div>
+                    <label id="lblAmount" style="color:red"></label>
+                </div>
+
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Payment Date</label>
+                    <div class="form-group">
+                        <input class="form-control" rows="4" id="txtPaymentDate" readonly>
+                    </div>
+                </div>
+
+                <div class="d-flex col-12">
+                    <button type="submit" class="btn blue-btn" id="btnSubmit">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#ddlProduct').css('background-color', '#E9EAE8');
+        $('#ddlCounsellor').css('background-color', '#E9EAE8');
+
+        $('#ddlStudent').change(function () {
+            var StudentID = $('#ddlstudent').val();
+            $.ajax
+                ({
+                    url: "/Payment/GetPaymentDetails?StudentID=" + StudentID + "",
+                    type: "Get",
+                    success: function (data) {
+
+                        var item = JSON.parse(data);
+                        debugger;
+                        for (var i = 0; i < item.length; i++) {
+                            $('#NameId').val(item[0].Id)
+                            $('#ddlCounsellor').val(item[0].Counsellor)
+                            $('#ddlStudent').val(item[0].Student)
+                            $('#startDate').val(item[0].DeadlineDate)
+                            $('#txtDescription').val(item[0].TaskDescription)
+
+                        }
+
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+
+        });
+
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#starDate1').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#AssignTaskDetails').DataTable({
+            "bSort": false
+        });
+        $('#btnSearch').click(function () {
+            debugger
+            var StrMain = "";
+            var Student = $('#ddlSearchStudent').val();
+            var startDate = $('#starDate1').val();
+            var endDate = $('#endDate').val();
+
+            if (Student != "" && Student != null) {
+                StrMain = StrMain + "And Student=" + "'" + Student + "'"
+            };
+            if ((startDate != "" && startDate != null) && (endDate == "" && endDate == null)) {
+                StrMain = StrMain + "And DeadlineDate=" + "'" + startDate + "'"
+            };
+            if (startDate != "" && startDate != null && endDate != "" && endDate != null) {
+                //StrMain = StrMain + "And DeadlineDate between" + "'" + startDate + "'" + "And" + "'" + endDate + "'"
+                StrMain = StrMain + "And DeadlineDate between " + "cast('" + startDate + "' as date)" + "And" + " cast('" + endDate + "' as date)"
+
+            };
+
+            document.location = '/AssignTask/AssignTask/?Str=' + StrMain;
+        });
+        $('#btnReset').click(function () {
+            var StrMain = "";
+            document.location = '/AssignTask/AssignTask/?Str=' + StrMain;
+        });
+
+    });
+
+    $("#btnSubmit").click(function () {
+
+        let data = [];
+        var Id = $('#NameId').val();
+        var Name = $('#ddlCounsellor').val();
+        var Student = $('#ddlStudent').val();
+        var startDate = $('#startDate').val();
+        var Description = $('#txtDescription').val();
+
+
+        if (Name == '' || Name == null) {
+            $('#ddlCounsellor').focus();
+            $('#lblCounsellor').text('Please select Name.');
+            $('#lblCounsellor').show();
+            return;
+        }
+        else {
+            $('#lblCounsellor').text('');
+            $('#lblCounsellor').hide();
+        }
+        if (Student == '' || Student == null) {
+            $('#ddlStudent').focus();
+            $('#lblStudent').text('Please select Student.');
+            $('#lblStudent').show();
+            return;
+        }
+        else {
+            $('#lblStudent').text('');
+            $('#lblStudent').hide();
+        }
+        if (startDate == '' || startDate == null) {
+            $('#startDate').focus();
+            $('#lblDate').text('Please enter Date.');
+            $('#lblDate').show();
+            return;
+        }
+        else {
+            $('#lblDate').text('');
+            $('#lblDate').hide();
+        }
+        if (Description == '' || Description == null) {
+            $('#txtDescription').focus();
+            $('#lblDescription').text('Please enter Description.');
+            $('#lblDescription').show();
+            return;
+        }
+        else {
+            $('#lblDescription').text('');
+            $('#lblDescription').hide();
+        }
+
+
+
+        data.push({
+            Counsellor: Name,
+            Student: Student,
+            DeadlineDate: startDate,
+            TaskDescription: Description
+        });
+
+        var json = JSON.stringify(data);
+        $.ajax
+            ({
+                url: "/AssignTask/InsertAssignTask?json=" + json + "&Id=" + Id + "",
+                type: "Get",
+                success: function (drr) {
+                    alert('Record has been update successfully');
+                    var url = "/AssignTask/AssignTask";
+                    window.location.href = url;
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+    });
+    $('#AssignTaskDetails').on('click', '#delete', function () {
+        var id = $(this).closest("tr").find('td:eq(5)').text();
+        var result = confirm("Do you Want to delete?");
+        if (result) {
+            $.ajax
+                ({
+                    url: "/AssignTask/DeleteAssignTaskDetails?id=" + id + "",
+                    type: "Get",
+                    success: function (drr) {
+                        alert('Record has been delete successfully');
+                        var url = "/AssignTask/AssignTask";
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        }
+    });
+    $('#AssignTaskDetails').on('click', '#edit', function () {
+
+        $('#btnSubmit').text('Update');
+        var id = $(this).closest("tr").find('td:eq(5)').text();
+        $.ajax
+            ({
+                url: "/AssignTask/EditAssignTaskDetails?id=" + id + "",
+                type: "Get",
+                success: function (data) {
+
+                    var item = JSON.parse(data);
+                    debugger;
+                    for (var i = 0; i < item.length; i++) {
+                        $('#NameId').val(item[0].Id)
+                        $('#ddlCounsellor').val(item[0].Counsellor)
+                        $('#ddlStudent').val(item[0].Student)
+                        $('#startDate').val(item[0].DeadlineDate)
+                        $('#txtDescription').val(item[0].TaskDescription)
+
+                    }
+
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+    });
+
+</script>

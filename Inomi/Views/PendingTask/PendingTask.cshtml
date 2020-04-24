@@ -1,0 +1,335 @@
+﻿
+@{
+    ViewBag.Title = "PendingTask";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Pending @TempData["Str"].ToString()</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw" style="display:none" id="PendingTask">
+            <div class="reports-hdr row">
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Select Counsellor</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select--", new { @class = "selectdiv", @id = "ddlCounsellor", @title = "Search by counsellor." })
+                    </div>
+                    <label id="lblCounsellor" style="color:red"></label>
+                    <input style="display:none" type="text" id="NameId" class="form-control">
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Select Student</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlStudent", @title = "Search by student" })
+                    </div>
+                    <label id="lblStudent" style="color:red"></label>
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Deadline</label>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="startDate" placeholder="Date" readonly title="Search by date" />
+                    </div>
+                    <label id="lblDate" style="color:red"></label>
+                </div>
+                <div class="col-12 form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" rows="4" id="txtDescription"></textarea>
+                    <label id="lblDescription" style="color:red"></label>
+                </div>
+                <div class="d-flex col-12">
+                    <button type="submit" class="btn blue-btn" id="btnSubmit">Submit</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h2>Pending @TempData["Str"].ToString() list</h2>
+                <div class="reports-hdr">
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "ddlSearchStudent", @title = "Search by student" })
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="starDate1" placeholder="From Deadline Date" readonly title="Search by start Deadline Date" />
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="endDate" placeholder="To Deadline Date" readonly title="Search by end Deadline Date" />
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                        <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="AssignTaskDetails">
+                    <thead>
+                        <tr>
+                            <th scope="col">Counsellor</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Assign Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row["Counsellor"].ToString()</td>
+                                <td>@row["Student"].ToString()</td>
+                                <td>@row["DeadlineDate"].ToString()</td>
+                                <td>@row["TaskDescription"].ToString()</td>
+                                <td>@row["CreatedDateTime"].ToString()</td>
+                                <td><label id="ID" style="display: none;">@row["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="d-flex col-12">
+                @if (Session["UserTypeId"].ToString() == "1")
+                {
+                    <a href="/Dashboard/Dashboard" class="btn blue-btn">Back</a>
+                }
+                else
+                {
+                    <a href="/CounsellorDashboard/CounsellorDashboard" class="btn blue-btn">Back</a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#PendingTask').hide();
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: today,
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#starDate1').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#AssignTaskDetails').DataTable({
+            "bSort": false
+        });
+
+        $('#btnSearch').click(function () {
+            debugger
+            var StrMain = "";
+            var Student = $('#ddlSearchStudent').val();
+            var startDate = $('#starDate1').val();
+            var endDate = $('#endDate').val();
+
+            if (Student != "" && Student != null) {
+                StrMain = StrMain + "And Student=" + "'" + Student + "'"
+            };
+            if ((startDate != "" && startDate != null) && (endDate == "" && endDate == null)) {
+                StrMain = StrMain + "And DeadlineDate=" + "'" + startDate + "'"
+            };
+            if (startDate != "" && startDate != null && endDate != "" && endDate != null) {
+                //StrMain = StrMain + "And DeadlineDate between" + "'" + startDate + "'" + "And" + "'" + endDate + "'"
+                StrMain = StrMain + "And DeadlineDate between " + "cast('" + startDate + "' as date)" + "And" + " cast('" + endDate + "' as date)"
+
+            };
+
+            @*document.location = '/PendingTask/PendingTask/?Str=' +@TempData["Str"].ToString()+'&StrMain=' + StrMain;*@
+            var Str='@TempData["Str"].ToString()';
+             var url ="/PendingTask/PendingTask?Str=" + Str + "&StrMain=" + StrMain + ""
+                    window.location.href = url;
+        });
+
+        $('#btnReset').click(function () {
+            var Str='@TempData["Str"].ToString()';
+            var StrMain = "";
+            @*document.location = '/PendingTask/PendingTask/?Str='+@TempData["Str"].ToString()+'&StrMain=' + StrMain;*@
+             var url ="/PendingTask/PendingTask?Str=" + Str + "&StrMain=" + StrMain + ""
+                    window.location.href = url;
+        });
+
+
+    });
+
+
+
+    $("#btnSubmit").click(function () {
+
+        let data = [];
+        var Id = $('#NameId').val();
+        var Name = $('#ddlCounsellor').val();
+        var Student = $('#ddlStudent').val();
+        var startDate = $('#startDate').val();
+        var Description = $('#txtDescription').val();
+
+
+        if (Name == '' || Name == null) {
+            $('#ddlCounsellor').focus();
+            $('#lblCounsellor').text('Please select Name.');
+            $('#lblCounsellor').show();
+            return;
+        }
+        else {
+            $('#lblCounsellor').text('');
+            $('#lblCounsellor').hide();
+        }
+        if (Student == '' || Student == null) {
+            $('#ddlStudent').focus();
+            $('#lblStudent').text('Please select Student.');
+            $('#lblStudent').show();
+            return;
+        }
+        else {
+            $('#lblStudent').text('');
+            $('#lblStudent').hide();
+        }
+        if (startDate == '' || startDate == null) {
+            $('#startDate').focus();
+            $('#lblDate').text('Please enter Date.');
+            $('#lblDate').show();
+            return;
+        }
+        else {
+            $('#lblDate').text('');
+            $('#lblDate').hide();
+        }
+        if (Description == '' || Description == null) {
+            $('#txtDescription').focus();
+            $('#lblDescription').text('Please enter Description.');
+            $('#lblDescription').show();
+            return;
+        }
+        else {
+            $('#lblDescription').text('');
+            $('#lblDescription').hide();
+        }
+
+
+
+        data.push({
+            Counsellor: Name,
+            Student: Student,
+            DeadlineDate: startDate,
+            TaskDescription: Description
+        });
+
+        $("#btnSubmit").text('Processing...');
+        $("#btnSubmit").attr("disabled", true);
+        //$("#FormatBack").attr("disabled", true);
+
+        var json = JSON.stringify(data);
+        $.ajax
+            ({
+                url: "/AssignTask/InsertAssignTask?json=" + json + "&Id=" + Id + "",
+                type: "Get",
+                success: function (drr) {
+                    alert('Record has been update successfully');
+                    $('#PendingTask').hide();
+                    $("#btnSubmit").text('Save');
+                    $("#btnSubmit").attr("disabled", false);
+                    var url = "/PendingTask/PendingTask";
+                    window.location.href = url;
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+    });
+
+
+    $('#AssignTaskDetails').on('click', '#delete', function () {
+        var id = $(this).closest("tr").find('td:eq(5)').text();
+        var result = confirm("Do you Want to delete?");
+        if (result) {
+            $.ajax
+                ({
+                    url: "/AssignTask/DeleteAssignTaskDetails?id=" + id + "",
+                    type: "Get",
+                    success: function (drr) {
+                        alert('Record has been delete successfully');
+                        var url = "/PendingTask/PendingTask";
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        }
+    });
+
+    $('#AssignTaskDetails').on('click', '#edit', function () {
+        $('#PendingTask').show();
+        $('#btnSubmit').text('Update');
+        var id = $(this).closest("tr").find('td:eq(5)').text();
+        $.ajax
+            ({
+                url: "/AssignTask/EditAssignTaskDetails?id=" + id + "",
+                type: "Get",
+                success: function (data) {
+
+                    var item = JSON.parse(data);
+                    debugger;
+                    for (var i = 0; i < item.length; i++) {
+                        $('#NameId').val(item[0].Id)
+                        $('#ddlCounsellor').val(item[0].Counsellor)
+                        $('#ddlStudent').val(item[0].Student)
+                        $('#startDate').val(item[0].DeadlineDate)
+                        $('#txtDescription').val(item[0].TaskDescription)
+
+                    }
+
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+    });
+
+</script>

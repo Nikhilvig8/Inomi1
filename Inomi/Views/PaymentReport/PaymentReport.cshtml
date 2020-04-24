@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "PaymentReport";
+}
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Payments Pending</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h2>Reports</h2>
+                <div class="reports-hdr">
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select Student--", new { @class = "selectdiv", @id = "ddlSearchStudent", @title = "Search by student" })
+
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="startDate" placeholder="Due Date" readonly title="Search by start due date" />
+                    </div>
+                    <div class="form-group date">
+                        <input type="text" class="form-control" id="endDate" placeholder="Due Date" readonly title="Search by end due date" />
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                        <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="PaymentTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Student Name</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Counsellor</th>
+                            <th scope="col">Installment No</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Due Date</th>
+                            @*<th scope="col">Status</th>*@
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row["Student"].ToString()</td>
+                                <td>@row["Product"].ToString()</td>
+                                <td>@row["Counsellor"].ToString()</td>
+                                <td>@row["InstallmentNo"].ToString()</td>
+                                <td>@row["InstallmentAmount"].ToString()</td>
+                                <td>@row["DueDate"].ToString()</td>
+                                @*<td>@row["Payment"].ToString()</td>*@
+                            <td>
+                                <label id="ID" style="display: none;">@row["ID"]</label>
+                                @if (@row["Payment"].ToString() == "Pending")
+                                {
+                                    <a href="javascript:void;" class="button13" id="Approved">@row["Payment"].ToString()</a>
+                                }
+                                else if (@row["Payment"].ToString() == "Done")
+                                {
+                                    <a href="javascript:void;" class="button11" id="Approved">@row["Payment"].ToString()</a>
+                                }
+                            </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link href="~/css/myStyle.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#PaymentTable').DataTable({
+            "bSort": false
+        });
+
+        $('#btnSearch').click(function () {
+
+            debugger;
+
+            var StrMain = "";
+            var Student = $('#ddlSearchStudent').val();
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+
+            if (Student != "" && Student != null) {
+                StrMain = StrMain + "And Student=" + "'" + Student + "'"
+            };
+            if ((startDate == "" && startDate == null) && (endDate != "" && endDate != null)) {
+                $('#startDate').focus();
+                alert('Please enter Start date.');
+                return;
+            };
+            if (startDate != "" && startDate != null && (endDate == "" || endDate == null)) {
+                $('#endDate').focus();
+                alert('Please enter end date.');
+                return;
+            };
+
+            if (startDate != "" && startDate != null && endDate != "" && endDate != null) {
+                StrMain = StrMain + "And DueDate between " + "cast('" + startDate + "' as date)" + "And" + " cast('" + endDate + "' as date)"
+            };
+
+
+            document.location = '/PaymentReport/PaymentReport/?Str=' + StrMain;
+        });
+
+        $('#btnReset').click(function () {
+            var StrMain = "";
+            document.location = '/PaymentReport/PaymentReport/?Str=' + StrMain;
+        });
+
+        $('#PaymentTable').on('click', '#Approved', function () {
+            var id = $(this).closest("tr").find('td:eq(6)').text();
+            $.ajax
+                ({
+                    url: "/PaymentReport/ApprovedPayment?Id=" + id + "",
+                    type: "Get",
+                    success: function (drr) {
+                        alert('Record has been update successfully');
+                        var url = "/PaymentReport/PaymentReport";
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+
+        });
+
+
+    });
+
+</script>
+

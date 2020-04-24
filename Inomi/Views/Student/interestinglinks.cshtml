@@ -1,0 +1,100 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+    <style type="text/css">
+        .nik {
+            border: 1px solid red;
+        }
+    </style>
+<div id="page-content-wrapper">
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Interesting Links</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover ">
+            <div class="links-section">
+
+                <div class="links-section-heading">
+                    <h3>Interesting Link (@Model.Interestinglinksview.Count)</h3>
+                </div>
+                @foreach (var item in Model.Interestinglinksview.Select((x, i) => new { Data = x, Index = i + 1 }))
+                {
+
+                    <div class="links-section-content">
+                        <div class="links-section-cmn">
+                            <h4>@item.Data.Title</h4>
+                            @Html.Raw(@item.Data.description)
+
+                            <span> @item.Data.Createddate</span>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+            @using (Html.BeginForm("interestinglinks", "Student", FormMethod.Post))
+            {
+                <div class="reports-hdr row">
+                    <div class="form-group col-12">
+                        <label>Title</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Type Title" id="Title" name="Title" />
+                    </div>
+                    <div class="form-group col-sm-12 col-12">
+                        <textarea cols="10" rows="1" id="ckeExample" name="ckeExample"> </textarea>
+                    </div>
+                    <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                        <button type="button" class="btn blue-btn" id="interestinglinksbutton">Submit</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+<script>
+    var ckEditorID;
+
+    ckEditorID = 'ckeExample';
+
+    function fnConsolePrint() {
+        //console.log($('#' + ckEditorID).val());
+        console.log(CKEDITOR.instances[ckEditorID].getData());
+    }
+    CKEDITOR.config.forcePasteAsPlainText = true;
+    CKEDITOR.replace(ckEditorID, {
+        toolbar: [
+            {
+                items: [
+                    'Bold',
+                    'Italic',
+                    'Underline',
+                    'Strike',
+                    '-',
+                    'RemoveFormat'
+                ]
+            },
+            {
+                items: ['Format']
+            },
+            {
+                items: ['Link', 'Unlink']
+            },
+            {
+                items: ['Indent', 'Outdent', '-', 'BulletedList', 'NumberedList']
+            },
+            {
+                items: ['Undo', 'Redo']
+            }
+        ]
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="~/Scripts/Custom/Dashboard.js"></script>

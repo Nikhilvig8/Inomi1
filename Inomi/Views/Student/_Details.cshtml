@@ -1,0 +1,20 @@
+﻿@model Inomi.Models.Student.Dashboard
+
+@foreach (var item in Model.DeadLineEssayview.Select((x, i) => new { Data = x, Index = i + 1 }))
+{
+
+
+    
+
+    <tr>
+        <td>
+            @if (@item.Data.LatestFile != "-")
+            {
+                <a class="text-underline" href="/Student/Download?CurrentFileName=@item.Data.LatestFile">Files_@item.Index</a>
+            }
+        </td>
+        <td>@item.Data.CreatedDateTime</td>
+    </tr>
+
+    
+}

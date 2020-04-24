@@ -1,0 +1,1007 @@
+﻿
+@{
+    ViewBag.Title = "Student Details";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">@TempData["PageName"].ToString() students list</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-details-cover">
+            @*<div>
+                    @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                    {
+                        <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                            @TempData["Message"]
+                        </label>
+
+                    }
+                    <label id="tab" style="display:none"> @TempData["tab"]</label>
+                </div>*@
+            <div class="report-details">
+                <h2>@TempData["PageName"].ToString() list</h2>
+                <div class="reports-hdr">
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select Year--", new { @class = "selectdiv", @id = "studentApplicationYear", @title = "Search by year" })
+                    </div>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.SchoolList, "--Select School--", new { @class = "selectdiv", @id = "School", @title = "Search by school" })
+                    </div>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select Student--", new { @class = "selectdiv", @id = "ddlStudent", @title = "Search by student" })
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                        <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="dashboardStudent">
+                    <thead>
+                        <tr>
+                            <th scope="col">Student Name</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">School</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Application Year</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" style="display:none"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row["Student"].ToString()</td>
+                                <td>@row["Grade"].ToString()</td>
+                                <td>@row["School"].ToString()</td>
+                                <td>@row["City"].ToString()</td>
+                                <td>@row["Country"].ToString()</td>
+                                <td>@row["Product"].ToString()</td>
+                                <td>@row["ApplicationYear"].ToString()</td>
+                                <td>@row["Status"].ToString()</td>
+                                <td style="display:none"><label id="ID" style="display: none;">@row["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="tab-pane" id="student" role="tabpanel" aria-labelledby="nav-profile-tab" style="display:none">
+                <div class="student-form row">
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Name<sup>*</sup></label>
+                        <input type="text" id="studentName" class="form-control">
+                        <input style="display:none" type="text" id="NameId" class="form-control">
+                        <label style="display:none;color:red" id="msgStudent"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Grade<sup>*</sup></label>
+                        <input type="text" id="studentGrade" class="form-control">
+                        <label style="display:none; color:red" id="msgGrade"></label>
+
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>School<sup>*</sup></label>
+                        <input type="text" id="studentSchool" class="form-control">
+                        <label style="display:none; color:red" id="msgSchool"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Phone<sup>*</sup></label>
+                        <input type="text" id="studentPhone" class="form-control">
+                        <label style="display:none; color:red" id="msgPhone"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Email<sup>*</sup></label>
+                        <input type="email" id="studentEmail" class="form-control">
+                        <label style="display:none; color:red" id="msgEmail"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-6">
+                        <label>Gender<sup>*</sup></label>
+                        <div class="selectdiv">
+                            <select id="studentGender">
+                                <option selected>--Select--</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Transgender</option>
+                            </select>
+                        </div>
+                        <label style="display:none; color:red" id="msgGender"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Product<sup>*</sup></label>
+                        <div class="selectdiv">
+                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "studentProduct" })
+                        </div>
+                        <label style="display:none; color:red" id="msgProduct"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Installment Type<sup>*</sup></label>
+                        <div class="selectdiv">
+                            <select id="txtInstallment">
+                                <option selected>--Select--</option>
+                                <option value="1">First Installment</option>
+                                <option value="2">Second Installment</option>
+                                <option value="3">Third Installment</option>
+                                <option value="4">Fourth Installment</option>
+                            </select>
+                        </div>
+                        <label style="display:none; color:red" id="msgInstallment"></label>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <div class="row" id="InstallmentDate">
+                            @*Dynamic textBox*@
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Concession<sup>*</sup></label>
+                        <div class="selectdiv">
+                            <select id="txtConcession">
+                                <option value="1" selected>No</option>
+                                <option value="2">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-3 col-12" id="divConAmt">
+                        <label>Concession Amount<sup>*</sup></label>
+                        <input type="text" id="txtConAmt" class="form-control">
+                        <label style="display:none; color:red" id="msgConAmt"></label>
+                    </div>
+
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Picture<sup>*</sup></label>
+                        <div class="input-group input-file" name="studentFichier" id="fileClick">
+                            <input type="text" id="studentPicture" class="form-control" placeholder='Choose a file...' />
+                            <span class="input-group-btn">
+                                <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                            </span>
+                        </div>
+                        <label style="display:none; color:red" id="msgPicture"></label>
+                    </div>
+                    <div class="form-group col-12">
+                        <h3>Parent 1</h3>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Name<sup>*</sup></label>
+                        <input type="text" id="studentParent1Name" class="form-control">
+                        <label style="display:none; color:red" id="msgParent1Name"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Occupation<sup>*</sup></label>
+                        <input type="text" id="studentParent1Occupation" class="form-control">
+                        <label style="display:none; color:red" id="msgParent1Occupation"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Phone<sup>*</sup></label>
+                        <input type="text" id="studentParent1Phone" class="form-control">
+                        <label style="display:none; color:red" id="msgParent1Phone"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Email<sup>*</sup></label>
+                        <input type="email" id="studentParent1Email" class="form-control">
+                        <label style="display:none; color:red" id="msgParent1Email"></label>
+                    </div>
+                    <div class="form-group col-12">
+                        <h3>Parent 2</h3>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Name<sup>*</sup></label>
+                        <input type="text" id="studentParent2Name" class="form-control">
+                        <label style="display:none; color:red" id="msgParent2Name"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Occupation<sup>*</sup></label>
+                        <input type="text" id="studentParent2Occupation" class="form-control">
+                        <label style="display:none; color:red" id="msgParent2Occupation"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Phone<sup>*</sup></label>
+                        <input type="text" id="studentParent2Phone" class="form-control">
+                        <label style="display:none; color:red" id="msgParent2Phone"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Email<sup>*</sup></label>
+                        <input type="email" id="studentParent2Email" class="form-control">
+                        <label style="display:none; color:red" id="msgParent2Email"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Career Applying<sup>*</sup></label>
+                        <input type="text" id="studentCareerApplying" class="form-control">
+                        <label style="display:none; color:red" id="msgCareerApplying"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Country Applying<sup>*</sup></label>
+                        @*<input type="text" id="studentCountryApplying" class="form-control">*@
+                        <div class="selectdiv">
+                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "studentCountryApplying" })
+                        </div>
+                        <label style="display:none; color:red" id="msgCountryApplying"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Application year<sup>*</sup></label>
+                        <div class="selectdiv">
+                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select--", new { @class = "selectdiv", @id = "studentApplicationYear" })
+                        </div>
+                        <label style="display:none; color:red" id="msgApplicationYear"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-12">
+                        <label>Finacial Aid needed<sup>*</sup></label>
+                        <input type="email" id="studentFinacialAidNeeded" class="form-control">
+                        <label style="display:none; color:red" id="msgFinacialAidNeeded"></label>
+                    </div>
+                    <div class="form-group col-sm-3 col-6">
+
+                        <label>Counsellor<sup>*</sup></label>
+                        <div class="selectdiv">
+                            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select Counsellor--", new { @class = "selectdiv", @id = "studentCounsellor" })
+                        </div>
+                        <label style="display:none; color:red" id="msgCounsellorList"></label>
+                    </div>
+                    <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                        <button type="submit" id="StudentSubmit" class="btn blue-btn">Submit</button>
+                        <button type="reset" id="StudentBack" class="btn dark-grey-btn back-hide-show" hirf="#studentGrid">Back</button>
+                    </div>
+                </div>
+            </div>
+
+            @*<button type="submit" id="StudentBackToDashboard" class="btn blue-btn">Back</button>*@
+            <div class="d-flex col-12">
+                @if (Session["UserTypeId"].ToString() == "1")
+                {
+                    <a href="/Dashboard/Dashboard" class="btn blue-btn">Back</a>
+                }
+                else
+                {
+                    <a href="/CounsellorDashboard/CounsellorDashboard" class="btn blue-btn">Back</a>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#startDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            maxDate: function () {
+                return $('#endDate').val();
+            }
+        });
+        $('#endDate').datepicker({
+            uiLibrary: 'bootstrap4',
+            iconsLibrary: 'fontawesome',
+            minDate: function () {
+                return $('#startDate').val();
+            }
+        });
+
+        $('#dashboardStudent').DataTable({
+            "bSort": false
+        });
+        //$('#StudentGrid').show();
+        //$('#student').hide();
+        $('#btnSearch').click(function () {
+
+
+
+            var StrMain = "";
+            var Student = $('#ddlStudent').val();
+            var Year = $('#studentApplicationYear').val();
+            var School = $('#School').val();
+
+            if (Student != "" && Student != null) {
+                StrMain = StrMain + "And Id=" + "'" + Student + "'"
+            };
+            if (Year != "" && Year != null) {
+                StrMain = StrMain + "And ApplicationYear=" + "'" + Year + "'"
+            };
+            if (School != "" && School != null) {
+                StrMain = StrMain + "And School=" + "'" + School + "'"
+            };
+
+             var Str='@TempData["PageName"].ToString()';
+             var url ="/StudentReport/StudentReport?str=" + Str + "&StrMain=" + StrMain + ""
+                    window.location.href = url;
+
+           // document.location = '/StudentReport/StudentReport/?Str=' + StrMain;
+        });
+
+        $('#btnReset').click(function () {
+            var Str='@TempData["PageName"].ToString()';
+            var StrMain = "";
+             var url ="/StudentReport/StudentReport?str=" + Str + "&StrMain=" + StrMain + ""
+                    window.location.href = url;
+
+           // document.location = '/StudentReport/StudentReport/?Str=' + StrMain;
+        });
+
+        $('#StudentBackToDashboard').click(function () {
+            document.location = '/Dashboard/Dashboard/'
+        });
+
+        $('#dashboardStudent').on('click', '#delete', function () {
+            var id = $(this).closest("tr").find('td:eq(8)').text();
+            var result = confirm("Do you Want to delete?");
+            if (result) {
+                $.ajax
+                    ({
+                        url: "/AddNew/DeleteStudentDetails?id=" + id + "",
+                        type: "Get",
+                        success: function (drr) {
+                            var Str = "";
+                            var StrMain = "Record has been delete successfully.";
+                            var url = "/Dashboard/Dashboard/?Str=" + Str + "&StrMain=" + StrMain;
+                            window.location.href = url;
+                        },
+                        Error: function (err) {
+                            Console.log(err);
+                        }
+                    });
+            }
+        });
+
+        $('#dashboardStudent').on('click', '#edit', function () {
+            $('#StudentGrid').hide();
+            $('#student').show();
+            $('#StudentSubmit').text('Update');
+            var id = $(this).closest("tr").find('td:eq(8)').text();
+            $.ajax
+                ({
+                    url: "/AddNew/EditStudentDetails?id=" + id + "",
+                    type: "Get",
+                    success: function (data) {
+
+                        var item = JSON.parse(data);
+                        for (var i = 0; i < item.length; i++) {
+
+                            var k = i;
+                            $('#NameId').val(item[0].ID)
+                            $('#studentName').val(item[0].FirstName)
+                            $('#studentGrade').val(item[0].Grade)
+                            $('#studentSchool').val(item[0].School)
+                            $('#studentPhone').val(item[0].Phone)
+                            $('#studentEmail').val(item[0].Email)
+                            $('#studentGender').val(item[0].Gender)
+                            $('#studentProduct').val(item[0].Product)
+                            $('#txtInstallment').val(item[0].InstallmentCount)
+                            if (i == 0) {
+                                InstallmentFn();
+                            }
+
+                            $('#InstallmentDate' + (k + 1) + '').val(item[i].InsDate);
+                            $('#Installment' + (k + 1) + '').val(item[i].InsAmt);
+
+                            $('#studentPicture').val(item[0].Picture)
+
+                            $('#studentParent1Name').val(item[0].Parent1Name)
+                            $('#studentParent1Occupation').val(item[0].Parent1Occupation)
+                            $('#studentParent1Phone').val(item[0].Parent1Phone)
+                            $('#studentParent1Email').val(item[0].Parent1Email)
+
+                            $('#studentParent2Name').val(item[0].Parent2Name)
+                            $('#studentParent2Occupation').val(item[0].Parent2Occupation)
+                            $('#studentParent2Phone').val(item[0].Parent2Phone)
+                            $('#studentParent2Email').val(item[0].Parent2Email)
+
+                            $('#studentCareerApplying').val(item[0].CareerApplying)
+                            $('#studentCountryApplying').val(item[0].CountryApplying)
+                            $('#studentApplicationYear').val(item[0].ApplicationYear)
+                            $('#studentFinacialAidNeeded').val(item[0].FinacialAidNeeded)
+                            $('#studentCounsellor').val(item[0].Counsellor)
+
+                            $('#txtConcession').val(item[0].IsConcession);
+                            if (item[0].IsConcession == 2) {
+                                $('#divConAmt').show();
+                            }
+                            else {
+                                $('#divConAmt').hide();
+                            }
+
+                            $('#txtConAmt').val(item[0].ConcessionAmount);
+                        }
+
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+
+        });
+
+        function clearflied() {
+            $('#StudentSubmit').text('Save');
+            $('#Id').val('')
+            $('#studentName').val('')
+            $('#studentGrade').val('')
+            $('#studentSchool').val('')
+            $('#studentPhone').val('')
+            $('#studentEmail').val('')
+            $('#studentGender').val('--Select--')
+            $('#studentProduct').val('')
+            $('#studentPicture').val('')
+            $('#studentParent1Name').val('')
+            $('#studentParent1Occupation').val('')
+            $('#studentParent1Phone').val('')
+            $('#studentParent1Email').val('')
+            $('#studentParent2Name').val('')
+            $('#studentParent2Occupation').val('')
+            $('#studentParent2Phone').val('')
+            $('#studentParent2Email').val('')
+            $('#studentCareerApplying').val('')
+            $('#studentCountryApplying').val('')
+            $('#studentApplicationYear').val('')
+            $('#studentFinacialAidNeeded').val('')
+            $('#studentCounsellor').val('')
+
+            $('#txtInstallment').val('--Select--')
+            $('#InstallmentDate').html('')
+            $('#txtConcession').val('1')
+            $('#txtConAmt').val('')
+        }
+
+
+        $('#StudentBack').click(function () {
+            $('#StudentGrid').show();
+            $('#student').hide();
+            $('#StudentSubmit').text('Save');
+        });
+
+        $("#StudentSubmit").click(function () {
+
+            function escapeHtml(emailBody) {
+                return emailBody
+                    .replace(/&/g, "~amp;")
+                    .replace(/</g, "~lt;")
+                    .replace(/>/g, "~gt;")
+                    .replace(/"/g, "~quot;")
+                    .replace(/'/g, "~#039;")
+                    .replace(/#/g, "~040;");
+            }
+
+            let data = [];
+            let Insdata = [];
+
+            var Id = $('#NameId').val();
+            var Name = $('#studentName').val();
+            var Grade = $('#studentGrade').val();
+            var School = $('#studentSchool').val();
+            var Phone = $('#studentPhone').val();
+            var Email = $('#studentEmail').val();
+            var Gender = $('#studentGender').val();
+            var Product = $('#studentProduct').val();
+
+            var InstallmentCount = $('#txtInstallment').val();
+            var Concession = $('#txtConcession').val();
+            var ConcessionAmount = $('#txtConAmt').val();
+
+            var Picture = $('#studentPicture').val();
+
+            var Parent1Name = $('#studentParent1Name').val();
+            var Parent1Occupation = $('#studentParent1Occupation').val();
+            var Parent1Phone = $('#studentParent1Phone').val();
+            var Parent1Email = $('#studentParent1Email').val();
+
+            var Parent2Name = $('#studentParent2Name').val();
+            var Parent2Occupation = $('#studentParent2Occupation').val();
+            var Parent2Phone = $('#studentParent2Phone').val();
+            var Parent2Email = $('#studentParent2Email').val();
+
+            var CareerApplying = $('#studentCareerApplying').val();
+            var CountryApplying = $('#studentCountryApplying').val();
+            var ApplicationYear = $('#studentApplicationYear').val();
+            var FinacialAidNeeded = $('#studentFinacialAidNeeded').val();
+            var Counsellor = $('#studentCounsellor').val();
+
+            var filter = /^[7-9][0-9]{9}$/;
+
+            if (Name == '' || Name == null) {
+                $('#msgStudent').text('Please enter Name.');
+                $('#msgStudent').show();
+                $('#studentName').focus();
+                return;
+            }
+            else {
+                $('#msgStudent').text('');
+                $('#msgStudent').hide();
+            }
+
+            if (Grade == '' || Grade == null) {
+                $('#msgGrade').text('Please enter Grade.');
+                $('#msgGrade').show();
+                $('#studentGrade').focus();
+                return;
+            }
+            else {
+                $('#msgGrade').text('');
+                $('#msgGrade').hide();
+            }
+            if (School == '' || School == null) {
+                $('#msgSchool').text('Please enter School.');
+                $('#msgSchool').show();
+                $('#studentSchool').focus();
+                return;
+            }
+            else {
+                $('#msgSchool').text('');
+                $('#msgSchool').hide();
+            }
+            if (Phone == '' || Phone == null) {
+                $('#msgPhone').text('Please enter Phone No.');
+                $('#msgPhone').show();
+                $('#studentPhone').focus();
+                return;
+            }
+            else {
+                $('#msgPhone').text('');
+                $('#msgPhone').hide();
+            }
+
+            if (filter.test(Phone)) {
+                $('#msgPhone').text('');
+                $('#msgPhone').hide();
+            }
+            else {
+                $('#msgPhone').text("Please enter valid mobile no.");
+                $('#msgPhone').show();
+                return;
+            }
+
+
+            if (Email == '' || Email == null) {
+                $('#msgEmail').text('Please enter Email.');
+                $('#msgEmail').show();
+                $('#studentEmail').focus();
+                return;
+            }
+            else {
+                $('#msgEmail').text('');
+                $('#msgEmail').hide();
+            }
+            if (Gender == '' || Gender == null || Gender == '--Select--') {
+                $('#msgGender').text('Please select Gender.');
+                $('#msgGender').show();
+                $('#studentGender').focus();
+                return;
+            }
+            else {
+                $('#msgGender').text('');
+                $('#msgGender').hide();
+            }
+            if (Product == '' || Product == null) {
+                $('#msgProduct').text('Please enter Product.');
+                $('#msgProduct').show();
+                $('#studentProduct').focus();
+                return;
+            }
+            else {
+                $('#msgProduct').text('');
+                $('#msgProduct').hide();
+            }
+
+            if (InstallmentCount == '' || InstallmentCount == null || InstallmentCount == '--Select--') {
+                $('#msgInstallment').text('Please select Installment No.');
+                $('#msgInstallment').show();
+                $('#txtInstallment').focus();
+                return;
+            }
+            else {
+                $('#msgInstallment').text('');
+                $('#msgInstallment').hide();
+            }
+
+            if (Concession == 2) {
+                if (ConcessionAmount == '' || ConcessionAmount == null) {
+                    $('#msgConAmt').text('Please select Installment No.');
+                    $('#msgConAmt').show();
+                    $('#txtConAmt').focus();
+                    return;
+                }
+                else {
+                    $('#msgConAmt').text('');
+                    $('#msgConAmt').hide();
+                }
+            }
+
+
+            if (Picture == '' || Picture == null) {
+                $('#msgPicture').text('Please choose Picture.');
+                $('#msgPicture').show();
+                $('#studentPicture').focus();
+                return;
+            }
+            else {
+                $('#msgPicture').text('');
+                $('#msgPicture').hide();
+            }
+            if (Parent1Name == '' || Parent1Name == null) {
+                $('#msgParent1Name').text('Please enter Parent Name.');
+                $('#msgParent1Name').show();
+                $('#studentParent1Name').focus();
+                return;
+            }
+            else {
+                $('#msgParent1Name').text('');
+                $('#msgParent1Name').hide();
+            }
+            if (Parent1Occupation == '' || Parent1Occupation == null) {
+                $('#msgParent1Occupation').text('Please enter Parent Occupation.');
+                $('#msgParent1Occupation').show();
+                $('#studentParent1Occupation').focus();
+                return;
+            }
+            else {
+                $('#msgParent1Occupation').text('');
+                $('#msgParent1Occupation').hide();
+            }
+            if (Parent1Phone == '' || Parent1Phone == null) {
+                $('#msgParent1Phone').text('Please enter Parent Phone.');
+                $('#msgParent1Phone').show();
+                $('#studentParent1Phone').focus();
+                return;
+            }
+            else {
+                $('#msgParent1Phone').text('');
+                $('#msgParent1Phone').hide();
+            }
+
+            if (filter.test(Parent1Phone)) {
+                $('#msgParent1Phone').text('');
+                $('#msgParent1Phone').hide();
+            }
+            else {
+                $('#msgParent1Phone').text("Please enter valid mobile no.");
+                $('#msgParent1Phone').show();
+                return;
+            }
+
+
+            if (Parent1Email == '' || Parent1Email == null) {
+                $('#msgParent1Email').text('Please enter Parent Email.');
+                $('#msgParent1Email').show();
+                $('#studentParent1Email').focus();
+                return;
+            }
+            else {
+                $('#msgParent1Email').text('');
+                $('#msgParent1Email').hide();
+            }
+            if (Parent2Name == '' || Parent2Name == null) {
+                $('#msgParent2Name').text('Please enter Parent Name.');
+                $('#msgParent2Name').show();
+                $('#studentParent2Name').focus();
+                return;
+            }
+            else {
+                $('#msgParent2Name').text('');
+                $('#msgParent2Name').hide();
+            }
+            if (Parent2Occupation == '' || Parent2Occupation == null) {
+                $('#msgParent2Occupation').text('Please enter Parent Occupation.');
+                $('#msgParent2Occupation').show();
+                $('#studentParent2Occupation').focus();
+                return;
+            }
+            else {
+                $('#msgParent2Occupation').text('');
+                $('#msgParent2Occupation').hide();
+            }
+            if (Parent2Phone == '' || Parent2Phone == null) {
+                $('#msgParent2Phone').text('Please enter Parent Phone.');
+                $('#msgParent2Phone').show();
+                $('#studentParent2Phone').focus();
+                return;
+            }
+            else {
+                $('#msgParent2Phone').text('');
+                $('#msgParent2Phone').hide();
+            }
+
+            if (filter.test(Parent2Phone)) {
+                $('#msgParent2Phone').text('');
+                $('#msgParent2Phone').hide();
+            }
+            else {
+                $('#msgParent2Phone').text("Please enter valid mobile no.");
+                $('#msgParent2Phone').show();
+                return;
+            }
+
+            if (Parent2Email == '' || Parent2Email == null) {
+                $('#msgParent2Email').text('Please enter Parent Email.');
+                $('#msgParent2Email').show();
+                $('#studentParent2Email').focus();
+                return;
+            }
+            else {
+                $('#msgParent2Email').text('');
+                $('#msgParent2Email').hide();
+            }
+            if (CareerApplying == '' || CareerApplying == null) {
+                $('#msgCareerApplying').text('Please enter Career Applying.');
+                $('#msgCareerApplying').show();
+                $('#studentCareerApplying').focus();
+                return;
+            }
+            else {
+                $('#msgCareerApplying').text('');
+                $('#msgCareerApplying').hide();
+            }
+            if (CountryApplying == '' || CountryApplying == null) {
+                $('#msgCountryApplying').text('Please enter Country Applying.');
+                $('#msgCountryApplying').show();
+                $('#studentCountryApplying').focus();
+                return;
+            }
+            else {
+                $('#msgCountryApplying').text('');
+                $('#msgCountryApplying').hide();
+            }
+            if (ApplicationYear == '' || ApplicationYear == null) {
+                $('#msgApplicationYear').text('Please enter Application Year.');
+                $('#msgApplicationYear').show();
+                $('#studentApplicationYear').focus();
+                return;
+            }
+            else {
+                $('#msgApplicationYear').text('');
+                $('#msgApplicationYear').hide();
+            }
+            if (FinacialAidNeeded == '' || FinacialAidNeeded == null) {
+                $('#msgFinacialAidNeeded').text('Please enter Finacial Aid Needed.');
+                $('#msgFinacialAidNeeded').show();
+                $('#studentFinacialAidNeeded').focus();
+                return;
+            }
+            else {
+                $('#msgFinacialAidNeeded').text('');
+                $('#msgFinacialAidNeeded').hide();
+            }
+            if (Counsellor == '' || Counsellor == null || Counsellor == '--Select Counsellor--') {
+                $('#msgCounsellorList').text('Please select Counsellor.');
+                $('#msgCounsellorList').show();
+                $('#studentCounsellor').focus();
+                return;
+            }
+            else {
+                $('#msgCounsellorList').text('');
+                $('#msgCounsellorList').hide();
+            }
+
+
+            Name = escapeHtml(Name);
+            Grade = escapeHtml(Grade);
+            School = escapeHtml(School);
+            Phone = escapeHtml(Phone);
+            Email = escapeHtml(Email);
+            Gender = escapeHtml(Gender);
+            Product = escapeHtml(Product);
+            Picture = escapeHtml(Picture);
+
+            Parent1Name = escapeHtml(Parent1Name);
+            Parent1Occupation = escapeHtml(Parent1Occupation);
+            Parent1Phone = escapeHtml(Parent1Phone);
+            Parent1Email = escapeHtml(Parent1Email);
+
+            Parent2Name = escapeHtml(Parent2Name);
+            Parent2Occupation = escapeHtml(Parent2Occupation);
+            Parent2Phone = escapeHtml(Parent2Phone);
+            Parent2Email = escapeHtml(Parent2Email);
+
+            CareerApplying = escapeHtml(CareerApplying);
+            CountryApplying = escapeHtml(CountryApplying);
+            ApplicationYear = escapeHtml(ApplicationYear);
+            FinacialAidNeeded = escapeHtml(FinacialAidNeeded);
+            Counsellor = escapeHtml(Counsellor);
+            InstallmentCount = escapeHtml(InstallmentCount);
+            IsConcession = escapeHtml(Concession);
+            ConcessionAmount = escapeHtml(ConcessionAmount);
+
+            data.push({
+                Name: Name,
+                Grade: Grade,
+                School: School,
+                Phone: Phone,
+                Email: Email,
+                Gender: Gender,
+                Product: Product,
+                Picture: Picture,
+
+                Parent1Name: Parent1Name,
+                Parent1Occupation: Parent1Occupation,
+                Parent1Phone: Parent1Phone,
+                Parent1Email: Parent1Email,
+
+                Parent2Name: Parent2Name,
+                Parent2Occupation: Parent2Occupation,
+                Parent2Phone: Parent2Phone,
+                Parent2Email: Parent2Email,
+
+                CareerApplying: CareerApplying,
+                CountryApplying: CountryApplying,
+                ApplicationYear: ApplicationYear,
+                FinacialAidNeeded: FinacialAidNeeded,
+                Counsellor: Counsellor,
+                InstallmentCount: InstallmentCount,
+                IsConcession: Concession,
+                ConcessionAmount: ConcessionAmount
+            });
+
+            for (var i = 1; i <= InstallmentCount; i++) {
+
+                let InsDate = $('#InstallmentDate' + i + '').val();
+                let InsAmt = $('#Installment' + i + '').val();
+
+                if (InsAmt == '' || InsAmt == null) {
+                    $('#msgInstallment' + i + '').text('Please enter intallment.');
+                    $('#msgInstallment' + i + '').show();
+                    $('#Installment' + i + '').focus();
+                    return;
+                }
+                else {
+                    $('#msgInstallment' + i + '').text('');
+                    $('#msgInstallment' + i + '').hide();
+                }
+
+
+                if (InsDate == '' || InsDate == null) {
+                    $('#msgInstallmentDate' + i + '').text('Please enter intallment Date.');
+                    $('#msgInstallmentDate' + i + '').show();
+                    $('#InstallmentDate' + i + '').focus();
+                    return;
+                }
+                else {
+                    $('#msgInstallmentDate' + i + '').text('');
+                    $('#msgInstallmentDate' + i + '').hide();
+                }
+
+                Insdata.push({
+                    InsDate: InsDate,
+                    InsAmt: InsAmt
+                });
+            }
+
+
+            var fileUpload = $("input[name='studentFichier']").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            var json = JSON.stringify(data);
+
+            var jsonIns = JSON.stringify(Insdata);
+
+            $("#StudentSubmit").text('Processing...');
+            $("#StudentSubmit").attr("disabled", true);
+            $("#StudentBack").attr("disabled", true);
+
+            $.ajax
+                ({
+                    url: "/AddNew/InsertStudentStatus?json=" + json + "&Id=" + Id + "&jsonIns=" + jsonIns + "",
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    data: fileData,
+                    success: function (drr) {
+
+                        $("#StudentSubmit").text('Update');
+                        $("#StudentSubmit").attr("disabled", false);
+                        $("#StudentBack").attr("disabled", false);
+
+                        var Str = "";
+                        var StrMain = "Record has been update successfully.";
+                        var url = "/Dashboard/Dashboard/?Str=" + Str + "&StrMain=" + StrMain;
+                        clearflied();
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+
+        $("#txtInstallment").change(function () {
+            InstallmentFn();
+        });
+
+        $('#divConAmt').hide();
+        $("#txtConcession").change(function () {
+            var cons = $("#txtConcession").val();
+            if (cons == 1) {
+                $('#divConAmt').hide();
+                $('#txtConAmt').val('0');
+            }
+            else {
+                $('#divConAmt').show();
+                $('#txtConAmt').val('');
+            }
+        });
+
+        function InstallmentFn() {
+            var Count = $("#txtInstallment").val();
+            var InsCount = parseInt(Count);
+            var htm = '';
+            for (var i = 1; i <= InsCount; i++) {
+                htm += '<div class="form-group col-sm-3 col-12 date"><label>Installment ' + i + ' <sup>*</sup></label><input type="text" id="Installment' + i + '" class="form-control"><label style="display:none;color:red" id="msgInstallment' + i + '"></label></div><div class="form-group col-sm-3 col-12 date"><label>Installment Deadline ' + i + ' <sup>*</sup></label><input type="text" id="InstallmentDate' + i + '" class="form-control InsDate" readonly><label style="display:none;color:red" id="msgInstallmentDate' + i + '"></label></div>';
+            }
+            $('#InstallmentDate').html(htm);
+            for (var i = 1; i <= InsCount; i++) {
+                var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+                $('#InstallmentDate' + i + '').datepicker({
+                    uiLibrary: 'bootstrap4',
+                    iconsLibrary: 'fontawesome',
+                    minDate: today,
+                    maxDate: function () {
+                        return $('#endDate').val();
+                    }
+                });
+            }
+        }
+
+        //$('#txtInstallment').keyup(function () {
+        //    if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+        //        this.value = this.value.replace(/[^0-9\.]/g, '');
+        //    }
+        //});
+        $('#txtConAmt').keyup(function () {
+            if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            }
+        });
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        $(window).on('load', function () {
+            setTimeout(function () { $("#msgErroStudent").hide(); }, 4000);
+        });
+
+    });
+
+</script>

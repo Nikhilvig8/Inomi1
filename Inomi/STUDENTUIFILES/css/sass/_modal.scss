@@ -1,0 +1,47 @@
+.cmn-modal {
+  .xl-modal-dialog {
+    max-width: 1000px;
+  }
+  .modal-header {
+    border: none;
+    padding-bottom: 0;
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+  }
+  .modal-footer {
+    border: none;
+    justify-content: flex-start;
+    padding-top: 0;
+    .btn {
+      border-radius: 5px !important;
+    }
+  }
+}
+button.close {
+  background-color: #3ba6de;
+  border: 1px solid #3ba6de;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  opacity: 1;
+  color: #fff;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: none;
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    outline: none;
+  }
+}
+.modal-backdrop {
+  z-index: 9999;
+}

@@ -1,0 +1,121 @@
+﻿@model Inomi.Models.Student.Dashboard
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<style>
+    .cmn-table {
+        max-height: 470px;
+        overflow: auto;
+    }
+</style>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Format</h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h2>LoR List</h2>
+
+            </div>
+
+            @using (Html.BeginForm("LoR", "Student", FormMethod.Get, new { id = "demoForm", name = "demoForm" }))
+            {
+                @Html.DropDownList("FooBarDropDown", new List<SelectListItem>
+               {
+                   new SelectListItem{ Text="LoR", Value = "LoR" },
+                  new SelectListItem{ Text="Bragsheet", Value = "Bragsheet" }
+
+                 }, "Select Format", new { Class = "form-control", onchange = "SelectedIndexChanged()" })
+            }
+            <br/>
+
+
+            <div class="table-responsive cmn-table">
+                <table id="example" class="table example table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">LoRs</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LORDetail.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <tr>
+                                <td>@item.Data.LoRs</td>
+                                <td>@item.Data.LoRsSize MB</td>
+                                <td>
+                                    <a href="/Student/Download?CurrentFileName=@item.Data.LoRspath">
+                                        <button type="button" class="btn blue-btn">
+                                            Download
+                                        </button>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+
+            @*<div class="col-md-6">
+            <div class="table-responsive cmn-table">
+                <table id="example" class="table example table-striped">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Bragsheet</th>
+                            <th scope="col">Size</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BragsheetDetail.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <tr>
+
+                                <td>Bragsheet Dummy text file name</td>
+                                <td>@item.Data.BragsheetSize MB</td>
+                                <td>
+                                    <a href="/Student/Download?CurrentFileName=@item.Data.BragsheetPath">
+                                        <button type="button" class="btn blue-btn">
+                                            Download
+                                        </button>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>*@
+
+
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.example').DataTable();
+
+    });
+    function SelectedIndexChanged() {
+        //Form post
+        document.demoForm.submit();
+    }
+</script>

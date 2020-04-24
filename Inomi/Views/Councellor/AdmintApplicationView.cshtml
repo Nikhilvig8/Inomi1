@@ -1,0 +1,277 @@
+﻿@model Inomi.Models.Student.Dashboard
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Application View</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-details-cover application-view">
+            <div class="filter-section">
+
+                <div class="search-section">
+                    <h2 class="d-flex justify-content-between align-items-center">Search <button class="btn blue-btn" id="reset">Reset</button></h2>
+
+                    <div class="form-group mb-0">
+                        <label>Councellor List</label>
+
+                        <div class="selectdiv">
+
+                            @Html.DropDownList("CouncellorList", (IEnumerable<SelectListItem>)ViewBag.CouncellorList, "Select", htmlAttributes: new { @class = "form-control" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label>Student List</label>
+
+                        <div class="selectdiv">
+
+                            @Html.DropDownList("StudentList", (IEnumerable<SelectListItem>)ViewBag.StudentList, "Select", htmlAttributes: new { @class = "form-control" })
+
+                        </div>
+                    </div>
+
+                    @*<div class="form-group mb-0">
+                            <label>Course</label>
+                            <div class="selectdiv">
+                                @Html.DropDownList("CourseList", (IEnumerable<SelectListItem>)ViewBag.courselist, "Select", htmlAttributes: new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Application through</label>
+
+                            <div class="selectdiv">
+
+                                @Html.DropDownList("ApplicationThrough", (IEnumerable<SelectListItem>)ViewBag.ApplicationThrough, "Select", htmlAttributes: new { id = "ApplicationThrough", @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+
+                            <div class="selectdiv">
+
+                                @Html.DropDownList("CountryList", (IEnumerable<SelectListItem>)ViewBag.CountryList, "Select", htmlAttributes: new { id = "CountryList", @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>City</label>
+                            <div class="selectdiv">
+                                @Html.DropDownList("CityList", new SelectList(string.Empty, "Value", "Text"), "Select", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>*@
+
+                </div>
+
+                @*<div class="checkbox-section">
+                        <h2>Filter Results</h2>
+                        <div class="checkbox-repeat-cover" data-simplebar>
+
+                            <div class="checkbox-inner">
+
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        SAT Total 25th-75th Percentile
+                                        <input type="checkbox" id="Sat" value="SAT Total 25th-75th Percentile" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        US News Ranking
+                                        <input type="checkbox" id="UsNewsranking" value="USNewsRanking" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        QS World Ranking
+                                        <input type="checkbox" id="QsWorldRanking" value="QsWorldRanking" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        QS By Subject Ranking
+                                        <input type="checkbox" id="QSBySubject" value="QSBySubject" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        Early Decision Deadline
+                                        <input type="checkbox" id="EarlyDate" value="EarlyDate" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="custom-checkbox">
+
+                                    <label class="checkbox">
+                                        Application Deadline
+                                        <input type="checkbox" id="ApplicationDeadline" value="ApplicationDeadline" />
+                                        <span class="checkbox-checkmark"></span>
+                                    </label>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>*@
+            </div>
+            <div class="result-section">
+                <!-- Nav pills -->
+                <div class="tabs-header-section">
+                    <ul>
+                        <li class="dark">
+                            List
+                        </li>
+                        <li>
+                            <ul class="nav nav-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="tab"
+                                       data-toggle="pill"
+                                       href="#home">All</a>
+                                </li>
+                                @*<li class="nav-item">
+                                    <a class="nav-link " data-toggle="pill" href="#home">Longlist</a>
+                                </li>*@
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#home">Final List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+
+                        <div class="filter-selected-content-cover">
+                            <div class="selected-content-header">
+                                <h3>College/School Name</h3>
+                                <h3>List</h3>
+                            </div>
+
+                            <div class="selected-content-body" data-simplebar id="selectedContent" style="height:400px; overflow:auto">
+
+                                @foreach (var item in Model.Collegeshortlist.Select((x, i) => new { Data = x, Index = i + 1 }))
+                                {
+                                    <div class="common-university-box">
+                                        <div class="university-header">
+                                            <h3 class="university-name">@item.Data.NameOfCollege</h3>
+                                            <h3 class="selected-university ">
+
+                                                @if (@item.Data.adminstatus == "-")
+                                                {
+                                                    <div class="dropdown">
+                                                        @Html.Hidden("CollegeID", @item.Data.sequenceid)
+                                                        <button class="btn btn-default dropdown-toggle p-0 add-text"
+                                                                type="button"
+                                                                data-toggle="dropdown">
+                                                           
+                                                                <i class="fa fa-plus"></i><span class="btn blue-btn" style="color:white">@item.Data.counsellorstatus</span>
+                                                            
+
+
+                                                        </button>
+                                                        <ul class="dropdown-menu select-list">
+
+                                                            <li><a href="#">Final List</a></li>
+                                                        </ul>
+                                                    </div>
+
+                                                }
+
+                                                else
+                                                {
+
+                                                    <span class="btn blue-btn">@item.Data.adminstatus</span>
+
+                                                }
+
+                                            </h3>
+                                        </div>
+                                        <div class="university-content">
+                                            <div id="overview" class="myaccordion">
+                                                <div class="card-cover">
+                                                    <div class="card">
+                                                        <div class="card-header" id="Cricket">
+                                                            <h2 class="mb-0">
+                                                                <button class="d-flex align-items-center btn btn-link"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#Cricket_@item.Index"
+                                                                        aria-expanded="false"
+                                                                        aria-controls="Cricket">
+                                                                    <span class="fa-stack fa-sm mr-2">
+                                                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                                                        <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                                                                    </span>
+                                                                    Overview
+                                                                </button>
+                                                            </h2>
+                                                        </div>
+                                                        <div id="Cricket_@item.Index"
+                                                             class="collapse"
+                                                             aria-labelledby="Cricket1"
+                                                             data-parent="#overview">
+                                                            <div class="card-body">
+                                                                <p>
+                                                                    @item.Data.Description
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="menu1">...</div>
+                    <div class="tab-pane container fade" id="menu2">...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+
+<link href="~/STUDENTUIFILES/css/style.css" rel="stylesheet" />
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+<script src="~/Scripts/Custom/AdminApplicationView.js"></script>
+
+
+
+
+
+

@@ -1,0 +1,751 @@
+﻿@{
+    ViewBag.Title = "My Profile";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">My Profile</h2>
+                </div>
+                <div>
+                    @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                    {
+                        <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                            @TempData["Message"]
+                        </label>
+
+                    }
+                    <label id="tab" style="display:none"> @TempData["tab"]</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (DataRow row in Model.Rows)
+            {
+                <div class="col-12 col-sm-5 col-md-3">
+                    <div class="report-details-cover zeroBorderRadius blueBackground" id="profile-left-box">
+                        <div class="profile-cover">
+                            <div class="profile-image">
+                                <img src="@row["Attribute1"].ToString()" alt="profile image" />
+                                @*<label for="file-input" class="edit-profile-image">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </label>*@
+
+                            </div>
+
+                            <div class="profile-details">
+                                <div class="cmn-row">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="15px" height="15px">
+                                        <path fill-rule="evenodd" fill="rgb(255, 255, 255)"
+                                              d="M12.421,9.538 C11.663,8.780 10.761,8.219 9.777,7.880 C10.831,7.153 11.524,5.938 11.524,4.564 C11.524,2.345 9.719,0.540 7.500,0.540 C5.281,0.540 3.476,2.345 3.476,4.564 C3.476,5.938 4.169,7.153 5.223,7.880 C4.239,8.219 3.337,8.780 2.579,9.538 C1.264,10.853 0.540,12.601 0.540,14.460 L1.628,14.460 C1.628,11.222 4.262,8.587 7.500,8.587 C10.738,8.587 13.373,11.222 13.373,14.460 L14.460,14.460 C14.460,12.601 13.736,10.853 12.421,9.538 ZM7.500,7.500 C5.881,7.500 4.564,6.183 4.564,4.564 C4.564,2.945 5.881,1.628 7.500,1.628 C9.119,1.628 10.436,2.945 10.436,4.564 C10.436,6.183 9.119,7.500 7.500,7.500 Z" />
+                                    </svg>
+                                    <span>@row["Name"].ToString()</span>
+                                </div>
+                                <div class="cmn-row">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="16px" height="16px">
+                                        <path fill-rule="evenodd" fill="rgb(255, 255, 255)"
+                                              d="M4.332,12.144 C4.023,12.144 3.772,11.893 3.772,11.584 C3.772,11.275 4.023,11.024 4.332,11.024 C4.641,11.024 4.892,11.275 4.892,11.584 C4.892,11.893 4.641,12.144 4.332,12.144 ZM4.332,7.272 C4.023,7.272 3.772,7.021 3.772,6.712 C3.772,6.403 4.023,6.152 4.332,6.152 C4.641,6.152 4.892,6.403 4.892,6.712 C4.892,7.021 4.641,7.272 4.332,7.272 ZM4.332,9.708 C4.023,9.708 3.772,9.457 3.772,9.148 C3.772,8.839 4.023,8.588 4.332,8.588 C4.641,8.588 4.892,8.839 4.892,9.148 C4.892,9.457 4.641,9.708 4.332,9.708 ZM6.768,12.144 C6.459,12.144 6.208,11.893 6.208,11.584 C6.208,11.275 6.459,11.024 6.768,11.024 C7.077,11.024 7.328,11.275 7.328,11.584 C7.328,11.893 7.077,12.144 6.768,12.144 ZM6.768,7.272 C6.459,7.272 6.208,7.021 6.208,6.712 C6.208,6.403 6.459,6.152 6.768,6.152 C7.077,6.152 7.328,6.403 7.328,6.712 C7.328,7.021 7.077,7.272 6.768,7.272 ZM6.768,9.708 C6.459,9.708 6.208,9.457 6.208,9.148 C6.208,8.839 6.459,8.588 6.768,8.588 C7.077,8.588 7.328,8.839 7.328,9.148 C7.328,9.457 7.077,9.708 6.768,9.708 ZM14.608,7.944 C14.299,7.944 14.048,7.693 14.048,7.384 L14.048,4.192 C14.048,3.574 13.546,3.072 12.928,3.072 L12.200,3.072 L12.200,3.632 C12.200,3.941 11.949,4.192 11.640,4.192 C11.331,4.192 11.080,3.941 11.080,3.632 L11.080,3.072 L8.532,3.072 L8.532,3.632 C8.532,3.941 8.281,4.192 7.972,4.192 C7.663,4.192 7.412,3.941 7.412,3.632 L7.412,3.072 L4.892,3.072 L4.892,3.632 C4.892,3.941 4.641,4.192 4.332,4.192 C4.023,4.192 3.772,3.941 3.772,3.632 L3.772,3.072 L3.072,3.072 C2.454,3.072 1.952,3.574 1.952,4.192 L1.952,12.928 C1.952,13.546 2.454,14.048 3.072,14.048 L7.356,14.048 C7.665,14.048 7.916,14.299 7.916,14.608 C7.916,14.917 7.665,15.168 7.356,15.168 L3.072,15.168 C1.837,15.168 0.832,14.163 0.832,12.928 L0.832,4.192 C0.832,2.957 1.837,1.952 3.072,1.952 L3.772,1.952 L3.772,1.392 C3.772,1.083 4.023,0.832 4.332,0.832 C4.641,0.832 4.892,1.083 4.892,1.392 L4.892,1.952 L7.412,1.952 L7.412,1.392 C7.412,1.083 7.663,0.832 7.972,0.832 C8.281,0.832 8.532,1.083 8.532,1.392 L8.532,1.952 L11.080,1.952 L11.080,1.392 C11.080,1.083 11.331,0.832 11.640,0.832 C11.949,0.832 12.200,1.083 12.200,1.392 L12.200,1.952 L12.928,1.952 C14.163,1.952 15.168,2.957 15.168,4.192 L15.168,7.384 C15.168,7.693 14.917,7.944 14.608,7.944 ZM8.644,6.712 C8.644,6.403 8.895,6.152 9.204,6.152 C9.513,6.152 9.764,6.403 9.764,6.712 C9.764,7.021 9.513,7.272 9.204,7.272 C8.895,7.272 8.644,7.021 8.644,6.712 ZM11.080,6.712 C11.080,6.403 11.331,6.152 11.640,6.152 C11.949,6.152 12.200,6.403 12.200,6.712 C12.200,7.021 11.949,7.272 11.640,7.272 C11.331,7.272 11.080,7.021 11.080,6.712 ZM11.780,8.392 C13.648,8.392 15.168,9.912 15.168,11.780 C15.168,13.648 13.648,15.168 11.780,15.168 C9.912,15.168 8.392,13.648 8.392,11.780 C8.392,9.912 9.912,8.392 11.780,8.392 ZM11.780,14.048 C13.031,14.048 14.048,13.031 14.048,11.780 C14.048,10.529 13.031,9.512 11.780,9.512 C10.529,9.512 9.512,10.529 9.512,11.780 C9.512,13.031 10.529,14.048 11.780,14.048 ZM11.780,10.072 C12.089,10.072 12.340,10.323 12.340,10.632 L12.340,11.220 L12.592,11.220 C12.901,11.220 13.152,11.471 13.152,11.780 C13.152,12.089 12.901,12.340 12.592,12.340 L11.780,12.340 C11.471,12.340 11.220,12.089 11.220,11.780 L11.220,10.632 C11.220,10.323 11.471,10.072 11.780,10.072 Z" />
+                                    </svg>
+                                    <span>Joined About @row["CreatedDateTime"].ToString()</span>
+                                </div>
+                                <div class="cmn-row" style="display:none">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="12px" height="19px">
+                                        <path fill-rule="evenodd" fill="rgb(255, 255, 255)"
+                                              d="M11.250,0.221 L0.750,0.221 C0.363,0.221 0.050,0.535 0.050,0.921 L0.050,17.453 C0.050,17.743 0.228,18.003 0.498,18.107 C0.768,18.211 1.074,18.138 1.269,17.923 L6.000,12.697 L10.731,17.923 C10.926,18.138 11.232,18.211 11.502,18.107 C11.772,18.003 11.950,17.743 11.950,17.453 L11.950,0.921 C11.950,0.535 11.637,0.221 11.250,0.221 ZM10.550,15.636 L6.519,11.183 C6.386,11.037 6.198,10.953 6.000,10.953 C5.802,10.953 5.614,11.037 5.481,11.183 L1.450,15.636 L1.450,1.622 L10.550,1.622 L10.550,15.636 Z" />
+                                    </svg>
+                                    <span></span>
+                                </div>
+                                <div class="cmn-row" style="display:none">
+                                    <img src="/images/location.png" alt="location icon">
+                                    <span>3 months ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-7 col-md-9">
+                    <div class="report-details-cover zeroBorderRadius" id="profile-right-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav class="nav-tabs-cover">
+                                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                        <button type="button" class="nav-item nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="task" aria-selected="false">
+                                            <span>About</span>
+                                        </button>
+                                        <button type="button" class="nav-item nav-link" id="education-tab" data-toggle="tab" href="#education" role="tab" aria-controls="college" aria-selected="false" style="display:none">
+                                            <span>Education</span>
+                                        </button>
+                                        <button type="button" class="nav-item nav-link" id="experience-tab" data-toggle="tab" href="#experience" role="tab" aria-controls="course" aria-selected="false">
+                                            <span>Experience</span>
+                                        </button>
+                                        <button type="button" class="nav-item nav-link" id="achievements-tab" data-toggle="tab" href="#achievements" role="tab" aria-controls="country" aria-selected="false">
+                                            <span>Achievements</span>
+                                        </button>
+                                        <button type="button" class="nav-item nav-link" id="linksUp-tab" data-toggle="tab" href="#linksUp" role="tab" aria-controls="course" aria-selected="false">
+                                            <span>Links up</span>
+                                        </button>
+                                    </div>
+                                </nav>
+                                <div class="tab-content px-sm-0 clearfix" id="nav-tabContent">
+
+                                    <div class="tab-pane active" id="about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                        <div class="row">
+                                            <div class="form-group col-12 txt-info">
+                                                <div class="d-flex">
+                                                    <span>Phone:</span><span id="lblPhone">@row["Phone"].ToString()</span>
+                                                    <div class="form-group" id="txtPhone">
+                                                        <input type="text" id="CslPhone" class="form-control" value="@row["Phone"].ToString()">
+                                                        <label style="display:none;color:red" id="msgCslPhone"></label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label id="lblCounsellorId" style="display:none">@row["Id"].ToString()</label>
+                                                    <label id="lblCountryId" style="display:none">@row["CountryId"].ToString()</label>
+                                                    <label id="lblCityId" style="display:none">@row["CityId"].ToString()</label>
+
+
+                                                    <div class="d-flex">
+                                                        <span>Address:</span><span id="lblAddress">@row["Address"].ToString()</span>
+
+                                                        <div class="counsellor-from container p-0" id="txtAddress">
+                                                            <div class="row">
+                                                                <div class="form-group  col-6">
+                                                                    <div class="selectdiv">
+                                                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "CslCountry" })
+                                                                    </div>
+                                                                    <label style="display:none;color:red" id="msgCslCountry"></label>
+                                                                </div>
+                                                                <div class="form-group col-6">
+                                                                    <div class="selectdiv">
+                                                                        <select id="CslCity">
+                                                                        </select>
+                                                                    </div>
+                                                                    <label style="display:none;color:red" id="msgCslCity"></label>
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div id="txtPicture">
+                                                        <div class="d-flex">
+
+                                                            <span>Picture</span>
+                                                            <div class="form-group">
+
+                                                                <div class="input-group input-file" name="CounsellorFichier">
+                                                                    <input type="text" id="CslPicture" class="form-control" placeholder='Choose a file...' value="@row["Picture"].ToString()" />
+                                                                    <span class="input-group-btn" style="width:auto">
+                                                                        <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                                                    </span>
+                                                                </div>
+                                                                <label style="display:none;color:red" id="msgCslPicture"></label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <span>Email:</span><a href="javascript:void;">@row["Email"].ToString()</a>
+                                                </p>
+                                                <p style="display:none"><span>Site:</span><span><a href="javascript:void;"></a> </span></p>
+                                                <h3 style="display:none">Basic Information</h3>
+
+                                                <p style="display:none"><span>Birthday:</span><span></span></p>
+                                                <p style="display:none"><span>Gender:</span><span></span></p>
+                                            </div>
+                                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                                <button type="submit" id="About" class="btn blue-btn">Edit</button>
+                                                <button type="submit" id="AboutSave" class="btn dark-grey-btn back-hide-show">Save </button>
+                                                <button type="submit" id="AboutBack" class="btn dark-grey-btn back-hide-show">Back </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="nav-contact-tab" style="display:none">
+                                        <div class="row">
+                                            <div class="form-group col-12 txt-info">
+                                                <p><span>Qualification:</span><span></span></p>
+                                                <p>
+                                                    <span>Certificate:</span><span>
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                                <button type="submit" class="btn blue-btn">Edit</button>
+                                                <button type="submit" class="btn dark-grey-btn back-hide-show">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane" id="experience" role="tabpanel" aria-labelledby="nav-about-tab">
+                                        <div class="row">
+                                            <div class="form-group col-12 txt-info">
+                                                <p>
+                                                    <span>Experience Name:</span><span id="lblExperience">@row["Experience"].ToString()</span>
+                                                    <span id="txtExperience"><input type="text" id="CslExperience" class="form-control" value="@row["Experience"].ToString()"></span>
+                                                    <label style="display:none;color:red" id="msgCslExperience"></label>
+                                                </p>
+                                            </div>
+                                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                                <button type="submit" id="Experience" class="btn blue-btn">Edit</button>
+                                                <button type="submit" id="ExperienceSave" class="btn dark-grey-btn back-hide-show">Save </button>
+                                                <button type="submit" id="ExperienceBack" class="btn dark-grey-btn back-hide-show">Back </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane" id="achievements" role="tabpanel" aria-labelledby="nav-about-tab">
+                                        <div class="row">
+                                            <div class="form-group col-12 txt-info">
+                                                <p>
+                                                    <span>Achievements Name :</span><span id="lblAchievement">
+                                                        @row["Achievements"].ToString()
+                                                    </span>
+                                                    <span id="txtAchievement"><input type="text" id="CslAchievement" class="form-control" value="@row["Achievements"].ToString()"></span>
+                                                    <label style="display:none;color:red" id="msgCslAchievement"></label>
+                                                </p>
+
+                                            </div>
+                                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                                <button type="submit" id="Achievement" class="btn blue-btn">Edit</button>
+                                                <button type="submit" id="AchievementsSave" class="btn dark-grey-btn back-hide-show">Save </button>
+                                                <button type="submit" id="AchievementsBack" class="btn dark-grey-btn back-hide-show">Back </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tab-pane" id="linksUp" role="tabpanel" aria-labelledby="nav-about-tab">
+                                        <div class="row">
+                                            <div class="form-group col-12 txt-info">
+                                                <p>
+                                                    <span>Write ups :</span><span id="lbllinksUp"><a href="@row["Link"].ToString()">@row["Link"].ToString()</a> </span>
+
+                                                    <span id="txtlinksUp"><input type="text" id="CsllinksUp" class="form-control" value="@row["Link"].ToString()"></span>
+                                                    <label style="display:none;color:red" id="msgCsllinksUp"></label>
+
+                                                </p>
+                                            </div>
+                                            <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                                                <button type="submit" id="linksUpEdit" class="btn blue-btn">Edit</button>
+                                                <button type="submit" id="linksUpSave" class="btn dark-grey-btn back-hide-show">Save </button>
+                                                <button type="submit" id="linksUpBack" class="btn dark-grey-btn back-hide-show">Back </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#AboutSave').hide();
+        $('#AboutBack').hide();
+        $('#ExperienceSave').hide();
+        $('#ExperienceBack').hide();
+        $('#AchievementsSave').hide();
+        $('#AchievementsBack').hide();
+        $('#linksUpSave').hide();
+        $('#linksUpBack').hide();
+        $('#txtPicture').hide();
+
+
+        $('#txtAddress').hide();
+        $('#txtPhone').hide();
+        $('#txtExperience').hide();
+        $('#txtAchievement').hide();
+        $('#txtlinksUp').hide();
+
+
+        $("#CslCountry").change(function () {
+            var selectedCountry = $("#CslCountry option:selected").val();
+            $.ajax
+                ({
+                    url: "/AddNew/GetCityList?Cid=" + selectedCountry + "",
+                    type: "Get",
+                    success: function (data) {
+                        var item = JSON.parse(data);
+                        var CityList = '<option value="">--Select--</option>';
+                        for (var i = 0; i < item.length; i++) {
+                            CityList += '<option value="' + item[i].CTID + '">' + item[i].Name + '</option>';
+                        }
+                        $("#CslCity").html(CityList);
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+
+        });
+
+
+        $('#About').click(function () {
+            $('#lblPhone').hide();
+            $('#lblAddress').hide();
+            $('#About').hide();
+            $('#txtPicture').show();
+
+            $('#txtAddress').show();
+            $('#txtPhone').show();
+            $('#AboutSave').show();
+            $('#AboutBack').show();
+        });
+
+        $('#AboutBack').click(function () {
+            $('#lblPhone').show();
+            $('#lblAddress').show();
+            $('#About').show();
+            $('#AboutSave').hide();
+            $('#AboutBack').hide();
+            $('#txtAddress').hide();
+            $('#txtPhone').hide();
+            $('#txtPicture').hide();
+
+        });
+
+        $('#AboutSave').click(function () {
+
+            debugger
+
+            var fileUpload = $("input[name='CounsellorFichier']").get(0);
+            var files = fileUpload.files;
+
+            var fileData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            var filter = /^[7-9][0-9]{9}$/;
+
+            function escapeHtml(emailBody) {
+                return emailBody
+                    .replace(/&/g, "~amp;")
+                    .replace(/</g, "~lt;")
+                    .replace(/>/g, "~gt;")
+                    .replace(/"/g, "~quot;")
+                    .replace(/'/g, "~039;")
+                    .replace(/#/g, "~040;");
+            }
+
+            var Id = $('#lblCounsellorId').text();
+            var Phone = $('#CslPhone').val();
+            var country = $('#CslCountry').val();
+            var city = $('#CslCity').val();
+            var Picture = $('#CslPicture').val();
+
+
+            if (Phone == '' || Phone == null) {
+                $('#msgCslPhone').text('Please enter Phone.');
+                $('#msgCslPhone').show();
+                $('#CslPhone').focus();
+                return;
+            } else {
+                $('#msgCslPhone').text('');
+                $('#msgCslPhone').hide();
+            }
+
+            if (filter.test(Phone)) {
+                $('#msgCslPhone').text('');
+                $('#msgCslPhone').hide();
+            }
+            else {
+                $('#msgCslPhone').text("Please enter valid mobile no.");
+                $('#msgCslPhone').show();
+                return;
+            }
+
+
+            if (country == '' || country == null) {
+                $('#msgCslCountry').text('Please select Country.');
+                $('#msgCslCountry').show();
+                $('#CslCountry').focus();
+                return;
+            } else {
+                $('#msgCslCountry').text('');
+                $('#msgCslCountry').hide();
+            }
+
+
+            if (city == '' || city == null) {
+                $('#msgCslCity').text('Please select City.');
+                $('#msgCslCity').show();
+                $('#CslCity').focus();
+                return;
+            } else {
+                $('#msgCslCity').text('');
+                $('#msgCslCity').hide();
+            }
+            if (Picture == '' || Picture == null) {
+                $('#msgCslPicture').text('Please choose Picture.');
+                $('#msgCslPicture').show();
+                $('#CslPicture').focus();
+                return;
+            } else {
+                $('#msgCslPicture').text('');
+                $('#msgCslPicture').hide();
+            }
+
+
+            $.ajax
+                ({
+                    url: "/MyProfile/InsertMyProfileAbount?Id=" + escapeHtml(Id) + "&Phone=" + escapeHtml(Phone) + "&country=" + escapeHtml(country) + "&city=" + escapeHtml(city) + "&Picture=" + Picture + "",
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    data: fileData,
+                    success: function (drr) {
+
+                        var tab = "About";
+                        var StrMain = "Record has been update successfully.";
+                        var url = "/MyProfile/MyProfile/?StrMain=" + StrMain + "&tab=" + tab;
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+
+        $('#Experience').click(function () {
+            $('#lblExperience').hide();
+            $('#Experience').hide();
+            $('#txtExperience').show();
+            $('#ExperienceSave').show();
+            $('#ExperienceBack').show();
+        });
+
+        $('#ExperienceBack').click(function () {
+            $('#lblExperience').show();
+            $('#Experience').show();
+
+            $('#txtExperience').hide();
+            $('#ExperienceSave').hide();
+            $('#ExperienceBack').hide();
+            $('#msgCslExperience').text('');
+            $('#msgCslExperience').hide();
+        });
+
+        $('#ExperienceSave').click(function () {
+
+
+            function escapeHtml(emailBody) {
+                return emailBody
+                    .replace(/&/g, "~amp;")
+                    .replace(/</g, "~lt;")
+                    .replace(/>/g, "~gt;")
+                    .replace(/"/g, "~quot;")
+                    .replace(/'/g, "~039;")
+                    .replace(/#/g, "~040;");
+            }
+
+            var Id = $('#lblCounsellorId').text();
+            var Experience = $('#CslExperience').val();
+
+
+
+            if (Experience == '' || Experience == null) {
+                $('#msgCslExperience').text('Please enter experience.');
+                $('#msgCslExperience').show();
+                $('#CslExperience').focus();
+                return;
+            } else {
+                $('#msgCslExperience').text('');
+                $('#msgCslExperience').hide();
+            }
+
+
+
+            $.ajax
+                ({
+                    url: "/MyProfile/InsertMyProfileExperience?Id=" + escapeHtml(Id) + "&Experience=" + escapeHtml(Experience) + "",
+                    type: "Get",
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    //data: fileData,
+                    success: function (drr) {
+
+                        var tab = "Experience";
+                        var StrMain = "Record has been update successfully.";
+                        var url = "/MyProfile/MyProfile/?StrMain=" + StrMain + "&tab=" + tab;
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+
+
+        $('#Achievement').click(function () {
+            $('#lblAchievement').hide();
+            $('#Achievement').hide();
+            $('#txtAchievement').show();
+            $('#AchievementsSave').show();
+            $('#AchievementsBack').show();
+        });
+
+        $('#AchievementsBack').click(function () {
+            $('#lblAchievement').show();
+            $('#Achievement').show();
+
+            $('#txtAchievement').hide();
+            $('#AchievementsSave').hide();
+            $('#AchievementsBack').hide();
+
+            $('#msgCslAchievement').text('');
+            $('#msgCslAchievement').hide();
+        });
+
+        $('#AchievementsSave').click(function () {
+
+
+            function escapeHtml(emailBody) {
+                return emailBody
+                    .replace(/&/g, "~amp;")
+                    .replace(/</g, "~lt;")
+                    .replace(/>/g, "~gt;")
+                    .replace(/"/g, "~quot;")
+                    .replace(/'/g, "~039;")
+                    .replace(/#/g, "~040;");
+            }
+
+            var Id = $('#lblCounsellorId').text();
+            var Achievement = $('#CslAchievement').val();
+
+
+
+            if (Achievement == '' || Achievement == null) {
+                $('#msgCslAchievement').text('Please enter achievement.');
+                $('#msgCslAchievement').show();
+                $('#CslAchievement').focus();
+                return;
+            } else {
+                $('#msgCslAchievement').text('');
+                $('#msgCslAchievement').hide();
+            }
+
+
+
+            $.ajax
+                ({
+                    url: "/MyProfile/InsertMyProfileAchievement?Id=" + escapeHtml(Id) + "&Achievement=" + escapeHtml(Achievement) + "",
+                    type: "Get",
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    //data: fileData,
+                    success: function (drr) {
+
+                        var tab = "Achievement";
+                        var StrMain = "Record has been update successfully.";
+                        var url = "/MyProfile/MyProfile/?StrMain=" + StrMain + "&tab=" + tab;
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+
+
+        $('#linksUpEdit').click(function () {
+            $('#lbllinksUp').hide();
+            $('#linksUpEdit').hide();
+
+            $('#txtlinksUp').show();
+            $('#linksUpSave').show();
+            $('#linksUpBack').show();
+        });
+
+        $('#linksUpBack').click(function () {
+            $('#lbllinksUp').show();
+            $('#linksUpEdit').show();
+
+            $('#txtlinksUp').hide();
+            $('#linksUpSave').hide();
+            $('#linksUpBack').hide();
+            $('#msgCsllinksUp').text('');
+            $('#msgCsllinksUp').hide();
+        });
+
+        $('#linksUpSave').click(function () {
+
+
+            function escapeHtml(emailBody) {
+                return emailBody
+                    .replace(/&/g, "~amp;")
+                    .replace(/</g, "~lt;")
+                    .replace(/>/g, "~gt;")
+                    .replace(/"/g, "~quot;")
+                    .replace(/'/g, "~039;")
+                    .replace(/#/g, "~040;");
+            }
+
+            var Id = $('#lblCounsellorId').text();
+            var linksUp = $('#CsllinksUp').val();
+
+
+
+            if (linksUp == '' || linksUp == null) {
+                $('#msgCsllinksUp').text('Please enter achievement.');
+                $('#msgCsllinksUp').show();
+                $('#CsllinksUp').focus();
+                return;
+            } else {
+                $('#msgCsllinksUp').text('');
+                $('#msgCsllinksUp').hide();
+            }
+
+
+
+            $.ajax
+                ({
+                    url: "/MyProfile/InsertMyProfilelinksUp?Id=" + escapeHtml(Id) + "&linksUp=" + escapeHtml(linksUp) + "",
+                    type: "Get",
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    //data: fileData,
+                    success: function (drr) {
+
+                        var tab = "linksUp";
+                        var StrMain = "Record has been update successfully.";
+                        var url = "/MyProfile/MyProfile/?StrMain=" + StrMain + "&tab=" + tab;
+                        window.location.href = url;
+                    },
+                    Error: function (err) {
+                        Console.log(err);
+                    }
+                });
+        });
+
+
+        $('#about').show();
+
+        var tab = $('#tab').text().trim();
+
+
+        if ('Experience' == tab) {
+            $('#experience-tab').addClass('active');
+            $('#about-tab').removeClass('active');
+            $('#experience').show();
+            $('#about').hide();
+        }
+        else if ('Achievement' == tab) {
+            $('#achievements-tab').addClass('active');
+            $('#about-tab').removeClass('active');
+            $('#achievements').show();
+            $('#about').hide();
+        }
+        else if ('linksUp' == tab) {
+            $('#linksUp-tab').addClass('active');
+            $('#about-tab').removeClass('active');
+            $('#linksUp').show();
+            $('#about').hide();
+        }
+
+
+        $('#about-tab').click(function () {
+
+            $('#about').show();
+            $('#experience').hide();
+            $('#achievements').hide();
+            $('#linksUp').hide();
+        });
+        $('#experience-tab').click(function () {
+            $('#about').hide();
+            $('#experience').show();
+            $('#achievements').hide();
+            $('#linksUp').hide();
+        });
+        $('#achievements-tab').click(function () {
+            $('#about').hide();
+            $('#experience').hide();
+            $('#achievements').show();
+            $('#linksUp').hide();
+        });
+        $('#linksUp-tab').click(function () {
+            $('#about').hide();
+            $('#experience').hide();
+            $('#achievements').hide();
+            $('#linksUp').show();
+        });
+
+
+
+    });
+
+    $(window).on('load', function () {
+        $("#CslCountry").val($('#lblCountryId').text());
+        var selectedCountry = $("#CslCountry option:selected").val();
+        $.ajax
+            ({
+                url: "/AddNew/GetCityList?Cid=" + selectedCountry + "",
+                type: "Get",
+                success: function (data) {
+                    var item = JSON.parse(data);
+                    var CityList = '<option value="">--Select--</option>';
+                    for (var i = 0; i < item.length; i++) {
+                        CityList += '<option value="' + item[i].CTID + '">' + item[i].Name + '</option>';
+                    }
+                    $("#CslCity").html(CityList);
+                    $("#CslCity").val($('#lblCityId').text());
+                },
+                Error: function (err) {
+                    Console.log(err);
+                }
+            });
+
+
+        setTimeout(function () { $("#msgErroStudent").hide(); }, 4000);
+
+
+    });
+
+
+</script>

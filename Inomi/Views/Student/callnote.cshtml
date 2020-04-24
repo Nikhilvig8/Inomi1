@@ -1,0 +1,162 @@
+﻿@model Inomi.Models.Student.Dashboard
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<style>
+    .cmn-table {
+        max-height: 400px;
+        overflow: auto;
+    }
+</style>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Call Note</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="report-details-cover">
+            <div class="row clone">
+                <div class="form-group col-sm-3 col-12 date">
+                    <label>Date</label>
+
+                    <input type="text" id="CallNoteDate" name="CallNoteDate" class="form-control  CallNoteDate" onkeyup="$(this).val('')" />
+
+
+                </div>
+                <div class="form-group col-sm-3 col-12">
+                    <label>Academics</label>
+                    @Html.Editor("Academics", new { htmlAttributes = new { @class = "form-control Academics" } })
+                </div>
+                <div class="form-group col-sm-3 col-12">
+                    <label>Testing</label>
+                    @Html.Editor("Testing", new { htmlAttributes = new { @class = "form-control Testing" } })
+                </div>
+                <div class="form-group col-sm-3 col-12">
+                    <label>College</label>
+                    @Html.Editor("College", new { htmlAttributes = new { @class = "form-control College" } })
+                </div>
+                <div class="form-group col-sm-12 col-12">
+                    <label>Project </label>
+                    <div class="form-group col-sm-12 col-12">
+                        <textarea cols="10" rows="1" id="Project1" name="Project1" class="Project1"> </textarea>
+                    </div>
+                    @*@Html.TextArea("Project1", new { htmlAttributes = new { @class = "form-control Project1" } })*@
+                </div>
+                @*<div class="form-group col-sm-3 col-12">
+                        <label>Project 2</label>
+                        @Html.Editor("Project2", new { htmlAttributes = new { @class = "form-control Project2" } })
+                    </div>*@
+                <div class="form-group col-sm-3 col-12">
+                    <label>Extra Curricular</label>
+                    @Html.Editor("ExtraCurricular", new { htmlAttributes = new { @class = "form-control ExtraCurricular" } })
+                </div>
+                <div class="form-group col-sm-3 col-12">
+                    <label>Misc</label>
+                    @Html.Editor("Misc", new { htmlAttributes = new { @class = "form-control Misc" } })
+                </div>
+                <div class="form-group col-sm-3 col-12">
+                    <label>Suggested course</label>
+                    @Html.Editor("Suggestedcourse", new { htmlAttributes = new { @class = "form-control Suggestedcourse" } })
+                </div>
+                <div class="d-flex bttn-box col-12 mb-4 mt-2">
+
+                    <button type="button" class="btn blue-btn" id="btnSave">Submit</button>
+
+                </div>
+            </div>
+            <div class="report-details">
+                <h2>Call Note List</h2>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table id="example" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr No</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Academics</th>
+                            <th scope="col">Testing</th>
+                            <th scope="col">College</th>
+                            <th scope="col">Project 1</th>
+                            @*<th scope="col">Project 2</th>*@
+                            <th scope="col">Extra Curricular</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CallNote.Select((x, i) => new { Data = x, Index = i + 1 }))
+                        {
+                            <tr>
+                                <td>@item.Index</td>
+                                <td>@item.Data.Date.Value.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @item.Data.Academics
+                                </td>
+                                <td>@item.Data.Testing</td>
+                                <td>@item.Data.College</td>
+                                <td>
+                                    @Html.Raw(@item.Data.Project1)
+                                    
+                                </td>
+                                @*<td>@item.Data.Project2</td>*@
+                                <td>@item.Data.ExtraCurricular  </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+<script>
+    var ckEditorID;
+
+    ckEditorID = 'Project1';
+
+    function fnConsolePrint() {
+        //console.log($('#' + ckEditorID).val());
+        console.log(CKEDITOR.instances[ckEditorID].getData());
+    }
+    CKEDITOR.config.forcePasteAsPlainText = true;
+    CKEDITOR.replace(ckEditorID, {
+        toolbar: [
+            {
+                items: [
+                    'Bold',
+                    'Italic',
+                    'Underline',
+                    'Strike',
+                    '-',
+                    'RemoveFormat'
+                ]
+            },
+            {
+                items: ['Format']
+            },
+            {
+                items: ['Link', 'Unlink']
+            },
+            {
+                items: ['Indent', 'Outdent', '-', 'BulletedList', 'NumberedList']
+            },
+            {
+                items: ['Undo', 'Redo']
+            }
+        ]
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="~/Scripts/Custom/Dashboard.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script> 

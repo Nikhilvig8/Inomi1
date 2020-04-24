@@ -1,0 +1,283 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Career";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Career</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- simple scrollbar-->
+    <link rel="stylesheet"
+          href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/style-questionnaire.css" />
+</head>
+<body class="inner-page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light  fixed-top top-navbar">
+            <a class="navbar-brand" href="#">
+                <img src="~/images/inomi-logo.png" class="inomi-logo" alt="inomi logo" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse top-nav-content"
+                 id="navbarSupportedContent">
+                <ul class="nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
+                            <div class="d-inline-block align-middle">
+                                <span class="bold-fonts">@FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name</span>
+                                <br />
+                                <span>Student</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="/LoginQuestionnaire/LogOut" id="navbarDropdown">
+                            <i class="material-icons">
+                                power_settings_new
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper mb-5">
+        <div class="content mt-cmn" id="content">
+            <div class="container-fluid">
+                <div class="signature-strength-results career-page">
+                    <h2>@ViewBag.CareerFields.MainField - @ViewBag.CareerFields.SubField</h2>
+                    <p class="career-txt">
+                        @ViewBag.Description.MainFieldDescription
+                    </p>
+                    <h5>@ViewBag.CareerFields.SubField</h5>
+                    <p class="career-second">
+                        @ViewBag.Description.SubFieldDescription
+                    </p>
+                    @if (ViewBag.CourseWork != null)
+                    {
+                        <div class="career-resources">
+                            <h2>Courses</h2>
+                            <div class="career-resources-content">
+                                @{
+                                    string s = ViewBag.CourseWork.CourseWork;
+                                    string[] str = s.Split(';');
+                                }
+
+                                @foreach (var item in str)
+                                {
+                                    <div class="career-resources-cmn-box">
+                                        <h3>@item</h3>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <br />
+
+                    <div class="reading-content-cover">
+                        @if (ViewBag.Reading.Count > 0)
+                        {
+                            <div class="reading-resources">
+                                <h2>Reading resources</h2>
+                                <div class="reading-resources-content" data-simplebar>
+                                    @foreach (var item in @ViewBag.Reading)
+                                    {
+                                        if (item.Link != "#")
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/reading-resources-icon.png"
+                                                         alt="stanford logo" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.Name</h3>
+                                                    <p><a href="http://@item.Link" target="_blank">Link</a></p>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/reading-resources-icon.png" alt="stanford logo" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.Name</h3>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.Videos.Count > 0)
+                        {
+                            <div class="reading-resources">
+                                <h2>Videos to watch</h2>
+                                <div class="reading-resources-content" data-simplebar>
+                                    @foreach (var item in @ViewBag.Videos)
+                                    {
+                                        if (item.Link.Contains("http"))
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/video-icon.png" alt="stanford logo" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.Video</h3>
+                                                    <p>
+                                                        <a href="@item.Link" target="_blank">
+                                                            @item.Link
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/video-icon.png" alt="stanford logo" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.Video</h3>
+
+                                                    <p>
+                                                        <a href="http://@item.Link" target="_blank">
+                                                            http://@item.Link
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.OnlineCourses.Count > 0)
+                        {
+                            <div class="reading-resources">
+                                <h2>Online courses</h2>
+                                <div class="reading-resources-content" data-simplebar>
+                                    @foreach (var item in @ViewBag.OnlineCourses)
+                                    {
+                                        if (item.Link.Contains("http"))
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/online-courses-icon.png" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.OnlineCourse</h3>
+
+                                                    <p>
+                                                        <a href="@item.Link" target="_blank">
+                                                            @item.Link
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="reading-resources-cmn-box courses">
+                                                <div class="img-cover">
+                                                    <img src="~/images/online-courses-icon.png" />
+                                                </div>
+                                                <div class="image-content">
+                                                    <h3>@item.OnlineCourse</h3>
+
+                                                    <p>
+                                                        <a href="http://@item.Link" target="_blank">
+                                                            http://@item.Link
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="d-flex mt-3">
+                <button class="btn btn-info button bg-button login-button"
+                        type="button"
+                        style="margin-left:1rem"
+                        onclick="window.location.href = '/DashBoardQuestionnaire/DashBoard';">
+                    BACK
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer>
+        <p>inomi © <label id="year">2019</label> All rights reserved.</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- simple scrollbar-->
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+    <script>
+        var course = '@ViewBag.OnlineCourses.Count';
+        var reading = '@ViewBag.Reading.Count';
+        var video = '@ViewBag.Videos.Count';
+        if ((course <= 0) || (reading <= 0) || (video <= 0))
+        {
+            $('.reading-content-cover').css('grid-template-columns', 'repeat(2, 1fr)')
+        }
+        if (((course <= 0) && (reading <= 0)) || ((course <= 0) && (video <= 0)) || ((video <= 0) && (reading <= 0))) {
+            $('.reading-content-cover').css('grid-template-columns', 'repeat(1, 1fr)')
+        }
+
+    </script>
+    <script>
+        $(document).ready(function (e) {
+            var d = new Date();
+            var year = d.getFullYear();
+            $("#year").text(year);
+
+        });
+    </script>
+</body>
+</html>

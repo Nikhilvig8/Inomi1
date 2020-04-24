@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "FAQ Master";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">FAQ Master</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw">
+            <div>
+                @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                {
+                    <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                        @TempData["Message"]
+                    </label>
+
+                }
+            </div>
+            <div class="reports-hdr row">
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Question</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtQuestion" />
+                    </div>
+                    <label id="lblQuestion" style="color:red"></label>
+                    <input style="display:none" type="text" id="IdQuestion" class="form-control">
+                </div>
+                <div class="col-12 col-sm-4 form-group">
+                    <label>Answer</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtAnswer" />
+                    </div>
+                    <label id="lblAnswer" style="color:red"></label>
+                </div>
+                <div class="d-flex col-12">
+                    <button type="submit" class="btn blue-btn" id="btnSubmit">Submit</button>
+                    <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="report-details-cover">
+
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="FAQDetails">
+                    <thead>
+                        <tr>
+                            <th scope="col">Question</th>
+                            <th scope="col">Answer</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row["Question"].ToString()</td>
+                                <td>@row["Answer"].ToString()</td>
+                                <td>
+                                    <label id="ID" style="display: none;">@row["Id"]</label>
+                                    <button type="button" class="fas fa-trash" id="delete"></button>
+                                    <button type="button" class="fas fa-pencil-alt" id="edit"></button>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Js/FAQMaster.js"></script>

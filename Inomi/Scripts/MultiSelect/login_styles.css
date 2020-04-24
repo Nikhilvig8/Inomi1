@@ -1,0 +1,105 @@
+﻿
+.loginbg {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+    box-shadow: 1px 1px 8px #CCCCCC;
+    float: left;
+    height:400px;
+    margin:28px auto 0 260px;
+    position: relative;
+    top: 75px;padding:0;
+    width: 450px;
+}
+
+.logoimg {
+    float: left;
+    left: 78px;
+    position:absolute;
+    top: -50px;
+    width: auto;
+}
+.usrname {
+    float: left;
+    margin: 2px 10%;
+    width: 80%;
+}
+.usermain {
+    cursor: pointer;
+    float: left;
+    margin: 2px 10%;
+    width: 80%;
+}
+.usermain span {
+    color: #989797;
+    float: left;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 5px 1% 0;
+    width: 56%;
+}
+.usermain input {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px #CCCCCC;
+    color: #989797;
+    float: left;
+    padding: 13px 2%;
+    width: 94%;
+}
+.rember {
+    float: left;
+    margin-left: 3px;
+    margin-top: 11px;
+    width: 40%;
+}
+.forgot {
+    float: left;
+    margin-top: 8px;
+    width: auto;
+    font-size:14px;
+    color:#139AC6;
+}
+.forgot a{   
+    color:#139AC6;
+}
+.forgot a:hover{   
+    text-decoration:none;
+}
+.rember label {
+    color: #363636;
+    float: right;
+    left: -25px;
+    line-height: 12px;
+    padding-left: 5px;
+    position: relative;font-size:14px;
+}
+.forgot span {
+    float: right;
+    text-align: right;
+    width: 100%;
+}
+.forgot span a {
+    color: #224292;
+    float: left;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 0 0 4%;
+    text-decoration: underline;
+    width: 96%;
+}
+.floatleft a {
+    color: #067705;
+    text-decoration: underline;
+}
+.clearboth, .dashboardgrid, .ui-datepicker-calendar {
+    clear: both;
+}
+.loginbutton {
+    background: url("../../images/loginbtn.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 none;
+    cursor: pointer;
+    float: left;
+    height: 53px;
+    width: 360px;
+}

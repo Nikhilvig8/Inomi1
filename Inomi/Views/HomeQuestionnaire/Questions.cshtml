@@ -1,0 +1,186 @@
+﻿@model IEnumerable<DataLayer.Sp_QuestionChecked_Result>
+
+
+@{
+    Layout = null;
+    ViewBag.Title = "Questions";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Questions Details</title>
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
+          rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"
+          rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- simple scrollbar-->
+    <link rel="stylesheet"
+          href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/style-questionnaire.css" />
+</head>
+<body class="inner-page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light  fixed-top top-navbar">
+            <a class="navbar-brand" href="#">
+                <img src="~/images/inomi-logo.png" class="inomi-logo" alt="inomi logo" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse top-nav-content"
+                 id="navbarSupportedContent">
+                <ul class="nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
+                            <div class="d-inline-block align-middle">
+                                <span class="bold-fonts">@FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name</span>
+                                <br />
+                                <span>Student</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="/LoginQuestionnaire/LogOut" id="navbarDropdown">
+                            <i class="material-icons">
+                                power_settings_new
+                            </i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="wrapper mb-5">
+        <div class="content mt-cmn" id="content">
+            <div class="container-fluid">
+                <div class="question-selections-cover">
+                    <table class="table questiontable" id="tblQuestion">
+                        <thead>
+                            <tr>
+                                <div class="top">
+                                    <h2>Test Questions</h2>
+                                    <h2 class="select-answer">Select Answer</h2>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody class="questions-box-cover" data-simplebar>
+                            @{
+                                int i = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                <tr class="questions-details-cover">
+                                    <td class="questions-box">
+                                        <p>
+                                            Q @i. @Html.DisplayFor(modelItem => item.Question)
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <div class="age-cover cmn-dropdown-icon">
+                                            <div class="questions-select-cover">
+                                                <select class="form-control minimal" id="@item.Id">
+                                                    <option value="5">Threshold</option>
+                                                    <option value="10">Average</option>
+                                                    <option value="15">Exceptional</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="display:none;">
+                                        <input type="hidden" id="QuestionId" value="@item.Id" />
+                                        <input type="hidden" id="SubStrengthId" value="@item.SubStrengthId" />
+                                        <input type="hidden" id="SubStrengthValue" value="@item.SubStrength" />
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        </tbody>
+                    </table>
+                    <div class="instructions">
+                        <h2>Instructions</h2>
+                        <p>
+                            Figure out your “Signature Styles” Here is a list of ordinary
+                            activities from everyday life. As you read through each
+                            statement,make a quick assessment about whether it is something
+                            you enjoy doing or are good at doing, and mark it on this simple
+                            scale:
+                        </p>
+                        <div class="button-value">
+                            <div class="first-box mb-3">
+                                <h3>Threshold</h3>
+                                <p>
+                                    I do this occasionally or at a beginner’s level. I am really
+                                    just about okay on this
+                                </p>
+                            </div>
+                            <div class="second-box mb-3">
+                                <h3>Average</h3>
+                                <p>I do it fine, not too great, but not bad either</p>
+                            </div>
+                        </div>
+                        <div class="button-value">
+                            <div class="first-box">
+                                <h3>Exceptional</h3>
+                                <p>
+                                    I know I am good at this. Note: “Exceptional” does not mean
+                                    “genius” like Da Vinci or Einstien. Just very good in your
+                                    own eyes. When in doubt, be generous to yourself!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <button class="btn btn-info button bg-button login-button"
+                                    type="button"
+                                    id="Submit">
+                                SUBMIT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>inomi © <label id="year">2019</label> All rights reserved.</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- simple scrollbar-->
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+    <script src="~/Js/Js.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            var d = new Date();
+            var year = d.getFullYear();
+            $("#year").text(year);
+
+        });
+    </script>
+</body>
+</html>

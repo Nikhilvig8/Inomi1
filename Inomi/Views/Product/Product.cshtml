@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Product";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Payments</h2>
+                </div>
+            </div>
+        </div>
+        <div class="payments-cover">
+            <div class="pay-header">
+                <h2>Lorem Ipsum is simply dummy text</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and</p>
+            </div>
+            <div class="payments-contents col-12">
+                <div class="row">
+
+                    @foreach (DataRow row in Model.Rows)
+                    {
+
+                        <div class="col-md-3 col-sm-4 col-12">
+                            <div class="products-cmn">
+                                <a href="/Product/ProductInfo/@row["Id"].ToString()">
+                                    <img src="@row["Attribute1"].ToString()" alt="common product" style="width:81px; height:81px" />
+                                </a>
+                                <p>@row["Name"].ToString()</p>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

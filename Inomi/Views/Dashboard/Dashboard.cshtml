@@ -1,0 +1,673 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Dashboard</h2>
+                    <div class="col-xl-4 ">
+                        <div class="kpi-bg-cmn kpi-bg1">
+                            <nav class="nav-tabs-cover d-flex justify-content-between">
+                                <div class="nav nav-tabs nav-fill col-8  p-0" id="nav-tab" role="tablist">
+                                    <button type="button" class="nav-item nav-link active" id="Product" data-toggle="tab" href="#product" role="tab" aria-controls="student" aria-selected="true">
+                                        <span>Product</span>
+                                    </button>
+                                    <button type="button" class="nav-item nav-link" id="Student" data-toggle="tab" href="#student" role="tab" aria-controls="counsellor" aria-selected="false">
+                                        <span>Student</span>
+                                    </button>
+                                </div>
+                                <div class="form-group m-0 col-4 p-0">
+                                    <div class="selectdiv">
+                                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "ProductId" })
+                                    </div>
+                                </div>
+                            </nav>
+                            <div class="tab-content px-sm-0 clearfix" id="nav-tabContent">
+                                <div class="tab-pane fade show active " id="columnchart_material" role="tabpanel" aria-labelledby="nav-home-tab">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 ">
+                        <div class="kpi-bg-cmn kpi-bg2">
+                            <h2>Pending Task</h2>
+                            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--desktop m-grid--ver-desktop m-body__content">
+                                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                                    <div class="m-content">
+                                        <!--Begin::Main Portlet-->
+                                        <div class="m-portlet">
+                                            <div class="m-portlet__body  m-portlet__body--no-padding">
+                                                <div class="m-row--no-padding m-row--col-separator-xl">
+                                                    <!--begin:: Widgets/Profit Share-->
+                                                    <div class="m-widget14">
+                                                        <div class="row  align-items-center">
+                                                            <div class="col">
+                                                                <div id="m_chart_profit_share"
+                                                                     class="m-widget14__chart"
+                                                                     style="height: 170px">
+                                                                    <div class="m-widget14__stat" id="TotalCount">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="m-widget14__legends">
+                                                                    <a href="/PendingTask/PendingTask?Str=Messages" class="m-widget14__legend">
+                                                                        <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                                                        <span class="m-widget14__legend-text">
+                                                                            Message
+                                                                            <label id="lblTask" style="display:none"></label>
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="/PendingTask/PendingTask?Str=Essays" class="m-widget14__legend">
+                                                                        <span class="m-widget14__legend-bullet m--bg-warning"></span>
+                                                                        <span class="m-widget14__legend-text">
+                                                                            Essay
+                                                                            <label id="lblEssays" style="display:none"></label>
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="/PendingTask/PendingTask?Str=Task" class="m-widget14__legend">
+                                                                        <span class="m-widget14__legend-bullet m--bg-brand"></span>
+                                                                        <span class="m-widget14__legend-text">
+                                                                            Task
+                                                                            <label id="lblMessages" style="display:none"></label>
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end:: Widgets/Profit Share-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End::Main Portlet-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 ">
+                        <div class="kpi-bg-cmn kpi-bg2">
+                            <h2>Total application</h2>
+                            <div class="m-grid__item m-grid__item--fluid m-grid m-grid--desktop m-grid--ver-desktop m-body__content">
+                                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                                    <div class="m-content">
+                                        <!--Begin::Main Portlet-->
+                                        <div class="m-portlet">
+                                            <div class="m-portlet__body  m-portlet__body--no-padding">
+                                                <div class="m-row--no-padding m-row--col-separator-xl">
+                                                    <!--begin:: Widgets/Profit Share-->
+                                                    <div class="m-widget14">
+                                                        <div class="row  align-items-center">
+                                                            <div class="col">
+                                                                <div id="m_chart_profit_share_Appliction"
+                                                                     class="m-widget14__chart"
+                                                                     style="height: 170px">
+                                                                    <div class="m-widget14__stat" id="TotalAppliction">
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="m-widget14__legends">
+                                                                    <a href="/StudentReport/StudentReport?Str=Accepted" class="m-widget14__legend">
+                                                                        <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                                                        <span class="m-widget14__legend-text">
+                                                                            Accepted
+                                                                            
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="/StudentReport/StudentReport?Str=Rejected" class="m-widget14__legend">
+                                                                        <span class="m-widget14__legend-bullet m--bg-warning"></span>
+                                                                        <span class="m-widget14__legend-text">
+                                                                            Rejected
+                                                                           
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end:: Widgets/Profit Share-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End::Main Portlet-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="report-details-cover">
+                <div>
+                    @if (TempData["Message"] != null || TempData["Message"].ToString() != "")
+                    {
+                        <label style="font:bold;color:forestgreen;font-size: medium;margin-right: 575px;" id="msgErroStudent" class="diff-hd">
+                            @TempData["Message"]
+                        </label>
+
+                    }
+                    <label id="tab" style="display:none"> @TempData["tab"]</label>
+                </div>
+                <div id="StudentGrid">
+                    <div class="report-details">
+                        <h2>Reports</h2>
+                        <div class="reports-hdr">
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select Year--", new { @class = "selectdiv", @id = "studentApplicationYear", @title = "Search by year" })
+                            </div>
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.SchoolList, "--Select School--", new { @class = "selectdiv", @id = "School", @title = "Search by school" })
+                            </div>
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select Student--", new { @class = "selectdiv", @id = "ddlStudent", @title = "Search by student" })
+                            </div>
+                            <div class="d-flex">
+                                <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                                <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive cmn-table">
+                        <table class="table table-striped" id="dashboardStudent">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Grade</th>
+                                    <th scope="col">School</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Application Year</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (DataRow row in Model.Rows)
+                                {
+                                    <tr>
+                                        <td>@row["Student"].ToString()</td>
+                                        <td>@row["Grade"].ToString()</td>
+                                        <td>@row["School"].ToString()</td>
+                                        <td>@row["City"].ToString()</td>
+                                        <td>@row["Country"].ToString()</td>
+                                        <td>@row["Product"].ToString()</td>
+                                        <td>@row["ApplicationYear"].ToString()</td>
+                                        <td>@row["Status"].ToString()</td>
+                                        <td><label id="ID" style="display: none;">@row["Id"]</label><button type="button" class="fas fa-trash" id="delete"></button><button type="button" class="fas fa-pencil-alt" id="edit"></button></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="student" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="student-form row">
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Name<sup>*</sup></label>
+                            <input type="text" id="studentName" class="form-control">
+                            <input style="display:none" type="text" id="NameId" class="form-control">
+                            <label style="display:none;color:red" id="msgStudent"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Grade<sup>*</sup></label>
+                            <input type="text" id="studentGrade" class="form-control">
+                            <label style="display:none; color:red" id="msgGrade"></label>
+
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>School<sup>*</sup></label>
+                            <input type="text" id="studentSchool" class="form-control">
+                            <label style="display:none; color:red" id="msgSchool"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Phone<sup>*</sup></label>
+                            <input type="text" id="studentPhone" class="form-control">
+                            <label style="display:none; color:red" id="msgPhone"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Email<sup>*</sup></label>
+                            <input type="email" id="studentEmail" class="form-control">
+                            <label style="display:none; color:red" id="msgEmail"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+                            <label>Gender<sup>*</sup></label>
+                            <div class="selectdiv">
+                                <select id="studentGender">
+                                    <option selected>--Select--</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Transgender</option>
+                                </select>
+                            </div>
+                            <label style="display:none; color:red" id="msgGender"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Product<sup>*</sup></label>
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "studentProduct" })
+                            </div>
+                            <label style="display:none; color:red" id="msgProduct"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Installment Type<sup>*</sup></label>
+                            <div class="selectdiv">
+                                <select id="txtInstallment">
+                                    <option selected>--Select--</option>
+                                    <option value="1">First Installment</option>
+                                    <option value="2">Second Installment</option>
+                                    <option value="3">Third Installment</option>
+                                    <option value="4">Fourth Installment</option>
+                                </select>
+                            </div>
+                            <label style="display:none; color:red" id="msgInstallment"></label>
+                        </div>
+
+                        <div class="form-group col-12">
+                            <div class="row" id="InstallmentDate">
+                                @*Dynamic textBox*@
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Concession<sup>*</sup></label>
+                            <div class="selectdiv">
+                                <select id="txtConcession">
+                                    <option value="1" selected>No</option>
+                                    <option value="2">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-3 col-12" id="divConAmt">
+                            <label>Concession Amount<sup>*</sup></label>
+                            <input type="text" id="txtConAmt" class="form-control">
+                            <label style="display:none; color:red" id="msgConAmt"></label>
+                        </div>
+
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Picture<sup>*</sup></label>
+                            <div class="input-group input-file" name="studentFichier" id="fileClick">
+                                <input type="text" id="studentPicture" class="form-control" placeholder='Choose a file...' />
+                                <span class="input-group-btn">
+                                    <button class="btn blue-btn btn-choose" type="button">Upload</button>
+                                </span>
+                            </div>
+                            <label style="display:none; color:red" id="msgPicture"></label>
+                        </div>
+                        <div class="form-group col-12">
+                            <h3>Parent 1</h3>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Name<sup>*</sup></label>
+                            <input type="text" id="studentParent1Name" class="form-control">
+                            <label style="display:none; color:red" id="msgParent1Name"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Occupation<sup>*</sup></label>
+                            <input type="text" id="studentParent1Occupation" class="form-control">
+                            <label style="display:none; color:red" id="msgParent1Occupation"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Phone<sup>*</sup></label>
+                            <input type="text" id="studentParent1Phone" class="form-control">
+                            <label style="display:none; color:red" id="msgParent1Phone"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Email<sup>*</sup></label>
+                            <input type="email" id="studentParent1Email" class="form-control">
+                            <label style="display:none; color:red" id="msgParent1Email"></label>
+                        </div>
+                        <div class="form-group col-12">
+                            <h3>Parent 2</h3>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Name<sup>*</sup></label>
+                            <input type="text" id="studentParent2Name" class="form-control">
+                            <label style="display:none; color:red" id="msgParent2Name"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Occupation<sup>*</sup></label>
+                            <input type="text" id="studentParent2Occupation" class="form-control">
+                            <label style="display:none; color:red" id="msgParent2Occupation"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Phone<sup>*</sup></label>
+                            <input type="text" id="studentParent2Phone" class="form-control">
+                            <label style="display:none; color:red" id="msgParent2Phone"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Email<sup>*</sup></label>
+                            <input type="email" id="studentParent2Email" class="form-control">
+                            <label style="display:none; color:red" id="msgParent2Email"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Career Applying<sup>*</sup></label>
+                            <input type="text" id="studentCareerApplying" class="form-control">
+                            <label style="display:none; color:red" id="msgCareerApplying"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Country Applying<sup>*</sup></label>
+                            @*<input type="text" id="studentCountryApplying" class="form-control">*@
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CountryList, "--Select--", new { @class = "selectdiv", @id = "studentCountryApplying" })
+                            </div>
+                            <label style="display:none; color:red" id="msgCountryApplying"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Application year<sup>*</sup></label>
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ApplicationYear, "--Select--", new { @class = "selectdiv", @id = "studentApplicationYear" })
+                            </div>
+                            <label style="display:none; color:red" id="msgApplicationYear"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-12">
+                            <label>Finacial Aid needed<sup>*</sup></label>
+                            <input type="email" id="studentFinacialAidNeeded" class="form-control">
+                            <label style="display:none; color:red" id="msgFinacialAidNeeded"></label>
+                        </div>
+                        <div class="form-group col-sm-3 col-6">
+
+                            <label>Counsellor<sup>*</sup></label>
+                            <div class="selectdiv">
+                                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.CounsellorList, "--Select Counsellor--", new { @class = "selectdiv", @id = "studentCounsellor" })
+                            </div>
+                            <label style="display:none; color:red" id="msgCounsellorList"></label>
+                        </div>
+                        <div class="d-flex bttn-box col-12 mb-0 mt-2">
+                            <button type="submit" id="StudentSubmit" class="btn blue-btn">Submit</button>
+                            <button type="reset" id="StudentBack" class="btn dark-grey-btn back-hide-show" hirf="#studentGrid">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <link href="~/css/chart.css" rel="stylesheet" />
+    <link href="~/css/vendors.bundle.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Js/Dashboard.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="~/Js/vendors.bundle.js"></script>
+    <script src="~/Js/scripts.bundle.js"></script>
+    <script src="~/Js/custom.js"></script>
+    @*<script src="~/Js/DashboardChart.js"></script>*@
+
+    <script type="text/javascript">
+        //== Class definition
+        var Dashboard = (function () {
+            //== Profit Share Chart.
+            var profitShare = function () {
+                if ($("#m_chart_profit_share").length == 0) {
+                    return;
+                }
+
+                $.ajax
+                    ({
+                        url: "/Dashboard/GetCounsellerPendingTask",
+                        type: "Get",
+                        success: function (dataC) {
+
+                            var itemC = JSON.parse(dataC);
+                            for (var i = 0; i < itemC.length; i++) {
+                                $('#TotalCount').html(itemC[0].TotalCount)
+                                var TotalTask = parseInt(itemC[0].TotalTask)
+                                var TotalEssay = parseInt(itemC[0].TotalEssay)
+                                var TotalMassege = parseInt(itemC[0].TotalMessage)
+
+                                var chart = new Chartist.Pie(
+                                    "#m_chart_profit_share",
+                                    {
+                                        series: [
+                                            {
+                                                value: TotalTask,
+                                                className: "custom",
+                                                meta: {
+                                                    color: mUtil.getColor("brand")
+                                                }
+                                            },
+                                            {
+                                                value: TotalEssay,
+                                                className: "custom",
+                                                meta: {
+                                                    color: mUtil.getColor("warning")
+                                                }
+                                            },
+                                            {
+                                                value: TotalMassege,
+                                                className: "custom",
+                                                meta: {
+                                                    color: mUtil.getColor("accent")
+                                                }
+                                            }
+                                        ],
+                                        labels: [1, 2, 3]
+                                    },
+                                    {
+                                        donut: true,
+                                        donutWidth: 13,
+                                        showLabel: false
+                                    }
+                                );
+
+                                chart.on("draw", function (data) {
+                                    if (data.type === "slice") {
+                                        // Get the total path length in order to use for dash array animation
+                                        var pathLength = data.element._node.getTotalLength();
+
+                                        // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+                                        data.element.attr({
+                                            "stroke-dasharray": pathLength + "px " + pathLength + "px"
+                                        });
+
+                                        // Create animation definition while also assigning an ID to the animation for later sync usage
+                                        var animationDefinition = {
+                                            "stroke-dashoffset": {
+                                                id: "anim" + data.index,
+                                                dur: 1000,
+                                                from: -pathLength + "px",
+                                                to: "0px",
+                                                easing: Chartist.Svg.Easing.easeOutQuint,
+                                                // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+                                                fill: "freeze",
+                                                stroke: data.meta.color
+                                            }
+                                        };
+
+                                        // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+                                        if (data.index !== 0) {
+                                            animationDefinition["stroke-dashoffset"].begin =
+                                                "anim" + (data.index - 1) + ".end";
+                                        }
+
+                                        // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+
+                                        data.element.attr({
+                                            "stroke-dashoffset": -pathLength + "px",
+                                            stroke: data.meta.color
+                                        });
+
+                                        // We can't use guided mode as the animations need to rely on setting begin manually
+                                        // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+                                        data.element.animate(animationDefinition, false);
+                                    }
+                                });
+
+                                // For the sake of the example we update the chart every time it's created with a delay of 8 seconds
+                                chart.on("created", function () {
+                                    if (window.__anim21278907124) {
+                                        clearTimeout(window.__anim21278907124);
+                                        window.__anim21278907124 = null;
+                                    }
+                                    window.__anim21278907124 = setTimeout(chart.update.bind(chart), 15000);
+                                });
+                            }
+
+                        }
+                    });
+
+            };
+
+            return {
+                //== Init demos
+                init: function () {
+                    // init charts
+                    profitShare();
+                }
+            };
+        })();
+
+        var TotalAppliction = (function () {
+            //== Profit Share Chart.
+            var profitShare = function () {
+                if ($("#m_chart_profit_share").length == 0) {
+                    return;
+                }
+
+                $.ajax
+                    ({
+                        url: "/Dashboard/GetTotalAppliction",
+                        type: "Get",
+                        success: function (dataC) {
+
+                            var itemC = JSON.parse(dataC);
+                            for (var i = 0; i < itemC.length; i++) {
+                                $('#TotalAppliction').html(itemC[0].TotalAppliction)
+                                var Approved = parseInt(itemC[0].Accepted)
+                                var Rejected = parseInt(itemC[0].Rejected)
+                                debugger;
+
+                                var chart = new Chartist.Pie(
+                                    "#m_chart_profit_share_Appliction",
+                                    {
+                                        series: [
+                                            {
+                                                value: Approved,
+                                                className: "custom",
+                                                meta: {
+                                                    color: mUtil.getColor("accent")
+                                                }
+                                            },
+                                            {
+                                                value: Rejected,
+                                                className: "custom",
+                                                meta: {
+                                                    color: mUtil.getColor("warning")
+                                                }
+                                            }
+                                        ],
+                                        labels: [1, 2]
+                                    },
+                                    {
+                                        donut: true,
+                                        donutWidth: 13,
+                                        showLabel: false
+                                    }
+                                );
+
+                                chart.on("draw", function (data) {
+                                    if (data.type === "slice") {
+                                        // Get the total path length in order to use for dash array animation
+                                        var pathLength = data.element._node.getTotalLength();
+
+                                        // Set a dasharray that matches the path length as prerequisite to animate dashoffset
+                                        data.element.attr({
+                                            "stroke-dasharray": pathLength + "px " + pathLength + "px"
+                                        });
+
+                                        // Create animation definition while also assigning an ID to the animation for later sync usage
+                                        var animationDefinition = {
+                                            "stroke-dashoffset": {
+                                                id: "anim" + data.index,
+                                                dur: 1000,
+                                                from: -pathLength + "px",
+                                                to: "0px",
+                                                easing: Chartist.Svg.Easing.easeOutQuint,
+                                                // We need to use `fill: 'freeze'` otherwise our animation will fall back to initial (not visible)
+                                                fill: "freeze",
+                                                stroke: data.meta.color
+                                            }
+                                        };
+
+                                        // If this was not the first slice, we need to time the animation so that it uses the end sync event of the previous animation
+                                        if (data.index !== 0) {
+                                            animationDefinition["stroke-dashoffset"].begin =
+                                                "anim" + (data.index - 1) + ".end";
+                                        }
+
+                                        // We need to set an initial value before the animation starts as we are not in guided mode which would do that for us
+
+                                        data.element.attr({
+                                            "stroke-dashoffset": -pathLength + "px",
+                                            stroke: data.meta.color
+                                        });
+
+                                        // We can't use guided mode as the animations need to rely on setting begin manually
+                                        // See http://gionkunz.github.io/chartist-js/api-documentation.html#chartistsvg-function-animate
+                                        data.element.animate(animationDefinition, false);
+                                    }
+                                });
+
+                                // For the sake of the example we update the chart every time it's created with a delay of 8 seconds
+                                chart.on("created", function () {
+                                    if (window.__anim21278907124) {
+                                        clearTimeout(window.__anim21278907124);
+                                        window.__anim21278907124 = null;
+                                    }
+                                    window.__anim21278907124 = setTimeout(chart.update.bind(chart), 15000);
+                                });
+                            }
+
+                        }
+                    });
+
+            };
+
+            return {
+                //== Init demos
+                init: function () {
+                    // init charts
+                    profitShare();
+                }
+            };
+        })();
+
+        //== Class initialization on page load
+        jQuery(document).ready(function () {
+            Dashboard.init();
+            TotalAppliction.init();
+        });
+
+    </script>

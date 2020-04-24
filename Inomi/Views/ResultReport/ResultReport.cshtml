@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "ResultReport";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Results View</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover res-viw">
+            <div class="reports-hdr row">
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Application Year</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.YearList, "--Select--", new { @class = "selectdiv", @id = "ApplicationYear", @title = "Search by year" })
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3 form-group">
+                    <label>School Name</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.SchoolList, "--Select--", new { @class = "selectdiv", @id = "School", @title = "Search by school" })
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Student Name</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select--", new { @class = "selectdiv", @id = "Student", @title = "Search by student" })
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-3 form-group">
+                    <label>Product</label>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.ProductList, "--Select--", new { @class = "selectdiv", @id = "Product", @title = "Search by product" })
+                    </div>
+                </div>
+                <div class="d-flex col-12">
+                    <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                    <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="report-details-cover">
+            <div class="report-details mb-0">
+                <h2>Results</h2>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="StudentReport">
+                    <thead>
+                        <tr>
+                            <th scope="col">Application Year</th>
+                            <th scope="col">Student Name</th>
+                            <th scope="col">School</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">College Applied to</th>
+                            <th scope="col">Career</th>
+                            <th scope="col">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+
+                            <tr>
+                                <td>@row["ApplicationYear"].ToString()</td>
+                                <td>@row["FirstName"].ToString()</td>
+                                <td>@row["School"].ToString()</td>
+                                <td>@row["Product"].ToString()</td>
+                                <td>@row["CollegeApply"].ToString()</td>
+                                <td>@row["CareerApplying"].ToString()</td>
+                                <td>@row["Result"].ToString()</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#StudentReport").dataTable({
+           "bSort": false
+        });
+
+        $('#btnSearch').click(function () {
+
+        var StrMain = "";
+        var ApplicationYear = $('#ApplicationYear').val();
+        var Student = $('#Student').val();
+        var School = $('#School').val();
+        var Product = $('#Product').val();
+
+        if (ApplicationYear != "" && ApplicationYear != null) {
+            StrMain = StrMain + "And ApplicationYear=" + "'" + ApplicationYear + "'"
+        };
+        if (Student != "" && Student != null) {
+            StrMain = StrMain + "And FirstName=" + "'" + Student + "'"
+        };
+        if (School != '' && School != null) {
+            StrMain = StrMain + "And School=" + "'" + School + "'"
+        };
+        if (Product != '' && Product != null) {
+            StrMain = StrMain + "And Product=" + "'" + Product + "'"
+        };
+
+            @*document.location ='@Url.Action("ResultReport","ResultReport")'+'?'+'Str ='+StrMain;*@
+                //url: '/ResultReport/ResultReport/?Str=' + StrMain
+            document.location = '/ResultReport/ResultReport/?Str=' + StrMain;
+        });
+
+        $('#btnReset').click(function () {
+            var StrMain = "";
+            document.location = '/ResultReport/ResultReport/?Str=' + StrMain;
+        });
+    });
+</script>
+
+
+

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "FAQ";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">FAQ</h2>
+                </div>
+            </div>
+        </div>
+        <div class="page1-wrapper">
+            <div class="accordian-wrapper1">
+                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                    @foreach (DataRow row in Model.Rows)
+                    {
+                        <div class="card1">
+                            <div class="card-header" role="tab" id="headingThree3">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree_@row["id"].ToString()"
+                                   aria-expanded="false" aria-controls="collapseThree3">
+                                    <h6>
+                                        <strong> @row["Question"].ToString()</strong> <i class="fas fa-angle-down rotate-icon"></i>
+                                    </h6>
+                                </a>
+                            </div>
+                            <div id="collapseThree_@row["id"].ToString()" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
+                                 data-parent="#accordionEx">
+                                <div class="card-body">
+                                    @row["Answer"].ToString()
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<link href="~/css/style.css" rel="stylesheet" />
+<link href="~/css/myStyle.css" rel="stylesheet" />

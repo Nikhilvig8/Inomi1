@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "ActivityReport";
+}
+
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Web.Mvc;
+@using BusinessLayer;
+@using DataLayer;
+@using Models;
+@using Newtonsoft.Json;
+@using System.Xml;
+@using System.Data;
+@using System.Configuration;
+@using System.Data;
+@using System.Data.SqlClient;
+
+@model DataTable
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 content-width dashboard">
+                <div class="row">
+                    <h2 class="col-md-12">Reports</h2>
+                </div>
+            </div>
+        </div>
+        <div class="report-details-cover">
+            <div class="report-details">
+                <h4>Activity Reports</h4>
+                <div class="reports-hdr">
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.YearList, "--Select Year--", new { @class = "selectdiv", @id = "studentApplicationYear", @title = "Search by year" })
+                    </div>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.SchoolList, "--Select School--", new { @class = "selectdiv", @id = "School", @title = "Search by school" })
+                    </div>
+                    <div class="selectdiv">
+                        @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.StudentList, "--Select Student--", new { @class = "selectdiv", @id = "Student", @title = "Search by student" })
+
+                    </div>
+
+                    <div class="d-flex">
+                        <button type="submit" class="btn blue-btn" id="btnSearch">Search</button>
+                        <button type="submit" class="btn blue-btn" id="btnReset">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive cmn-table">
+                <table class="table table-striped" id="ActivityReprot">
+                    <thead>
+                        <tr>
+                            <th scope="col">Counsellor</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Hours Spent</th>
+                            <th scope="col">Activity Date</th>
+                            <th scope="col">On What</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+
+                            <tr>
+                                <td>@row["Counsellor"].ToString()</td>
+                                <td>@row["StudentName"].ToString()</td>
+                                <td>@row["HoursSpent"].ToString()</td>
+                                <td>@row["ActivityDate"].ToString()</td>
+                                <td>@row["OnWhat"].ToString()</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Js/ActivityReport.js"></script>

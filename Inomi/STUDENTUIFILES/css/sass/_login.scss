@@ -1,0 +1,311 @@
+@import 'colorPalette';
+
+/* login page */
+.login-page {
+  background: $login-bg-color;
+  position: relative;
+  @include respond(tab-port) {
+    background: $login-bg-color url(../../images/login-bg.png) no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  &::before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    content: url(../../images/login-bg-dot-top.png);
+    height: 134px;
+    @include respond(tab-port) {
+      top: 0;
+      right: 0;
+    }
+    @include respond(phone-land) {
+      top: -84px;
+      right: -54px;
+    }
+    @include respond(phone) {
+      top: -84px;
+      right: -54px;
+    }
+  }
+  &::after {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    content: url(../../images/login-bg-dot-bottom.png);
+    height: 113px;
+    @include respond(tab-port) {
+      bottom: 0;
+      left: 0;
+    }
+    @include respond(phone-land) {
+      bottom: -55px;
+      left: -60px;
+    }
+    @include respond(phone) {
+      bottom: -55px;
+      left: -60px;
+    }
+  }
+  .login-content-wrapper {
+    height: 100%;
+    padding: 3rem 5rem;
+
+    @include respond(tab-land) {
+      background-size: cover;
+      padding: 9rem 4rem;
+      height: auto;
+    }
+    @include respond(tab-port) {
+      background-size: cover;
+      padding: 3rem 2rem;
+      background: rgba(256, 256, 256, 0.9);
+      height: 100%;
+    }
+    @include respond(phone-land) {
+      background-size: cover;
+      padding: 1rem 0;
+      height: 100vh;
+    }
+    @include respond(phone) {
+      background-size: cover;
+      padding: 1rem 0;
+      height: 100vh;
+    }
+    [class*='col-'] {
+      @include respond(tab-port) {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+    .row,
+    .container {
+      height: 100%;
+      @include respond(phone) {
+        height: auto;
+      }
+    }
+    .row {
+      @include respond(tab-port) {
+        height: auto;
+      }
+    }
+    .form-cover {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      max-width: 320px;
+      @include respond(tab-port) {
+        max-width: 100%;
+      }
+      @include respond(phone) {
+        margin-top: 2rem;
+      }
+      .form-txt {
+        @include respond(tab-port) {
+          margin: 0 auto;
+          max-width: 400px;
+          padding: 0 1.2rem;
+          margin-top: 6rem;
+          margin-bottom: 2rem;
+        }
+        @include respond(phone-land) {
+          display: none;
+        }
+        .h4 {
+          font-size: 2.25rem;
+          font-weight: 400;
+          color: #464646;
+          strong {
+            font-weight: 700;
+          }
+        }
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  img {
+    @include respond(phone) {
+      display: block;
+      margin: 0 auto;
+    }
+    @include respond(tab-port) {
+      display: block;
+      margin: 0 auto;
+    }
+    @include respond(phone-land) {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .about-login-page {
+    color: #fff;
+    margin-top: 1rem;
+    @include respond(tab-port) {
+      display: none;
+      margin-top: 1rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    @include respond(phone-land) {
+      margin-top: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    @include respond(phone) {
+      margin-top: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.3475rem;
+      font-family: 'Helvetica Neue Medium', sans-serif;
+      @include respond(phone) {
+        font-size: 1.3475rem;
+      }
+      @include respond(tab-port) {
+        font-size: 1.3475rem;
+      }
+    }
+
+    p {
+      font-size: 0.875rem;
+      font-family: 'Helvetica Neue Medium', sans-serif;
+      max-width: 85%;
+      @include respond(phone) {
+        font-size: 0.675rem;
+        max-width: 100%;
+        margin-bottom: 0.2rem;
+      }
+      @include respond(tab-port) {
+        font-size: 0.675rem;
+        max-width: 100%;
+        margin-bottom: 0.2rem;
+      }
+    }
+    img {
+      max-width: 450px;
+      width: 100%;
+    }
+  }
+
+  form {
+    margin: 0 auto;
+    width: 100%;
+    @include respond(phone) {
+      margin: 0 auto;
+      padding: 1rem 1.2rem;
+      display: block;
+    }
+    @include respond(tab-port) {
+      margin: 0 auto;
+      padding: 1rem 1.2rem;
+      display: block;
+      max-width: 400px;
+    }
+    .h4 {
+      font-size: 1.5rem;
+      padding: 3rem 0 0;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      @include respond(phone) {
+        padding: 0;
+      }
+      @include respond(tab-port) {
+        padding: 0;
+      }
+    }
+    .checkbox {
+      margin: 0;
+    }
+    label {
+      text-align: left;
+      width: 100%;
+    }
+    .btn {
+      background-color: $font-color3;
+      outline: none;
+      box-shadow: none;
+      font-size: 0.875rem;
+      border-radius: 0 !important;
+      padding: 0.8rem 3rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin: 0;
+      &:focus {
+        background-color: $font-color3;
+        outline: none;
+        box-shadow: none;
+      }
+      &:active {
+        background-color: $font-color3;
+        box-shadow: none;
+      }
+      &:hover {
+        background-color: $font-color3;
+        box-shadow: none;
+      }
+    }
+    .bottom-text {
+      font-size: 0.75rem;
+      font-family: 'Helvetica Neue Medium', sans-serif;
+      margin-bottom: 0;
+    }
+    .input-cover {
+      background-color: #fff;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.07);
+      border: 1px solid rgba(70, 70, 70, 0.1);
+      position: relative;
+      .form-control {
+        border: none;
+        border-left: 3px solid transparent;
+        padding: 1rem 0.8125rem 1.4rem;
+        padding-top: 3rem;
+        position: relative;
+        border-radius: 0;
+        box-sizing: border-box;
+        background: none;
+        &:focus {
+          box-shadow: none;
+          border-left: 3px solid #3ba6dd;
+        }
+        &::placeholder {
+          font-weight: 700;
+          color: #464646;
+        }
+      }
+      label {
+        margin: 0;
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+      }
+      .email-cover {
+        border-bottom: 1px solid rgba(70, 70, 70, 0.1);
+        position: relative;
+      }
+      .password-cover {
+        position: relative;
+      }
+    }
+  }
+  .footer {
+    position: fixed;
+    bottom: 0.6rem;
+    left: 0;
+    width: 100%;
+    p {
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+}
